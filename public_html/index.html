@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MASBOT – IT Services</title>
+  <!-- Tailwind CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#FFF3E6', 100: '#FFE0BF', 300: '#FFB26B', 500: '#FF7A00', 600: '#FF6600'
+            }
+          },
+          boxShadow: {
+            glow: '0 10px 40px rgba(255, 102, 0, 0.35)'
+          }
+        }
+      }
+    }
+    
+  </script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Three.js + Vanta for animated hero background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.net.min.js"></script>
+  <!-- Lottie for animated illustrations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <style>
+
+html, body {
+  overflow-x: hidden;  /* ✅ horizontal scroll hata dega */
+  width: 100%;         /* ✅ width fix rakhe */
+}
+
+
+
+    :root { --card-radius: 18px; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: #303030; /* existing bg color */
+  color: #e8e8ea;
+  position: relative;
+}
+
+/* Right side dark green shadow */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px; /* width of the shadow */
+  height: 100%;
+  background: linear-gradient(to left, rgba(90, 248, 134, 0.5), transparent); /* dark green fading to transparent */
+  pointer-events: none; /* allow clicks through shadow */
+}
+
+    /* --- Loader + Curtain --- */
+    #loader {
+      position: fixed; inset: 0; background: #141316; display:flex; align-items:center; justify-content:center; z-index: 9999;
+    }
+    .masboot-loader { width: 128px; height:128px; border:6px solid rgba(53, 240, 137, 0.5); border-top:6px solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; animation: spin-once .7s linear forwards; box-shadow: 0 0 0 4px rgba(255,152,0,.15), 0 0 40px rgba(255,152,0,.25) inset; }
+    .masboot-loader span { color:#fff; font-weight:900; letter-spacing:1px; animation: text-zoom 1.1s ease-in-out infinite alternate; }
+    @keyframes spin-once { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    @keyframes text-zoom { from{transform:scale(1)} to{transform:scale(1.25)} }
+    #curtain { position:fixed; left:0; bottom:0; width:100%; height:100vh; background:#fff; z-index: 9998; transform: translateY(100%); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+
+    /* --- Utilities --- */
+    .container-xl { width: min(1200px, 92vw); margin-inline: auto; }
+
+    /* --- Fancy card hover (left+bottom orange) --- */
+    .fancy-card { position:relative; border-radius: var(--card-radius); background: #303030; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.08); overflow:hidden; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+    .fancy-card::before { content:''; position:absolute; inset:0; border-radius: inherit; border-left:4px solid transparent; border-bottom:4px solid transparent; transition: .35s ease; pointer-events:none; }
+    .fancy-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+    .fancy-card:hover::before { border-left:6px solid rgba(53, 240, 137, 0.5); border-bottom:6px solid #ff6600; box-shadow: -6px 6px 18px rgba(255,102,0,.35); }
+
+    /* Arrow pill in card */
+    .arrow-pill { position: absolute; right: 16px; bottom: 16px; width: 42px; height: 42px; display:flex; align-items:center; justify-content:center; border-radius: 50%; background:#fff; transition: background .3s ease, transform .3s ease; }
+    .arrow-pill span { color:rgba(53, 240, 137, 0.5); font-size: 20px; transition: color .3s ease, transform .3s ease; }
+    .fancy-card:hover .arrow-pill { background:rgba(53, 240, 137, 0.5); }
+    .fancy-card:hover .arrow-pill span { color:#fff; transform: translateX(3px); }
+
+    /* Marquee logos */
+    .marquee { overflow:hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .marquee-track { display:flex; gap: 64px; animation: marquee 22s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Glass inputs */
+    .glass-input { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:14px 16px; color:#fff; outline:none; }
+    .glass-input::placeholder { color: #cfcfd4; }
+
+    /* Scroll snap for projects */
+    .snap-x { scroll-snap-type: x mandatory; }
+    .snap { scroll-snap-align: start; }
+
+    /* Section paddings */
+    section { padding: 96px 0; }
+
+ 
+
+    /* Fade + slide-up animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fancy-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fancy-card.show {
+  animation: fadeUp 0.8s forwards;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+
+  <!-- Curtain -->
+  <div id="curtain"></div>
+
+  <!-- HERO -->
+<header class="relative min-h-[92vh] flex items-center">
+  <div id="vanta" class="absolute inset-0 -z-10"></div>
+
+<!-- Top Navbar -->
+<!-- Navbar -->
+<!-- Navbar -->
+<div id="navbar" class="w-full flex justify-between items-center p-4 z-50 transition-all duration-300 relative"
+     style="position: fixed; top:0; left:0; background-color: transparent;">
+
+  <!-- Overlay lines -->
+  <div class="absolute inset-0 flex pointer-events-none">
+    <!-- Left extra vertical line -->
+    <div class="absolute left-[1.6%] top-0 bottom-0 border-r border-white/40"></div>
+
+    <!-- 4 equal divisions -->
+    <div class="flex w-full">
+      <div class="flex-1 border-r border-white/20"></div>
+      <div class="flex-1 border-r border-white/20"></div>
+      <div class="flex-1 border-r border-white/20"></div>
+      <div class="flex-1"></div>
+    </div>
+
+    <!-- Bottom horizontal line -->
+    <div class="absolute bottom-0 left-0 w-full border-t border-white/20"></div>
+  </div>
+
+  <!-- Left: Logo -->
+  <div class="text-black relative z-10">
+    <h1 style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; transform: scaleX(1.5); margin:0;margin-left: 30px;">
+      MASBOT
+    </h1>
+  </div>
+
+  <!-- Right: Navigation Buttons -->
+  <div class="flex gap-6 items-center pr-6 relative z-10">
+    <a href="#" class="nav-link">About</a>
+    <a href="#" class="nav-link">Services</a>
+    <a href="#" class="nav-link">Core Values</a>
+    <a href="Contect Us.html" class="nav-link">Contact</a>
+  </div>
+</div>
+
+<style>
+  .nav-link {
+    position: relative;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover {
+    color: rgba(53, 240, 137, 0.5);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background-color: rgba(53, 240, 137, 0.5);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  let lastScrollTop = 0;
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Keep navbar fully transparent
+    navbar.style.backgroundColor = "transparent";
+
+    // Hide/Show navbar on scroll
+    if (scrollTop > lastScrollTop) {
+      navbar.style.transform = "translateY(-100%)";
+    } else {
+      navbar.style.transform = "translateY(0)";
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  }, false);
+</script>
+
+
+
+
+
+
+  <!-- Full-page grid lines -->
+<!-- Vertical lines (global full-page height) -->
+<div class="pointer-events-none fixed inset-0 z-0">
+  <!-- Left side line -->
+  <div class="fixed left-[20px] top-0 bottom-0 w-[1px] bg-white/10"></div>
+  
+  <!-- 25% line (between left and center) -->
+  <div class="fixed left-1/4 top-0 bottom-0 w-[1px] bg-white/10"></div>
+  
+  <!-- Center line -->
+  <div class="fixed left-1/2 top-0 bottom-0 w-[1px] bg-white/10"></div>
+  
+  <!-- Divider inside right section (at 75%) -->
+  <div class="fixed left-3/4 top-0 bottom-0 w-[1px] bg-white/10"></div>
+  
+  <!-- Right side line -->
+  <div class="fixed right-0 top-0 bottom-0 w-[1px] bg-white/10"></div>
+</div>
+
+
+
+
+
+<div class="container-xl grid lg:grid-cols-2 gap-10 items-center relative z-10">
+
+  <!-- LEFT SIDE (50%) -->
+  <div class="col-12 d-flex justify-content-between align-items-center" style="height:100vh; position:relative; padding: 0 50px;">
+    <!-- Logo (already in nav, optional duplicate) -->
+    <div class="text-white" style="z-index:2;">
+      
+    </div>
+
+    <!-- Particles Animation Background -->
+    <div id="particles-js" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+  </div>
+
+  <!-- RIGHT SIDE (50% => 2 PARTS) -->
+  <div class="grid grid-cols-2 gap-6 relative min-h-screen">
+    <!-- Vertical Divider -->
+    <!-- <div class="fixed left-1/2 top-0 bottom-0 w-[2px] bg-white/20"></div> -->
+
+    <!-- Text Section -->
+   <div class="flex flex-col justify-between pr-6">
+  <div class="space-y-6">
+    <h1 style="display: inline-block; font-family: 'Inter', sans-serif; font-weight: 400; transform: scaleX(2); margin-left: 100px; margin-top: 220px; font-size: 25px; line-height: 1.6; white-space: nowrap; width: 100%; max-width: 1000px;">
+      Break the System. <br> Build a Better One.
+    </h1>
+  </div>
+</div>
+
+
+
+    <!-- Image Section -->
+    <div class="flex flex-col items-center pl-6"></div>
+
+    <!-- Thesis Buttons Row -->
+ <div class="col-span-2 flex gap-4 mt-0" style="margin-top: -90px;">
+  <a href="#" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
+    Portfolio<span class="text-3xl">›</span>
+  </a>
+  <a href="Contect Us.html" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
+    Contect Us <span class="text-3xl">›</span>
+  </a>
+</div>
+
+<script>
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  document.querySelectorAll(".glitch-btn").forEach((btn) => {
+    const span = btn.querySelector("span");
+    const originalText = btn.childNodes[0].textContent.trim(); // sirf text pick karna
+    btn.addEventListener("mouseenter", () => {
+      let i = 0;
+      const interval = setInterval(() => {
+        btn.childNodes[0].textContent = originalText
+          .split("")
+          .map((char, index) => {
+            if (index < i) {
+              return originalText[index];
+            }
+            return letters[Math.floor(Math.random() * letters.length)];
+          })
+          .join("");
+        if (i >= originalText.length) {
+          clearInterval(interval);
+        }
+        i += 1 / 3; // speed control
+      }, 30);
+
+      // 2 second baad original text wapas
+      setTimeout(() => {
+        btn.childNodes[0].textContent = originalText;
+      }, 2000);
+    });
+  });
+</script>
+
+  </div>
+</div>
+
+
+
+
+
+  <!-- Particles.js Script -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#53F3C0" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3 },
+        "line_linked": { "enable": true, "color": "#53F3C0" },
+        "move": { "enable": true, "speed": 4 }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</header>
+
+
+
+
+  <!-- Full-width MASBOT Text at Bottom (moved up) -->
+<div class="col-span-3 w-full text-center" style="margin-top: -150px;">
+  <h1 class="text-6xl md:text-8xl font-extrabold text-black" style="transform: scaleX(1.5); font-size: 11rem;">
+    MASBOT
+  </h1>
+</div>
+
+
+
+<!-- Particles.js Script -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#53F3C0" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.5 },
+    "size": { "value": 3 },
+    "line_linked": { "enable": true, "color": "#53F3C0" },
+    "move": { "enable": true, "speed": 4 }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    }
+  },
+  "retina_detect": true
+});
+</script>
+
+
+
+
+  <!-- LOGOS / TRUSTED BY -->
+
+
+
+
+
+  <!-- Section -->
+<!-- Section Start -->
+<!-- ====== Section Start ====== -->
+<section class="section">
+  <div class="bars">
+    <div class="bar bar1"></div>
+    <div class="bar bar2"></div>
+    <div class="bar bar3"></div>
+    <div class="bar bar4"></div>
+  </div>
+  <div class="text">
+    
+    <p>
+      MASBOT isn’t just another tech company. We’re your innovation partner — delivering digital products that look stunning, work flawlessly, and help your business scale without limits.
+    </p>
+  </div>
+</section>
+<!-- ====== Section End ====== -->
+
+
+<style>
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 50px;
+  background: #303030; /* dark bg */
+}
+
+.bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.bar {
+  width: 20px;
+  background: rgba(53, 240, 137, 0.5);
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: all 0.8s ease;
+}
+
+/* different bar sizes (like your screenshot) */
+.bar1 { height: 30px; }
+.bar2 { height: 100px; }
+.bar3 { height: 120px; }
+.bar4 { height: 70px; }
+
+.text {
+  flex: 2;
+  padding-left: 60px;
+  font-size: 22px;
+  line-height: 1.6;
+  color: white;
+}
+
+/* visible state (when animated) */
+.bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+
+<script>
+const bars = document.querySelectorAll('.bar');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      bars.forEach((bar, index) => {
+        setTimeout(() => {
+          bar.classList.add('visible');
+        }, index * 400); // delay each bar
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+observer.observe(document.querySelector('.section'));
+</script>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+
+
+  <!-- SERVICES -->
+  <!-- SERVICES -->
+
+<section id="services" class="py-12 bg-[#303030]">
+  <div class="container mx-auto px-6">
+    <div class="flex items-end justify-between mb-12">
+      <h2 class="text-3xl md:text-4xl font-black text-white">Services</h2>
+      <p class="text-white/60 max-w-md">
+        From design to deployment — full-stack engineering with rock-solid infra. 
+        Built for speed, scale and security.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Row 1: 3 cards + empty column -->
+      <article class="service-card">
+        <div class="tags">
+          <span>N.001</span>
+          <span>Web</span>
+          <span>Development</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/html-5.png" alt="Web Development" />
+        </div>
+        <h3>Web Development</h3>
+        <p class="location">Germany, 2020</p>
+        <div class="bottom">
+          <span>Development</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="tags">
+          <span>N.002</span>
+          <span>UI</span>
+          <span>Design</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/figma--v1.png" alt="UI/UX Design" />
+        </div>
+        <h3>UI/UX Design</h3>
+        <p class="location">Switzerland, 2017</p>
+        <div class="bottom">
+          <span>Design</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="tags">
+          <span>N.003</span>
+          <span>AI</span>
+          <span>ML</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="AI" />
+        </div>
+        <h3>Artificial Intelligence</h3>
+        <p class="location">UK, 2022</p>
+        <div class="bottom">
+          <span>AI</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <!-- Empty column -->
+      <div></div>
+
+      <!-- Row 2: 3 cards + empty column -->
+      <article class="service-card">
+        <div class="tags">
+          <span>N.004</span>
+          <span>Mobile</span>
+          <span>Apps</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/android-os.png" alt="Mobile" />
+        </div>
+        <h3>Mobile Apps</h3>
+        <p class="location">USA, 2021</p>
+        <div class="bottom">
+          <span>Apps</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="tags">
+          <span>N.005</span>
+          <span>Cloud</span>
+          <span>Infra</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/cloud.png" alt="Cloud" />
+        </div>
+        <h3>Cloud Solutions</h3>
+        <p class="location">Canada, 2019</p>
+        <div class="bottom">
+          <span>Cloud</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="tags">
+          <span>N.006</span>
+          <span>Cyber</span>
+          <span>Security</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/cyber-security.png" alt="Security" />
+        </div>
+        <h3>Cyber Security</h3>
+        <p class="location">India, 2018</p>
+        <div class="bottom">
+          <span>Security</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <!-- Empty column -->
+      <div></div>
+
+      <!-- Row 3: 2 cards (Networking + ERP) + empty column -->
+      <article class="service-card">
+        <div class="tags">
+          <span>N.007</span>
+          <span>Networking</span>
+          <span>IT</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/network.png" alt="Networking" />
+        </div>
+        <h3>Networking</h3>
+        <p class="location">Australia, 2023</p>
+        <div class="bottom">
+          <span>Networking</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="tags">
+          <span>N.008</span>
+          <span>ERP</span>
+          <span>Solutions</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/erp.png" alt="ERP" />
+        </div>
+        <h3>ERP Solutions</h3>
+        <p class="location">Japan, 2022</p>
+        <div class="bottom">
+          <span>ERP</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+      <!-- Empty column -->
+      <div></div>
+
+      <!-- Optional empty column if needed for grid alignment -->
+      <div></div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- CSS -->
+<style>
+.service-card {
+  background: black;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  /* box-shadow: 0 8px 24px rgba(0,0,0,0.4); */
+}
+
+.service-card .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.service-card .tags span {
+  font-size: 12px;
+  color: #fff;
+  background: #3a3a3a;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.service-card .logo {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.service-card .logo img {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.service-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+.service-card .location {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 24px;
+}
+
+.service-card .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #444;
+  padding-top: 16px;
+  margin-top: auto;
+}
+.service-card .bottom span {
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+}
+.service-card .arrow-btn {
+  background: #3a3a3a;
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.service-card .arrow-btn:hover {
+  background: #555;
+}
+
+
+.service-card {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-left: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border-left-color: rgba(53, 240, 137, 0.5);
+  border-bottom-color: rgba(53, 240, 137, 0.5);
+}
+
+.service-card .arrow-btn {
+  background: #3a3a3a;
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.service-card:hover .arrow-btn {
+  background: rgba(53, 240, 137, 0.5);
+}
+
+</style>
+
+
+
+
+<!-- core values  -->
+
+
+<section id="core-values" class="cv-section">
+  <div class="cv-stage">
+
+    <h2 class="cv-heading" style="font-size: 100px;text-align: center;">Our Core Values</h2>
+    <div class="cv-circle"></div>
+    <div class="cv-cards-track">
+      <div class="cv-card">⚡ Innovation</div>
+      <div class="cv-card">🤝 Integrity</div>
+      <div class="cv-card">🚀 Excellence</div>
+      <div class="cv-card">🌍 Sustainability</div>
+      <div class="cv-card">💡 Creativity</div>
+      <div class="cv-card">📈 Growth</div>
+    </div>
+  </div>
+</section>
+
+<style>
+.cv-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.cv-stage {
+  position: relative;
+  height: 100%;
+}
+.cv-circle {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(53, 240, 137, 0.5);
+  box-shadow: 0 0 80px rgba(53, 240, 137, 0.5), inset 0 0 40px rgba(0,0,0,.25);
+  z-index: 1;
+}
+.cv-cards-track {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 2;
+}
+.cv-card {
+  min-width: 220px;
+  height: 280px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; font-weight: 700;
+  color: #fff;
+  background: black;
+  border: 1px solid rgba(12, 12, 12, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(14, 14, 14, 0.3);
+  backdrop-filter: blur(6px);
+}
+</style>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const track = document.querySelector(".cv-cards-track");
+const firstCard = document.querySelector(".cv-card");
+
+let tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".cv-section",
+    start: "top top",
+    end: "+=2000",
+    scrub: true,
+    pin: true,
+    anticipatePin: 1
+  }
+});
+
+// Step 1: circle zoom slow
+tl.to(".cv-circle", { scale: 20, ease: "power1.inOut", duration: 4 })
+
+  // Step 2: cards fade in jab circle ~70% fill kare
+  .to(track, { opacity: 1, duration: 0.8 }, "-=2.5")  
+  // 👆 yahan "-=2.5" ka matlab hai ke circle zoom complete hone se
+  // lagbhag 70% pehle hi cards visible ho jayenge
+
+  // Step 3: horizontal scroll
+  .to(track, {
+    x: () => {
+      const offset = (window.innerWidth - firstCard.offsetWidth) / 2;
+      return -(track.scrollWidth - window.innerWidth + offset);
+    },
+    ease: "power1.inOut",
+    duration: 4
+  }, "<");
+</script>
+
+
+<!-- projects  -->
+
+
+
+<section id="my-projects" class="relative bg-#303030;-900">
+  <div class="sticky top-0 h-screen overflow-hidden">
+    <h1 class="text-center text-5xl text-white mb-16 sticky top-0 z-10" style="margin-top: -50px;">Projects</h1>
+
+    <div class="relative w-full" id="projectsContainer" style="height: 400px;">
+      <!-- Project 1 -->
+      <article class="project absolute top-0 left-0 w-full h-full flex items-center justify-between p-8">
+        <div class="flex flex-col gap-4 text-white w-1/2">
+          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 01</span>
+          <h2 class="text-4xl font-bold">Institute for Art and Culture (IAC)</h2>
+          <p class="text-gray-300">Developed a fully custom, responsive website for the Institute for Art and Culture (IAC).brand
+Designed with a modern and clean UI, optimized for speed and user experience. <br>
+Implemented dynamic content management with full backend control using Node.js & MongoDB. <br>
+Created over 140 responsive pages covering courses, events, faculty, and student resources. <br>
+Integrated advanced features like CMS, dashboards, and interactive galleries for seamless navigation. <br>
+Delivered a highly professional, scalable, and visually appealing platform for students and faculty.</p> <br>
+heck the live website: https://www.iac.edu.pk
+        </div>
+        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
+  <img src="iac.png" class="w-full h-full object-contain rounded-2xl">
+</div>
+
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project absolute top-0 left-full w-full h-full flex items-center justify-between p-8" style="background-color: #000;">
+        <div class="flex flex-col gap-4 text-white w-1/2">
+          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 02</span>
+          <h2 class="text-4xl font-bold">J Brothers</h2>
+          <p class="text-gray-300">Developed a fully custom website for J Brothers, showcasing multiple business verticals including IT Services, Trainings, and Construction. <br>
+Designed with a modern, responsive, and user-friendly interface for seamless navigation across all devices. <br>
+Implemented a dynamic backend with Node.js and MongoDB, enabling real-time content management. <br>
+Built multi-page layouts, including student onboarding, course registration, and admin CMS for easy management. <br>
+Integrated interactive features and animations to enhance user engagement and brand presentation. <br>
+Delivered a professional, scalable, and visually appealing platform tailored to the client’s diverse business needs. <br>
+
+Check the live website: https://www.jbrothers.com</p>
+        </div>
+        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
+  <img src="j bros.png" class="w-full h-full object-contain rounded-2xl">
+</div>
+
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project absolute top-0 left-[200%] w-full h-full flex items-center justify-between p-8" style="background-color: #111;">
+        <div class="flex flex-col gap-4 text-white w-1/2">
+          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 03</span>
+          <h2 class="text-4xl font-bold">Istrahat Waheed</h2>
+          <p class="text-gray-300">Developed a custom website for Fine Arts, highlighting the institute’s work and students’ creative projects.
+Designed with a modern, visually rich interface to showcase artwork and student portfolios effectively.
+Implemented dynamic galleries and interactive sections for smooth browsing of student and faculty work.
+Built a responsive multi-page layout with About, Work, and Student Projects sections for complete information.
+Integrated animations and hover effects to enhance visual appeal and user engagement.
+Delivered a professional, creative, and engaging platform to promote Fine Arts education and student talent.</p>
+        </div>
+        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
+          <img src="istrahat.png" class="w-full h-full object-cover rounded-2xl">
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="project absolute top-0 left-[300%] w-full h-full flex items-center justify-between p-8" style="background-color: #222;">
+        <div class="flex flex-col gap-4 text-white w-1/2">
+          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 04</span>
+          <h2 class="text-4xl font-bold">Typing Master Web App</h2>
+          <p class="text-gray-300">On-screen keyboard, WPM/accuracy, lessons lock/unlock & result analytics.</p>
+        </div>
+        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover rounded-2xl">
+        </div>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="project absolute top-0 left-[400%] w-full h-full flex items-center justify-between p-8" style="background-color: #333;">
+        <div class="flex flex-col gap-4 text-white w-1/2">
+          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 05</span>
+          <h2 class="text-4xl font-bold">E-Learning Platform</h2>
+          <p class="text-gray-300">Interactive courses, progress tracking, quizzes, and certificate generation with gamification.</p>
+        </div>
+        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
+          <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover rounded-2xl">
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const container = document.getElementById("projectsContainer");
+const panels = gsap.utils.toArray("#projectsContainer > .project");
+
+gsap.to(container, {
+  xPercent: -100 * (panels.length - 1),
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#my-projects",
+    pin: true,              // freeze vertical scroll
+    scrub: 1,
+    end: () => "+=" + (panels.length * window.innerWidth),
+    snap: 1 / (panels.length - 1), // smooth one-by-one scroll
+    invalidateOnRefresh: true
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+  <!-- ABOUT (Parallax + Lottie) -->
+<!-- 🔶 Section Start -->
+<section class="founders-section">
+  <div class="founders-left">
+    <div class="shape" data-founder="near"></div>
+    <div class="shape" data-founder="polkadot"></div>
+    <div class="shape" data-founder="sorare"></div>
+    <div class="shape" data-founder="immutable"></div>
+  </div>
+
+  <div class="founders-right">
+    <h2>About MASBOT 
+</h2>
+    <div class="founder-tabs">
+      <span data-founder="near" class="active">STORY</span>
+      <span data-founder="polkadot">VISION</span>
+      <span data-founder="sorare">MISSION</span>
+      <span data-founder="immutable">VALUES</span>
+    </div>
+    <p id="founder-text">
+      "The team at Fabric Posses strong insights into the Web3 industry,
+      tokenomics and valuable connections on both the capital and talent sides."
+    </p>
+  </div>
+</section>
+<!-- 🔶 Section End -->
+
+
+<style>
+.founders-section {
+  display: flex;
+  background: #303030;
+  color: white;
+  min-height: 100vh;
+  padding: 50px;
+}
+
+/* Left side shapes */
+.founders-left {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+  justify-items: center;
+}
+
+.shape {
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgba(53, 240, 137, 0.5);
+  clip-path: path("M75 0 C115 0 150 35 150 75 C150 115 115 150 75 150 C35 150 0 115 0 75 C0 35 35 0 75 0 Z M75 30 L120 75 L75 120 L30 75 Z");
+  transition: all 0.3s ease;
+}
+.shape:hover,
+.shape.active {
+  background: rgba(53, 240, 137, 0.5);
+}
+
+/* Right side text */
+.founders-right {
+  flex: 1;
+  padding-left: 50px;
+}
+.founders-right h2 {
+  font-size: 40px;
+  font-weight: bold;
+}
+.founder-tabs {
+  display: flex;
+  gap: 40px;
+  margin: 30px 0;
+}
+.founder-tabs span {
+  cursor: pointer;
+  position: relative;
+}
+.founder-tabs span.active {
+  color: rgba(53, 240, 137, 0.5);
+}
+.founder-tabs span.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(53, 240, 137, 0.5);
+}
+#founder-text {
+  font-size: 18px;
+  line-height: 1.6;
+}
+</style>
+
+<script>
+const texts = {
+  near: `"We’re not just developers, marketers, or engineers — we’re bridge-builders between vision and reality. MASBOT was founded on the belief that tech should empower, not intimidate.
+
+What started as a team of three — a strategist, a developer, and a DevOps engineer — has already delivered over a dozen projects for clients in Pakistan and abroad. And we’re just getting started.
+."`,
+  polkadot: `"To be the global tech partner businesses trust to scale without limits." – Gavin`,
+  sorare: `"To deliver bold, beautifully designed, and flawlessly engineered solutions that bring enterprise-level innovation within reach for every business." – Nicolas`,
+  immutable: `Simplicity in design, power in performance
+Client-first thinking, always
+Creativity as a core advantage – Robbie`
+};
+
+
+
+
+document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
+  el.addEventListener("mouseenter", () => {
+    const founder = el.getAttribute("data-founder");
+
+    // Left side active
+    document.querySelectorAll(".shape").forEach(s => s.classList.remove("active"));
+    document.querySelector(`.shape[data-founder="${founder}"]`).classList.add("active");
+
+    // Tabs active
+    document.querySelectorAll(".founder-tabs span").forEach(s => s.classList.remove("active"));
+    document.querySelector(`.founder-tabs span[data-founder="${founder}"]`).classList.add("active");
+
+    // Text update
+    document.getElementById("founder-text").textContent = texts[founder];
+  });
+});
+</script>
+
+
+
+
+<!-- ✅ Team Section Start -->
+<section id="team" class="py-5" style="background: #303030;">
+  <div class="container">
+    <h1 style="font-size: 30px;" class="text-center mb-5 fw-bold text-white">Team Spotlight</h1>
+    <p class="text-center mb-5 text-secondary">The Minds Behind MASBOT</p>
+
+    <!-- ✅ Flex Container -->
+   <div class="team-container">
+
+  <!-- ✅ Row 1 -->
+  <div class="row">
+    <!-- Card 1 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Mian Ahmad Shafiqe">
+      </div>
+      <h5 class="mt-3">Mian Ahmad Shafiqe</h5>
+      <p>Founder & Strategist<br>Vision-driver. Big-picture thinker.</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Asad">
+      </div>
+      <h5 class="mt-3">Asad</h5>
+      <p>Web Developer & UI Craftsman<br>Turns ideas into digital art.</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Vakar">
+      </div>
+      <h5 class="mt-3">Vakar</h5>
+      <p>DevOps & Microsoft Solutions Expert<br>Keeps businesses running seamlessly.</p>
+    </div>
+
+    <!-- Empty Placeholder -->
+    <div class="team-card d-flex align-items-center justify-content-center" style="opacity:0.3;">
+      <!-- <p>Coming Soon...</p> -->
+    </div>
+  </div>
+
+  <!-- ✅ Row 2 -->
+  <div class="row">
+    <!-- Card 4 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Member 4">
+      </div>
+      <h5 class="mt-3">Member 4</h5>
+      <p>Role / Expertise<br>Short description here.</p>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Member 5">
+      </div>
+      <h5 class="mt-3">Member 5</h5>
+      <p>Role / Expertise<br>Short description here.</p>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="team-card">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/300x300" alt="Member 6">
+      </div>
+      <h5 class="mt-3">Member 6</h5>
+      <p>Role / Expertise<br>Short description here.</p>
+    </div>
+
+    <!-- Empty Placeholder -->
+    <div class="team-card d-flex align-items-center justify-content-center" style="opacity:0.3;">
+      <!-- <p>Coming Soon...</p> -->
+    </div>
+  </div>
+
+</div>
+
+    <div class="text-center mt-5">
+      <p class="fw-semibold text-white">
+        Together, we’re not just building tech — we’re shaping digital experiences that feel human.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ CSS -->
+<!-- ✅ CSS -->
+<style>
+.team-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* gap between rows */
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.team-card {
+  flex: 1 1 calc(25% - 20px); /* 4 per row */
+  max-width: calc(25% - 20px);
+  background: #1f1f1f;
+  border-radius: 12px;
+  padding: 20px 15px;
+  text-align: center;
+  color: #fff;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.team-card .img-box {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #2a2a2a;
+}
+
+.team-card .img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-left: 6px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 6px solid rgba(53, 240, 137, 0.5);
+}
+
+.team-card:hover .img-box img {
+  transform: scale(1.1);
+}
+</style>
+
+
+
+
+
+<!-- ✅ PROJECTS (Case Studies) -->
+<!-- ✅ CASE STUDIES SECTION -->
+<section class="cs-section">
+  <div class="cs-container">
+    <!-- Section header -->
+    <div class="cs-header">
+      <h2>Case Studies</h2>
+      <p>Real results from real builds. Our successful implementations.</p>
+    </div>
+
+    <!-- Cards using grid -->
+    <div class="cs-cards-grid">
+      <!-- Card 1 -->
+      <div class="cs-card">
+        <h3>E-commerce Revamp</h3>
+        <p>+42% conversion with blazing web performance and UX overhaul.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="cs-card">
+        <h3>FinTech Infra</h3>
+        <p>PCI-minded microservices with autoscaling & observability.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="cs-card">
+        <h3>AI Support Bot</h3>
+        <p>Reduced ticket volume 35% using custom LLM workflows.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="cs-card">
+        <h3>Healthcare Platform</h3>
+        <p>HIPAA-compliant telehealth system with real-time video and secure records.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ CSS -->
+<style>
+/* Section and container same as before */
+.cs-section {
+  background-color: #303030;;
+  color: #fff;
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.cs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cs-header h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.cs-header p {
+  font-size: 16px;
+  color: #bbb;
+  margin-bottom: 40px;
+}
+
+/* Grid wrapper for 4 columns */
+.cs-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  justify-items: center;
+}
+
+/* Individual card */
+.cs-card {
+  background-color: #2c2c2c;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 24px;
+  width: 100%;
+  min-height: 220px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.cs-card h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.cs-card p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Hover effect */
+.cs-card:hover {
+  transform: translateY(-8px);
+  border-left: 6px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 6px solid rgba(53, 240, 137, 0.5);
+  /* box-shadow: 0 15px 30px rgba(53, 240, 137, 0.5); */
+}
+
+/* Responsive: stack cards on smaller screens */
+@media (max-width: 1024px) {
+  .cs-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cs-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+
+
+<!-- ✅ WHY US (Stats Counters) -->
+<section class="cs-counter-section">
+  <div class="cs-counter-grid">
+    <div class="cs-counter-card">
+      <div class="cs-counter" data-target="250">0</div>
+      <p>Projects Delivered</p>
+    </div>
+    <div class="cs-counter-card">
+      <div class="cs-counter" data-target="100">0</div>
+      <p>Happy Clients</p>
+    </div>
+    <div class="cs-counter-card">
+      <div class="cs-counter" data-target="15">0</div>
+      <p>Countries Served</p>
+    </div>
+    <div class="cs-counter-card">
+      <div class="cs-counter" data-target="99">0</div>
+      <p>Uptime %</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.cs-counter-section {
+  background-color: #303030;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 60px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Grid for 4 columns */
+.cs-counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual counter card */
+.cs-counter-card {
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  padding: 30px 20px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.cs-counter-card:hover {
+  transform: translateY(-8px);
+  border-left: 6px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 6px solid rgba(53, 240, 137, 0.5);
+  /* box-shadow: 0 15px 30px rgba(53, 240, 137, 0.5); */
+}
+
+/* Counter text */
+.cs-counter-card .cs-counter {
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(53, 240, 137, 0.5);
+  margin-bottom: 10px;
+}
+
+.cs-counter-card p {
+  font-size: 16px;
+  color: #ccc;
+}
+
+/* Responsive: stack on smaller screens */
+@media (max-width: 1024px) {
+  .cs-counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cs-counter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<!-- ✅ JS (Counter animation) -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll('.cs-counter');
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / 200;
+      if(count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        requestAnimationFrame(updateCount);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+});
+</script>
+
+
+<!-- ✅ LOVED BY TEAM SECTION -->
+<section class="lbt-section">
+  <div class="lbt-container">
+    <!-- Section Header -->
+    <div class="lbt-header" style="text-align:center; margin-bottom:40px;">
+      <h2 style="color:#fff; font-size:36px; font-weight:bold;">Loved by Team</h2>
+      <p style="color:#bbb; font-size:16px;">What our clients and partners say about us</p>
+    </div>
+
+    <div class="lbt-track">
+      <div class="lbt-card">
+        <p>“Amazing support from the MASBOT team!”</p>
+        <span>- Client A</span>
+      </div>
+      <div class="lbt-card">
+        <p>“Projects delivered on time with great quality.”</p>
+        <span>- Client B</span>
+      </div>
+      <div class="lbt-card">
+        <p>“Highly skilled engineers and transparent process.”</p>
+        <span>- Client C</span>
+      </div>
+      <div class="lbt-card">
+        <p>“The team truly understands our requirements.”</p>
+        <span>- Client D</span>
+      </div>
+      <!-- Duplicate cards for continuous scroll -->
+      <div class="lbt-card">
+        <p>“Amazing support from the MASBOT team!”</p>
+        <span>- Client A</span>
+      </div>
+      <div class="lbt-card">
+        <p>“Projects delivered on time with great quality.”</p>
+        <span>- Client B</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ CSS (unchanged from previous version) -->
+<style>
+.lbt-section {
+  background-color: #303030;  
+  padding: 60px 20px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.lbt-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.lbt-track {
+  display: flex;
+  gap: 30px;
+  animation: lbt-scroll 20s linear infinite;
+}
+
+.lbt-card {
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  padding: 30px 20px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.lbt-card p {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.lbt-card span {
+  font-size: 14px;
+  color: rgba(53, 240, 137, 0.5);
+  font-weight: bold;
+}
+
+.lbt-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-left: 4px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 4px solid rgba(53, 240, 137, 0.5);
+  /* box-shadow: 0 12px 25px rgba(53, 240, 137, 0.5); */
+}
+
+@keyframes lbt-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 1024px) {
+  .lbt-track {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lbt-card {
+    min-width: 200px;
+    padding: 20px 15px;
+  }
+}
+</style>
+
+<!-- ✅ CSS -->
+<style>
+/* Section background */
+.lbt-section {
+  background-color: #1a1a1a;
+  padding: 60px 20px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Container with mask for fade effect */
+.lbt-container {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Track for continuous scroll */
+.lbt-track {
+  display: flex;
+  gap: 30px;
+  animation: lbt-scroll 20s linear infinite;
+}
+
+/* Individual cards */
+.lbt-card {
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  padding: 30px 20px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.lbt-card p {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.lbt-card span {
+  font-size: 14px;
+  color: rgba(53, 240, 137, 0.5);
+  font-weight: bold;
+}
+
+/* Hover effect */
+.lbt-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-left: 4px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 4px solid rgba(53, 240, 137, 0.5);
+  box-shadow: 0 12px 25px rgba(53, 240, 137, 0.5);
+}
+
+/* Scroll animation */
+@keyframes lbt-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .lbt-track {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lbt-card {
+    min-width: 200px;
+    padding: 20px 15px;
+  }
+}
+</style>
+
+
+  <!-- CTA -->
+<section id="contact" class="cs-contact-section">
+  <div class="cs-contact-container">
+    <!-- Left: Form -->
+    <div class="cs-contact-form">
+      <h2>Let’s build the future</h2>
+      <p>Tell us about your project. We’ll reply within 24 hours.</p>
+      <form class="cs-form">
+        <input class="cs-glass-input" placeholder="Your name" />
+        <input class="cs-glass-input" placeholder="Email" type="email" />
+        <textarea class="cs-glass-input" placeholder="Project brief..."></textarea>
+        <button type="submit" class="cs-button">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Right: Simple Info Card -->
+    <div class="cs-info-card">
+      <h3>Why work with MASBOT?</h3>
+      <p>• Senior‑level engineers only</p>
+      <p>• Transparent pricing & sprints</p>
+      <p>• Security‑first architecture</p>
+      <p>• SLA‑driven support</p>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ CSS -->
+<style>
+.cs-contact-section {
+  background-color: #303030;
+  color: #fff;
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.cs-contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center; /* Vertically center left form */
+}
+
+.cs-contact-form {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center form vertically */
+  gap: 20px;
+}
+
+.cs-contact-form h2 {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.cs-contact-form p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.cs-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cs-glass-input {
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #fff;
+  outline: none;
+}
+
+.cs-glass-input::placeholder {
+  color: #cfcfd4;
+}
+
+.cs-button {
+  background-color: rgba(53, 240, 137, 0.5);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cs-button:hover {
+  box-shadow: 0 0 15px rgba(53, 240, 137, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Right card */
+.cs-info-card {
+  flex: 1 1 300px;
+  background-color: #2c2c2c;
+  border-radius: 14px;
+  padding: 24px;
+  min-height: 280px; /* Height increased */
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cs-info-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.cs-info-card p {
+  font-size: 16px;
+  color: #ccc;
+  margin: 6px 0;
+}
+
+/* Hover effect: left + bottom orange border */
+.cs-info-card:hover {
+  transform: translateY(-6px);
+  border-left: 4px solid rgba(53, 240, 137, 0.5);
+  border-bottom: 4px solid rgba(53, 240, 137, 0.5);
+  box-shadow: 0 12px 25px rgba(53, 240, 137, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cs-contact-container {
+    flex-direction: column;
+    align-items: stretch; /* Make stacked items full width */
+  }
+
+  .cs-contact-form,
+  .cs-info-card {
+    min-height: auto;
+  }
+}
+</style>
+
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-10" style="background-color:black ;">
+    <div class="container-xl flex flex-wrap items-center justify-between gap-4">
+      <div class="font-black text-xl">MASBOT</div>
+      <div class="text-white/60 text-sm">© <span id="year"></span> MASBOT. All rights reserved.</div>
+      <div class="flex gap-3">
+        <a class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center" href="#" aria-label="Twitter">T</a>
+        <a class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center" href="#" aria-label="LinkedIn">in</a>
+        <a class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center" href="#" aria-label="GitHub">GH</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Loader + Curtain flow
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        const curtain = document.getElementById('curtain');
+        requestAnimationFrame(() => {
+          curtain.style.transform = 'translateY(0)';
+          curtain.addEventListener('transitionend', () => {
+            curtain.style.display = 'none';
+          }, { once: true });
+        });
+      }, 2200);
+    });
+
+   
+
+    // Counters
+    const counters = document.querySelectorAll('.counter');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target; const target = +el.dataset.target;
+          let current = 0; const step = Math.ceil(target / 60);
+          const int = setInterval(() => { current += step; if(current >= target){ current = target; clearInterval(int); } el.textContent = current; }, 20);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => io.observe(c));
+  </script>
+</body>
+</html>
+<!-- <div>
+  <svg aria-label="Instagram" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="29" role="img" viewBox="32 4 113 32" width="103"><title>Instagram</title><path clip-rule="evenodd" d="M37.82 4.11c-2.32.97-4.86 3.7-5.66 7.13-1.02 4.34 3.21
+     6.17 3.56 5.57.4-.7-.76-.94-1-3.2-.3-2.9 1.05-6.16 2.75-7.58.32-.27.3.1.3.78l-.06 14.46c0 3.1-.13 4.07-.36 5.04-.23.98-.6 1.64-.33 1.9.32.28 1.68-.4 2.46-1.5a8.13 8.13 0 0 0 1.33-4.58c.07-2.06.06-5.33.07-7.19
+      0-1.7.03-6.71-.03-9.72-.02-.74-2.07-1.51-3.03-1.1Zm82.13 14.48a9.42 9.42 0 0 1-.88 3.75c-.85 1.72-2.63 2.25-3.39-.22-.4-1.34-.43-3.59-.13-5.47.3-1.9 1.14-3.35 2.53-3.22 1.38.13 2.02 1.9 1.87 5.16ZM96.8 28.57c-.02 2.67-.44 5.01-1.34 5.7-1.29.96-3
+       .23-2.65-1.72.31-1.72 1.8-3.48 4-5.64l-.01 1.66Zm-.35-10a10.56 10.56 0 0 1-.88 3.77c-.85 1.72-2.64 2.25-3.39-.22-.5-1.69-.38-3.87-.13-5.25.33-1.78 1.12-3.44 2.53-3.44 1.38 0 2.06 1.5 1.87 5.14Zm-13.41-.02a9.54 9.54 0 0 1-.87 3.8c-.88 1.7-2.63 2.24-3.4-.23
+       -.55-1.77-.36-4.2-.13-5.5.34-1.95 1.2-3.32 2.53-3.2 1.38.14 2.04 1.9 1.87 5.13Zm61.45 1.81c-.33 0-.49.35-.61.93-.44 2.02-.9 2.48-1.5 2.48-.66 0-1.26-1-1.42-3-.12-1.58-.1-4.48.06-7.37.03-.59-.14-1.17-1.73-1.75-.68-.25-1.68-.62-2.17.58a29.65 29.65 0 0 0-2.08 7.14c0 .06-.08.07-.1-.
+       06-.07-.87-.26-2.46-.28-5.79 0-.65-.14-1.2-.86-1.65-.47-.3-1.88-.81-2.4-.2-.43.5-.94 1.87-1.47 3.48l-.74 2.2.01-4.88c0-.5-.34-.67-.45-.7a9.54 9.54 0 0 0-1.8-.37c-.48 0-.6.27-.6.67 0 .05-.08 4.65-.08 7.87v.46c-.27 1.48-1.14 3.49-2.09 3.49s-1.4-.84-1.4-4.68c0-2.24.07-3.21.1-4.83.02-
+       .94.06-1.65.06-1.81-.01-.5-.87-.75-1.27-.85-.4-.09-.76-.13-1.03-.11-.4.02-.67.27-.67.62v.55a3.71 3.71 0 0 0-1.83-1.49c-1.44-.43-2.94-.05-4.07 1.53a9.31 9.31 0 0 0-1.66 4.73c-.16 1.5-.1 3.01.17 4.3-.33 1.44-.96 2.04-1.64 2.04-.99 0-1.7-1.62-1.62-4.4.06-1.84.42-3.13.82-4.99.17-
+       .8.04-1.2-.31-1.6-.32-.37-1-.56-1.99-.33-.7.16-1.7.34-2.6.47 0 0 .05-.21.1-.6.23-2.03-1.98-1.87-2.69-1.22-.42.39-.7.84-.82 1.67-.17 1.3.9 1.91.9 1.91a22.22 22.22 0 0 1-3.4 7.23v-.7c-.01-3.36.03-6 .05-6.95.02-.94.06-1.63.06-1.8 0-.36-.22-.5-.66-.67-.4-.16-.86-.26-1.34-.3-.6-.05-.
+       97.27-.96.65v.52a3.7 3.7 0 0 0-1.84-1.49c-1.44-.43-2.94-.05-4.07 1.53a10.1 10.1 0 0 0-1.66 4.72c-.15 1.57-.13 2.9.09 4.04-.23 1.13-.89 2.3-1.63 2.3-.95 0-1.5-.83-1.5-4.67 0-2.24.07-3.21.1-4.83.02-.94.06-1.65.06-1.81 0-.5-.87-.75-1.27-.85-.42-.1-.79-.13-1.06-.1-.37.02-.63.35-.63.6v.56a3.7 3.7 0 0 0-1.84-1.49c-1.44-.43-2.93-.04-4.07 1.53-.75 1.03-1.35 2.17-1.66 4.7a15.8 15.8 0 0 0-.12 2.04c-.3 1.81-1.61 3.9-2.68 3.9-.63 0-1.23-1.21-1.23-3.8 0-3.45.22-8.36.25-8.83l1.62-.03c.68 0 1.29.01 2.19-.04.45-.02.88-1.64.42-1.84-.21-.09-1.7-.17-2.3-.18-.5-.01-1.88-.11-1.88-.11s.13-3.26.16-3.6c.02-.3-.35-.44-.57-.53a7.77 7.77 0 0 0-1.53-.44c-.76-.15-1.1 0-1.17.64-.1.97-.15 3.82-.15 3.82-.56 0-2.47-.11-3.02-.11-.52 0-1.08 2.22-.36 2.25l3.2.09-.03 6.53v.47c-.53 2.73-2.37 4.2-2.37 4.2.4-1.8-.42-3.15-1.87-4.3-.54-.42-1.6-1.22-2.79-2.1 0 0 .69-.68 1.3-2.04.43-.96.45-2.06-.61-2.3-1.75-.41-3.2.87-3.63 2.25a2.61 2.61 0 0 0 .5 2.66l.15.19c-.4.76-.94 1.78-1.4 2.58-1.27 2.2-2.24 3.95-2.97 3.95-.58 0-.57-1.77-.57-3.43 0-1.43.1-3.58.19-5.8.03-.74-.34-1.16-.96-1.54a4.33 4.33 0 0 0-1.64-.69c-.7 0-2.7.1-4.6 5.57-.23.69-.7 1.94-.7 1.94l.04-6.57c0-.16-.08-.3-.27-.4a4.68 4.68 0 0 0-1.93-.54c-.36 0-.54.17-.54.5l-.07 10.3c0 .78.02 1.69.1 2.09.08.4.2.72.36.91.15.2.33.34.62
+    .4.28.06 1.78.25 1.86-.32.1-.69.1-1.43.89-4.2 1.22-4.31 2.82-6.42 3.58-7.16.13-.14.28-.14.27.07l-.22 5.32c-.2 5.37.78 6.36 2.17 6.36 1.07 0 2.58-1.06 4.2-3.74l2.7-4.5 1.58 1.46c1.28 1.2 1.7 2.36 1.42 3.45-.21.83-1.02 1.7-2.44.86-.42-.25-.6-.44-1.01-.71-.23-.15-.57-.2-.78-.04-.53.4-.84.92-1.01 1.55-.17.61.45.94 1.09 1.22.55.25 1.74.47 2.5.5 2.94.1 5.3-1.42 6.94-5.34.3 3.38 1.55 5.3 3.72 5.3 1.45 0 2.91-1.88 3.55-3.72.18.75.45 1.4.8 1.96 1.68 2.65 4.93 2.07 6.56-.18.5-.69.58-.94.58-.94a3.07 3.07 0 0 0 2.94 2.87c1.1 0 2.23-.52 3.03-2.31.09.2.2.38.3.56 1.68 2.65 4.93 2.07 6.56-.18l.2-.28.05 1.4-1.5 1.37c-2.52 2.3-4.44 4.05-4.58 6.09-.18 2.6 1.93 3.56 3.53 3.69a4.5 4.5 0 0 0 4.04-2.11c.78-1.15 1.3-3.63 1.26-6.08l-.06-3.56a28.55 28.55 0 0 0 5.42-9.44s.93.01 1.92-.05c.32-.02.41.04.35.27-.07.28-1.25 4.84-.17 7.88.74 2.08 2.4 2.75 3.4 2.75 1.15 0 2.26-.87 2.85-2.17l.23.42c1.68 2.65 4.92 2.07 6.56-.18.37-.5.58-.94.58-.94.36 2.2 2.07 2.88 3.05 2.88 1.02 0 2-.42 2.78-2.28.03.82.08 1.49.16 1.7.05.13.34.3.56.37.93.34 1.88.18 2.24.11.24-.05.43-.25.46-.75.07-1.33.03-3.56.43-5.21.67-2.79 1.3-3.87 1.6-4.4.17-.3.36-.35.37-.03.01.64.04 2.52.3 5.05.2 1.86.46 2.96.65 3.3.57 1 1.27 1.05 1.83 1.05.36 0 1.12-.1 1.05-.73-.03-.31.02-2.22.7-4.96.43-1.79 1.15-3.4 1.41-4 .1-.21.15-.04.15 0-.06 1.22-.18 5.25.32 7.46.68 2.98 2.65 3.32 3.34 3.32 1.47 0 2.67-1.12 3.07-4.05.1-.7-.05-1.25-.48-1.25Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div> -->
