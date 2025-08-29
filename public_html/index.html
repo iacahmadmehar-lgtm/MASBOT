@@ -61,7 +61,7 @@ body::after {
   right: 0;
   width: 300px; /* width of the shadow */
   height: 100%;
-  background: linear-gradient(to left, rgba(90, 248, 134, 0.5), transparent); /* dark green fading to transparent */
+  background: linear-gradient(to left, #8af8cc, transparent); /* dark green fading to transparent */
   pointer-events: none; /* allow clicks through shadow */
 }
 
@@ -145,8 +145,7 @@ body::after {
 <!-- Top Navbar -->
 <!-- Navbar -->
 <!-- Navbar -->
-<div id="navbar" class="w-full flex justify-between items-center p-4 z-50 transition-all duration-300 relative"
-     style="position: fixed; top:0; left:0; background-color: transparent;">
+<div id="navbar" class="w-full flex justify-between items-center p-4 z-50 transition-all duration-300 fixed top-0 left-0 bg-transparent">
 
   <!-- Overlay lines -->
   <div class="absolute inset-0 flex pointer-events-none">
@@ -167,19 +166,44 @@ body::after {
 
   <!-- Left: Logo -->
   <div class="text-black relative z-10">
-    <h1 style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; transform: scaleX(1.5); margin:0;margin-left: 30px;">
-      MASBOT
-    </h1>
+   <img style="width: 50px;margin-left: 30px;" src="logo.png" alt="">
   </div>
 
-  <!-- Right: Navigation Buttons -->
-  <div class="flex gap-6 items-center pr-6 relative z-10">
+  <!-- Right: Navigation Buttons Desktop -->
+  <div class="hidden md:flex gap-6 items-center pr-6 relative z-10">
     <a href="#" class="nav-link">About</a>
     <a href="#" class="nav-link">Services</a>
     <a href="#" class="nav-link">Core Values</a>
     <a href="Contect Us.html" class="nav-link">Contact</a>
   </div>
+
+  <!-- Hamburger button mobile -->
+  <div class="md:hidden flex items-center z-10">
+    <button id="menu-btn" class="focus:outline-none">
+      <div class="w-6 h-0.5 bg-white mb-1"></div>
+      <div class="w-6 h-0.5 bg-white mb-1"></div>
+      <div class="w-6 h-0.5 bg-white"></div>
+    </button>
+  </div>
 </div>
+
+<!-- Mobile Hamburger + Menu -->
+<div class="md:hidden relative z-10">
+  <button id="menu-btn" class="focus:outline-none flex flex-col gap-1 p-2">
+    <span class="w-6 h-0.5 bg-white"></span>
+    <span class="w-6 h-0.5 bg-white"></span>
+    <span class="w-6 h-0.5 bg-white"></span>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 w-40 bg-black/90 rounded-md flex flex-col items-start py-2 space-y-2">
+    <a href="#" class="nav-link text-white px-4 py-1 w-full">About</a>
+    <a href="#" class="nav-link text-white px-4 py-1 w-full">Services</a>
+    <a href="#" class="nav-link text-white px-4 py-1 w-full">Core Values</a>
+    <a href="Contect Us.html" class="nav-link text-white px-4 py-1 w-full">Contact</a>
+  </div>
+</div>
+
 
 <style>
   .nav-link {
@@ -211,16 +235,16 @@ body::after {
 </style>
 
 <script>
+  // Scroll hide/show navbar
   let lastScrollTop = 0;
   const navbar = document.getElementById("navbar");
 
   window.addEventListener("scroll", function() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Keep navbar fully transparent
+    // Keep navbar transparent
     navbar.style.backgroundColor = "transparent";
 
-    // Hide/Show navbar on scroll
     if (scrollTop > lastScrollTop) {
       navbar.style.transform = "translateY(-100%)";
     } else {
@@ -229,7 +253,17 @@ body::after {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   }, false);
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
 </script>
+
 
 
 
@@ -293,11 +327,11 @@ body::after {
 
     <!-- Thesis Buttons Row -->
  <div class="col-span-2 flex gap-4 mt-0" style="margin-top: -90px;">
-  <a href="#" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
+  <a href="Portfolio.html" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
     Portfolio<span class="text-3xl">›</span>
   </a>
   <a href="Contect Us.html" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
-    Contect Us <span class="text-3xl">›</span>
+    Contact Us <span class="text-3xl">›</span>
   </a>
 </div>
 
@@ -552,22 +586,25 @@ observer.observe(document.querySelector('.section'));
         </div>
       </article>
 
+
       <article class="service-card">
         <div class="tags">
-          <span>N.003</span>
-          <span>AI</span>
-          <span>ML</span>
+          <span>N.007</span>
+          <span>Networking</span>
+          <span>IT</span>
         </div>
         <div class="logo">
-          <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="AI" />
+          <img src="https://img.icons8.com/color/96/network.png" alt="Networking" />
         </div>
-        <h3>Artificial Intelligence</h3>
-        <p class="location">UK, 2022</p>
+        <h3>Networking</h3>
+        <p class="location">Australia, 2023</p>
         <div class="bottom">
-          <span>AI</span>
+          <span>Networking</span>
           <button class="arrow-btn">›</button>
         </div>
       </article>
+
+     
 
       <!-- Empty column -->
       <div></div>
@@ -589,63 +626,9 @@ observer.observe(document.querySelector('.section'));
           <button class="arrow-btn">›</button>
         </div>
       </article>
+      
 
-      <article class="service-card">
-        <div class="tags">
-          <span>N.005</span>
-          <span>Cloud</span>
-          <span>Infra</span>
-        </div>
-        <div class="logo">
-          <img src="https://img.icons8.com/color/96/cloud.png" alt="Cloud" />
-        </div>
-        <h3>Cloud Solutions</h3>
-        <p class="location">Canada, 2019</p>
-        <div class="bottom">
-          <span>Cloud</span>
-          <button class="arrow-btn">›</button>
-        </div>
-      </article>
-
-      <article class="service-card">
-        <div class="tags">
-          <span>N.006</span>
-          <span>Cyber</span>
-          <span>Security</span>
-        </div>
-        <div class="logo">
-          <img src="https://img.icons8.com/color/96/cyber-security.png" alt="Security" />
-        </div>
-        <h3>Cyber Security</h3>
-        <p class="location">India, 2018</p>
-        <div class="bottom">
-          <span>Security</span>
-          <button class="arrow-btn">›</button>
-        </div>
-      </article>
-
-      <!-- Empty column -->
-      <div></div>
-
-      <!-- Row 3: 2 cards (Networking + ERP) + empty column -->
-      <article class="service-card">
-        <div class="tags">
-          <span>N.007</span>
-          <span>Networking</span>
-          <span>IT</span>
-        </div>
-        <div class="logo">
-          <img src="https://img.icons8.com/color/96/network.png" alt="Networking" />
-        </div>
-        <h3>Networking</h3>
-        <p class="location">Australia, 2023</p>
-        <div class="bottom">
-          <span>Networking</span>
-          <button class="arrow-btn">›</button>
-        </div>
-      </article>
-
-      <article class="service-card">
+        <article class="service-card">
         <div class="tags">
           <span>N.008</span>
           <span>ERP</span>
@@ -662,6 +645,50 @@ observer.observe(document.querySelector('.section'));
         </div>
       </article>
 
+       <article class="service-card">
+        <div class="tags">
+          <span>N.003</span>
+          <span>AI</span>
+          <span>ML</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="AI" />
+        </div>
+        <h3>Artificial Intelligence</h3>
+        <p class="location">UK, 2022</p>
+        <div class="bottom">
+          <span>AI</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+     
+    
+
+      <!-- Empty column -->
+      <div></div>
+
+      <!-- Row 3: 2 cards (Networking + ERP) + empty column -->
+      
+
+     <article class="service-card">
+        <div class="tags">
+          <span>N.005</span>
+          <span>Cloud</span>
+          <span>Infra</span>
+        </div>
+        <div class="logo">
+          <img src="https://img.icons8.com/color/96/cloud.png" alt="Cloud" />
+        </div>
+        <h3>Cloud Solutions</h3>
+        <p class="location">Canada, 2019</p>
+        <div class="bottom">
+          <span>Cloud</span>
+          <button class="arrow-btn">›</button>
+        </div>
+      </article>
+
+
       <!-- Empty column -->
       <div></div>
 
@@ -671,10 +698,6 @@ observer.observe(document.querySelector('.section'));
     </div>
   </div>
 </section>
-
-
-
-
 
 <!-- CSS -->
 <style>
@@ -804,195 +827,58 @@ observer.observe(document.querySelector('.section'));
 
 
 
-<!-- core values  -->
 
-
-<section id="core-values" class="cv-section">
-  <div class="cv-stage">
-
-    <h2 class="cv-heading" style="font-size: 100px;text-align: center;">Our Core Values</h2>
-    <div class="cv-circle"></div>
-    <div class="cv-cards-track">
-      <div class="cv-card">⚡ Innovation</div>
-      <div class="cv-card">🤝 Integrity</div>
-      <div class="cv-card">🚀 Excellence</div>
-      <div class="cv-card">🌍 Sustainability</div>
-      <div class="cv-card">💡 Creativity</div>
-      <div class="cv-card">📈 Growth</div>
-    </div>
-  </div>
-</section>
-
-<style>
-.cv-section {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-}
-.cv-stage {
-  position: relative;
-  height: 100%;
-}
-.cv-circle {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.1);
-  width: 240px; height: 240px;
-  border-radius: 50%;
-  background: rgba(53, 240, 137, 0.5);
-  box-shadow: 0 0 80px rgba(53, 240, 137, 0.5), inset 0 0 40px rgba(0,0,0,.25);
-  z-index: 1;
-}
-.cv-cards-track {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  z-index: 2;
-}
-.cv-card {
-  min-width: 220px;
-  height: 280px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; font-weight: 700;
-  color: #fff;
-  background: black;
-  border: 1px solid rgba(12, 12, 12, 0.4);
-  border-radius: 16px;
-  box-shadow: 0 0 25px rgba(14, 14, 14, 0.3);
-  backdrop-filter: blur(6px);
-}
-</style>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-const track = document.querySelector(".cv-cards-track");
-const firstCard = document.querySelector(".cv-card");
-
-let tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".cv-section",
-    start: "top top",
-    end: "+=2000",
-    scrub: true,
-    pin: true,
-    anticipatePin: 1
-  }
-});
-
-// Step 1: circle zoom slow
-tl.to(".cv-circle", { scale: 20, ease: "power1.inOut", duration: 4 })
-
-  // Step 2: cards fade in jab circle ~70% fill kare
-  .to(track, { opacity: 1, duration: 0.8 }, "-=2.5")  
-  // 👆 yahan "-=2.5" ka matlab hai ke circle zoom complete hone se
-  // lagbhag 70% pehle hi cards visible ho jayenge
-
-  // Step 3: horizontal scroll
-  .to(track, {
-    x: () => {
-      const offset = (window.innerWidth - firstCard.offsetWidth) / 2;
-      return -(track.scrollWidth - window.innerWidth + offset);
-    },
-    ease: "power1.inOut",
-    duration: 4
-  }, "<");
-</script>
-
-
-<!-- projects  -->
-
-
-
-<section id="my-projects" class="relative bg-#303030;-900">
+<!-- Projects Section -->
+<section id="my-projects" class="relative bg-[#303030]">
   <div class="sticky top-0 h-screen overflow-hidden">
     <h1 class="text-center text-5xl text-white mb-16 sticky top-0 z-10" style="margin-top: -50px;">Projects</h1>
 
-    <div class="relative w-full" id="projectsContainer" style="height: 400px;">
-      <!-- Project 1 -->
-      <article class="project absolute top-0 left-0 w-full h-full flex items-center justify-between p-8">
+    <div class="relative w-full h-full" id="projectsContainer">
+      <!-- Project 01 -->
+      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#111]" style="margin-top: -100px;">
         <div class="flex flex-col gap-4 text-white w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 01</span>
           <h2 class="text-4xl font-bold">Institute for Art and Culture (IAC)</h2>
-          <p class="text-gray-300">Developed a fully custom, responsive website for the Institute for Art and Culture (IAC).brand
-Designed with a modern and clean UI, optimized for speed and user experience. <br>
-Implemented dynamic content management with full backend control using Node.js & MongoDB. <br>
-Created over 140 responsive pages covering courses, events, faculty, and student resources. <br>
-Integrated advanced features like CMS, dashboards, and interactive galleries for seamless navigation. <br>
-Delivered a highly professional, scalable, and visually appealing platform for students and faculty.</p> <br>
-heck the live website: https://www.iac.edu.pk
+          <p class="text-gray-300">Custom responsive website for IAC with Node.js, MongoDB, CMS, dashboards, galleries etc.</p>
         </div>
-        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
-  <img src="iac.png" class="w-full h-full object-contain rounded-2xl">
-</div>
-
+        <!-- Right side with 4 images -->
+        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
+          <img src="iac.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="iac2.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="iac3.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="iac4.webp" class="w-full h-full object-cover rounded-xl">
+        </div>
       </article>
 
-      <!-- Project 2 -->
-      <article class="project absolute top-0 left-full w-full h-full flex items-center justify-between p-8" style="background-color: #000;">
+      <!-- Project 02 -->
+      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#000]" style="margin-top: -100px;">
         <div class="flex flex-col gap-4 text-white w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 02</span>
           <h2 class="text-4xl font-bold">J Brothers</h2>
-          <p class="text-gray-300">Developed a fully custom website for J Brothers, showcasing multiple business verticals including IT Services, Trainings, and Construction. <br>
-Designed with a modern, responsive, and user-friendly interface for seamless navigation across all devices. <br>
-Implemented a dynamic backend with Node.js and MongoDB, enabling real-time content management. <br>
-Built multi-page layouts, including student onboarding, course registration, and admin CMS for easy management. <br>
-Integrated interactive features and animations to enhance user engagement and brand presentation. <br>
-Delivered a professional, scalable, and visually appealing platform tailored to the client’s diverse business needs. <br>
-
-Check the live website: https://www.jbrothers.com</p>
+          <p class="text-gray-300">Custom multi-vertical website with backend CMS, responsive layouts and animations.</p>
         </div>
-        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
-  <img src="j bros.png" class="w-full h-full object-contain rounded-2xl">
-</div>
-
+        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
+          <img src="j bros.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="jbros2.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="jbros3.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="jbros4.webp" class="w-full h-full object-cover rounded-xl">
+        </div>
       </article>
 
-      <!-- Project 3 -->
-      <article class="project absolute top-0 left-[200%] w-full h-full flex items-center justify-between p-8" style="background-color: #111;">
+      <!-- Project 03 -->
+      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#222]" style="margin-top: -100px;">
         <div class="flex flex-col gap-4 text-white w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 03</span>
           <h2 class="text-4xl font-bold">Istrahat Waheed</h2>
-          <p class="text-gray-300">Developed a custom website for Fine Arts, highlighting the institute’s work and students’ creative projects.
-Designed with a modern, visually rich interface to showcase artwork and student portfolios effectively.
-Implemented dynamic galleries and interactive sections for smooth browsing of student and faculty work.
-Built a responsive multi-page layout with About, Work, and Student Projects sections for complete information.
-Integrated animations and hover effects to enhance visual appeal and user engagement.
-Delivered a professional, creative, and engaging platform to promote Fine Arts education and student talent.</p>
+          <p class="text-gray-300">Creative fine arts website with galleries, portfolios and animations.</p>
         </div>
-        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
-          <img src="istrahat.png" class="w-full h-full object-cover rounded-2xl">
+        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
+          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
+          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
         </div>
       </article>
-
-      <!-- Project 4 -->
-      <article class="project absolute top-0 left-[300%] w-full h-full flex items-center justify-between p-8" style="background-color: #222;">
-        <div class="flex flex-col gap-4 text-white w-1/2">
-          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 04</span>
-          <h2 class="text-4xl font-bold">Typing Master Web App</h2>
-          <p class="text-gray-300">On-screen keyboard, WPM/accuracy, lessons lock/unlock & result analytics.</p>
-        </div>
-        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover rounded-2xl">
-        </div>
-      </article>
-
-      <!-- Project 5 -->
-      <article class="project absolute top-0 left-[400%] w-full h-full flex items-center justify-between p-8" style="background-color: #333;">
-        <div class="flex flex-col gap-4 text-white w-1/2">
-          <span class="uppercase text-sm text-gray-400 tracking-widest">Project 05</span>
-          <h2 class="text-4xl font-bold">E-Learning Platform</h2>
-          <p class="text-gray-300">Interactive courses, progress tracking, quizzes, and certificate generation with gamification.</p>
-        </div>
-        <div class="w-1/2 h-[60vh] overflow-hidden rounded-2xl">
-          <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover rounded-2xl">
-        </div>
-      </article>
-
     </div>
   </div>
 </section>
@@ -1000,22 +886,27 @@ Delivered a professional, creative, and engaging platform to promote Fine Arts e
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-const container = document.getElementById("projectsContainer");
-const panels = gsap.utils.toArray("#projectsContainer > .project");
+// Sab projects select karo
+const projects = gsap.utils.toArray("#projectsContainer .project");
 
-gsap.to(container, {
-  xPercent: -100 * (panels.length - 1),
-  ease: "none",
+// Timeline banayenge jo ek-ek project ko right se slide kare
+let tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#my-projects",
-    pin: true,              // freeze vertical scroll
-    scrub: 1,
-    end: () => "+=" + (panels.length * window.innerWidth),
-    snap: 1 / (panels.length - 1), // smooth one-by-one scroll
-    invalidateOnRefresh: true
+    start: "top top",
+    end: "+=" + (projects.length * window.innerHeight),
+    scrub: true,
+    pin: true,
   }
 });
+
+// Har project ko ek-ek karke slide in karna
+projects.forEach((project, i) => {
+  gsap.set(project, { xPercent: 100 });
+  tl.to(project, { xPercent: 0, duration: 1 }, i);
+});
 </script>
+
 
 
 
@@ -1030,15 +921,49 @@ gsap.to(container, {
 <!-- 🔶 Section Start -->
 <section class="founders-section">
   <div class="founders-left">
-    <div class="shape" data-founder="near"></div>
-    <div class="shape" data-founder="polkadot"></div>
-    <div class="shape" data-founder="sorare"></div>
-    <div class="shape" data-founder="immutable"></div>
-  </div>
+  <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"
+       style="margin-top:-50px;"> <!-- 👈 thora upar move karne ke liye -->
+       
+    <!-- Outer Circle Border (green now) -->
+    <circle cx="200" cy="200" r="190" fill="none" stroke="#35F089" stroke-width="3"/>
+
+    <!-- Top Left Shape -->
+    <path class="shape" data-founder="near"
+          d="M200,200 
+             Q200,80 100,80 
+             L80,100 
+             Q80,200 200,200 Z" 
+          fill="none" stroke="#35F089" stroke-width="3"/>
+
+    <!-- Top Right Shape -->
+    <path class="shape" data-founder="polkadot"
+          d="M200,200 
+             Q200,80 300,80 
+             L320,100 
+             Q320,200 200,200 Z" 
+          fill="none" stroke="#35F089" stroke-width="3"/>
+
+    <!-- Bottom Left Shape -->
+    <path class="shape" data-founder="sorare"
+          d="M200,200 
+             Q200,320 100,320 
+             L80,300 
+             Q80,200 200,200 Z" 
+          fill="none" stroke="#35F089" stroke-width="3"/>
+
+    <!-- Bottom Right Shape -->
+    <path class="shape" data-founder="immutable"
+          d="M200,200 
+             Q200,320 300,320 
+             L320,300 
+             Q320,200 200,200 Z" 
+          fill="none" stroke="#35F089" stroke-width="3"/>
+  </svg>
+</div>
+
 
   <div class="founders-right">
-    <h2>About MASBOT 
-</h2>
+    <h2>About MASBOT</h2>
     <div class="founder-tabs">
       <span data-founder="near" class="active">STORY</span>
       <span data-founder="polkadot">VISION</span>
@@ -1053,9 +978,8 @@ gsap.to(container, {
 </section>
 <!-- 🔶 Section End -->
 
-
 <style>
-.founders-section {
+  .founders-section {
   display: flex;
   background: #303030;
   color: white;
@@ -1063,26 +987,23 @@ gsap.to(container, {
   padding: 50px;
 }
 
-/* Left side shapes */
+/* Left side svg */
 .founders-left {
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  justify-items: center;
 }
 
+/* Shapes style */
 .shape {
-  width: 150px;
-  height: 150px;
-  border: 2px solid rgba(53, 240, 137, 0.5);
-  clip-path: path("M75 0 C115 0 150 35 150 75 C150 115 115 150 75 150 C35 150 0 115 0 75 C0 35 35 0 75 0 Z M75 30 L120 75 L75 120 L30 75 Z");
-  transition: all 0.3s ease;
+  cursor: pointer;
 }
 .shape:hover,
 .shape.active {
-  background: rgba(53, 240, 137, 0.5);
+  fill: white;
+  stroke: #35F089;   /* green hi rahe */
+  stroke-width: 4;
 }
 
 /* Right side text */
@@ -1104,7 +1025,7 @@ gsap.to(container, {
   position: relative;
 }
 .founder-tabs span.active {
-  color: rgba(53, 240, 137, 0.5);
+  color: #35F089;
 }
 .founder-tabs span.active::after {
   content: "";
@@ -1113,29 +1034,24 @@ gsap.to(container, {
   left: 0;
   width: 100%;
   height: 2px;
-  background: rgba(53, 240, 137, 0.5);
+  background: #35F089;
 }
 #founder-text {
   font-size: 18px;
   line-height: 1.6;
 }
-</style>
 
+</style>
 <script>
 const texts = {
-  near: `"We’re not just developers, marketers, or engineers — we’re bridge-builders between vision and reality. MASBOT was founded on the belief that tech should empower, not intimidate.
-
-What started as a team of three — a strategist, a developer, and a DevOps engineer — has already delivered over a dozen projects for clients in Pakistan and abroad. And we’re just getting started.
-."`,
-  polkadot: `"To be the global tech partner businesses trust to scale without limits." – Gavin`,
-  sorare: `"To deliver bold, beautifully designed, and flawlessly engineered solutions that bring enterprise-level innovation within reach for every business." – Nicolas`,
-  immutable: `Simplicity in design, power in performance
-Client-first thinking, always
-Creativity as a core advantage – Robbie`
+  near: `"We’re not just developers, marketers, or engineers — we’re bridge-builders between vision and reality. MASBOT was founded on the belief that tech should empower, not intimidate.<br><br>
+What started as a team of three — a strategist, a developer, and a DevOps engineer — has already delivered over a dozen projects for clients in Pakistan and abroad. And we’re just getting started."`,
+  polkadot: `"To be the global tech partner businesses trust to scale without limits."`,
+  sorare: `"To deliver bold, beautifully designed, and flawlessly engineered solutions that bring enterprise-level innovation within reach for every business."`,
+  immutable: `Simplicity in design, power in performance<br>
+• Client-first thinking, always<br>
+• Creativity as a core advantage`
 };
-
-
-
 
 document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
   el.addEventListener("mouseenter", () => {
@@ -1150,10 +1066,11 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
     document.querySelector(`.founder-tabs span[data-founder="${founder}"]`).classList.add("active");
 
     // Text update
-    document.getElementById("founder-text").textContent = texts[founder];
+    document.getElementById("founder-text").innerHTML = texts[founder];
   });
 });
 </script>
+
 
 
 
@@ -1172,7 +1089,7 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
     <!-- Card 1 -->
     <div class="team-card">
       <div class="img-box">
-        <img src="https://via.placeholder.com/300x300" alt="Mian Ahmad Shafiqe">
+        <img src="Ahmad shafiqe.jpeg" alt="Mian Ahmad Shafiqe">
       </div>
       <h5 class="mt-3">Mian Ahmad Shafiqe</h5>
       <p>Founder & Strategist<br>Vision-driver. Big-picture thinker.</p>
@@ -1181,9 +1098,9 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
     <!-- Card 2 -->
     <div class="team-card">
       <div class="img-box">
-        <img src="https://via.placeholder.com/300x300" alt="Asad">
+        <img src="Asad profile.png" alt="Asad">
       </div>
-      <h5 class="mt-3">Asad</h5>
+      <h5 class="mt-3">Muhammad Asad</h5>
       <p>Web Developer & UI Craftsman<br>Turns ideas into digital art.</p>
     </div>
 
@@ -1192,7 +1109,7 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
       <div class="img-box">
         <img src="https://via.placeholder.com/300x300" alt="Vakar">
       </div>
-      <h5 class="mt-3">Vakar</h5>
+      <h5 class="mt-3">Waqar</h5>
       <p>DevOps & Microsoft Solutions Expert<br>Keeps businesses running seamlessly.</p>
     </div>
 
@@ -1209,8 +1126,8 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
       <div class="img-box">
         <img src="https://via.placeholder.com/300x300" alt="Member 4">
       </div>
-      <h5 class="mt-3">Member 4</h5>
-      <p>Role / Expertise<br>Short description here.</p>
+      <h5 class="mt-3">Muhammad Ahmad Anjum</h5>
+      <p>System Administrator | IT Infrastructure & Network Specialist</p>
     </div>
 
     <!-- Card 5 -->
@@ -1266,8 +1183,8 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
   flex: 1 1 calc(25% - 20px); /* 4 per row */
   max-width: calc(25% - 20px);
   background: #1f1f1f;
-  border-radius: 12px;
-  padding: 20px 15px;
+  border-radius: 10px;
+  padding: 15px 10px;   /* padding kam kar di */
   text-align: center;
   color: #fff;
   transition: all 0.3s ease;
@@ -1275,20 +1192,34 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
 }
 
 .team-card .img-box {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto;
-  overflow: hidden;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  border: 3px solid #2a2a2a;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+
+  margin: 0 auto;   /* 👉 card ke andar perfectly horizontal center */
 }
+
 
 .team-card .img-box img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  object-fit: contain;
 }
+
+
+
+
+.team-card .img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* full image show hogi, cut nahi hogi */
+}
+
 
 .team-card:hover {
   transform: translateY(-6px);
@@ -1297,7 +1228,7 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
 }
 
 .team-card:hover .img-box img {
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 </style>
 

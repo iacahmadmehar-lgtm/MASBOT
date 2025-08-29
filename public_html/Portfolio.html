@@ -3,83 +3,257 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Page</title>
+  <title>MASBOT Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    .section-divider {
-      border-top: 2px solid #ddd;
-      margin: 40px 0;
+    body, html {
+      margin:0;
+      padding:0;
+      position: relative;
+      min-height: 100%;
+      overflow-x: hidden;
+      background-color: #303030;;
+
     }
+    body, html {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: #303030; /* Correct single semicolon */
+}
+
+
+    /* Navbar */
+    #navbar {
+      transition: all 0.3s ease;
+      z-index: 50;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .nav-link {
+      position: relative;
+      color: white;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover {
+      color: rgba(53, 240, 137, 0.7);
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: rgba(53, 240, 137, 0.5);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Full-page 4-column grid lines */
+    .grid-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-between;
+      z-index: 0;
+    }
+    .grid-lines div {
+      flex: 1;
+      position: relative;
+    }
+    .grid-lines div:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      border-left: 1px solid #888; /* thin gray line */
+    }
+
+    /* Horizontal lines for navbar */
+    .navbar-top-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid #888; /* thin gray line */
+      z-index: 0;
+    }
+    .navbar-bottom-line {
+      position: fixed;
+      top: 80px; /* approximate navbar height */
+      left: 0;
+      width: 100%;
+      border-top: 1px solid #888; /* thin gray line */
+      z-index: 0;
+    }
+
+    /* Project cards */
     .project-card {
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 20px;
-      text-align: center;
       transition: all 0.3s ease;
+      background: #fff;
+      z-index:1;
     }
+    /* Hover effect: only left and bottom border green */
     .project-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-left: 6px solid #35F089; /* green left border */
+      border-bottom: 6px solid #35F089; /* green bottom border */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      background: rgba(0,0,0,0.9);
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      width: 200px;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      padding: 10px 0;
+      z-index: 60;
+    }
+    #mobile-menu a {
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+    #mobile-menu a:hover {
+      background: rgba(53,240,137,0.2);
     }
   </style>
 </head>
-<body>
-  <div class="container py-5">
+<body class="bg-dark text-white">
 
-    <!-- Section 1: Heading -->
+  <!-- Horizontal lines for navbar -->
+  <div class="navbar-top-line"></div>
+  <div class="navbar-bottom-line"></div>
+
+  <!-- Full-page vertical 4-column grid lines -->
+  <div class="grid-lines">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a style="text-decoration: none;color: black;" href="index.html">
+    <h1 style="font-family: 'Inter', sans-serif; font-weight:600; transform: scaleX(1.5);font-size: 20px; z-index:1;">MASBOT</h1>
+</a>
+    <div class="d-none d-md-flex gap-4 me-3">
+      <a href="#" class="nav-link">About</a>
+      <a href="#" class="nav-link">Services</a>
+      <a href="#" class="nav-link">Core Values</a>
+      <a href="Contect Us.html" class="nav-link">Contact</a>
+    </div>
+
+    <div class="d-md-none me-3">
+      <button id="menu-btn" class="border-0 bg-transparent">
+        <div class="w-6 h-0.5 bg-white mb-1"></div>
+        <div class="w-6 h-0.5 bg-white mb-1"></div>
+        <div class="w-6 h-0.5 bg-white"></div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="d-none flex-column position-fixed top-0 start-0 w-100 h-100 bg-black/90 z-60">
+    <a href="#" class="nav-link text-white p-3">About</a>
+    <a href="#" class="nav-link text-white p-3">Services</a>
+    <a href="#" class="nav-link text-white p-3">Core Values</a>
+    <a href="Contect Us.html" class="nav-link text-white p-3">Contact</a>
+  </div>
+
+  <!-- Portfolio Section -->
+  <div class="container py-5 mt-5 position-relative" style="z-index:1;">
     <section class="text-center mb-5">
       <h1 class="display-4 fw-bold">Our Portfolio</h1>
+      <p class="lead">High-quality IT solutions delivered with innovation, creativity & excellence.</p>
     </section>
 
-    <div class="section-divider"></div>
-
-    <!-- Section 2: About Company -->
-    <section class="text-center mb-5">
-      <p class="lead">
-        We are a passionate team delivering high-quality IT solutions across multiple domains.
-        Our work reflects innovation, creativity, and a commitment to excellence.
-      </p>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- Section 3: Projects -->
-    <section class="mb-5">
-      <div class="row g-4">
-        <div class="col-md-3">
-          <div class="project-card">
-            <h5>Project 1</h5>
-            <p>Short description here...</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="project-card">
-            <h5>Project 2</h5>
-            <p>Short description here...</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="project-card">
-            <h5>Project 3</h5>
-            <p>Short description here...</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="project-card">
-            <h5>Project 4</h5>
-            <p>Short description here...</p>
-          </div>
+    <!-- Cards -->
+    <div class="row g-4 position-relative">
+      <div class="col-12 col-md-3">
+        <div class="project-card h-100 d-flex flex-column justify-content-between">
+          <h5 class="fw-bold">Project 1</h5>
+          <p class="text-muted">Short description of Project 1.</p>
+          <a href="#" class="btn btn-success mt-auto">View Details</a>
         </div>
       </div>
-    </section>
+      <div class="col-12 col-md-3">
+        <div class="project-card h-100 d-flex flex-column justify-content-between">
+          <h5 class="fw-bold">Project 2</h5>
+          <p class="text-muted">Short description of Project 2.</p>
+          <a href="#" class="btn btn-success mt-auto">View Details</a>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="project-card h-100 d-flex flex-column justify-content-between">
+          <h5 class="fw-bold">Project 3</h5>
+          <p class="text-muted">Short description of Project 3.</p>
+          <a href="#" class="btn btn-success mt-auto">View Details</a>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="project-card h-100 d-flex flex-column justify-content-between">
+          <h5 class="fw-bold">Project 4</h5>
+          <p class="text-muted">Short description of Project 4.</p>
+          <a href="#" class="btn btn-success mt-auto">View Details</a>
+        </div>
+      </div>
+    </div>
 
-    <div class="section-divider"></div>
-
-    <!-- Section 4: Footer/Extra -->
-    <section class="text-center">
+    <!-- Footer -->
+    <footer class="text-center mt-5">
       <p class="text-muted">© 2025 MASBOT. All rights reserved.</p>
-    </section>
-
+    </footer>
   </div>
+
+  <script>
+    // Scroll hide/show navbar
+    let lastScrollTop = 0;
+    const navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", function() {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      navbar.style.backgroundColor = "transparent";
+      if (scrollTop > lastScrollTop) {
+        navbar.style.transform = "translateY(-100%)";
+      } else {
+        navbar.style.transform = "translateY(0)";
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+  </script>
 </body>
 </html>
