@@ -61,7 +61,7 @@ body::after {
   right: 0;
   width: 300px; /* width of the shadow */
   height: 100%;
-  background: linear-gradient(to left, #8af8cc, transparent); /* dark green fading to transparent */
+  background: linear-gradient(to left, #8feec8, transparent); /* dark green fading to transparent */
   pointer-events: none; /* allow clicks through shadow */
 }
 
@@ -149,27 +149,18 @@ body::after {
 
   <!-- Overlay lines -->
   <div class="absolute inset-0 flex pointer-events-none">
-    <!-- Left extra vertical line -->
-    <div class="absolute left-[1.6%] top-0 bottom-0 border-r border-white/40"></div>
-
-    <!-- 4 equal divisions -->
     <div class="flex w-full">
-      <div class="flex-1 border-r border-white/20"></div>
-      <div class="flex-1 border-r border-white/20"></div>
-      <div class="flex-1 border-r border-white/20"></div>
       <div class="flex-1"></div>
     </div>
-
-    <!-- Bottom horizontal line -->
     <div class="absolute bottom-0 left-0 w-full border-t border-white/20"></div>
   </div>
 
   <!-- Left: Logo -->
   <div class="text-black relative z-10">
-   <img style="width: 100px;margin-left: 30px;" src="logo2.png" alt="">
+    <img style="width: 100px; margin-left: 30px;" src="logo2.png" alt="Logo">
   </div>
 
-  <!-- Right: Navigation Buttons Desktop -->
+  <!-- Right: Navigation (Desktop) -->
   <div class="hidden md:flex gap-6 items-center pr-6 relative z-10">
     <a href="#" class="nav-link">About</a>
     <a href="#" class="nav-link">Services</a>
@@ -177,35 +168,27 @@ body::after {
     <a href="Contect Us.html" class="nav-link">Contact</a>
   </div>
 
-  <!-- Hamburger button mobile -->
+  <!-- Hamburger button (Mobile) -->
   <div class="md:hidden flex items-center z-10">
-    <button id="menu-btn" class="focus:outline-none">
-      <div class="w-6 h-0.5 bg-white mb-1"></div>
-      <div class="w-6 h-0.5 bg-white mb-1"></div>
-      <div class="w-6 h-0.5 bg-white"></div>
+    <button id="menu-btn" class="relative w-8 h-8 flex flex-col justify-between p-1">
+      <span class="bar w-6 h-0.5 bg-white"></span>
+      <span class="bar w-6 h-0.5 bg-white"></span>
+      <span class="bar w-6 h-0.5 bg-white"></span>
     </button>
   </div>
 </div>
 
-<!-- Mobile Hamburger + Menu -->
-<div class="md:hidden relative z-10">
-  <button id="menu-btn" class="focus:outline-none flex flex-col gap-1 p-2">
-    <span class="w-6 h-0.5 bg-white"></span>
-    <span class="w-6 h-0.5 bg-white"></span>
-    <span class="w-6 h-0.5 bg-white"></span>
-  </button>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 w-40 bg-black/90 rounded-md flex flex-col items-start py-2 space-y-2">
-    <a href="#" class="nav-link text-white px-4 py-1 w-full">About</a>
-    <a href="#" class="nav-link text-white px-4 py-1 w-full">Services</a>
-    <a href="#" class="nav-link text-white px-4 py-1 w-full">Core Values</a>
-    <a href="Contect Us.html" class="nav-link text-white px-4 py-1 w-full">Contact</a>
-  </div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden fixed top-16 right-4 w-48 bg-white rounded-md flex flex-col items-start py-3 space-y-2 z-50 md:hidden shadow-lg">
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">About</a>
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">Services</a>
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">Core Values</a>
+  <a href="Contect Us.html" class="mobile-link text-green-600 px-4 py-2 w-full">Contact</a>
 </div>
 
 
 <style>
+  /* Desktop Links */
   .nav-link {
     position: relative;
     color: white;
@@ -215,7 +198,7 @@ body::after {
   }
 
   .nav-link:hover {
-    color: rgba(53, 240, 137, 0.5);
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .nav-link::after {
@@ -225,13 +208,50 @@ body::after {
     bottom: -4px;
     width: 0%;
     height: 2px;
-    background-color: rgba(53, 240, 137, 0.5);
+    background-color: green;
     transition: width 0.3s ease;
   }
 
   .nav-link:hover::after {
     width: 100%;
   }
+
+  /* Mobile Links */
+  .mobile-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-link:hover {
+    color: #16a34a; /* darker green */
+  }
+
+  /* Hamburger to Cross Animation */
+  #menu-btn.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    background: white;
+   
+  }
+  #menu-btn.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  #menu-btn.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background: white;
+  }
+
+  #menu-btn .bar {
+    transition: all 0.3s ease;
+    background: white; /* ensure white color */
+  }
+
+  /* Sirf mobile view (max-width: 768px) ke liye adjust */
+@media (max-width: 768px) {
+  #menu-btn {
+    margin-right: 10px; /* jitna andar chahiye utna badha sakte ho */
+  }
+}
+
 </style>
 
 <script>
@@ -239,10 +259,8 @@ body::after {
   let lastScrollTop = 0;
   const navbar = document.getElementById("navbar");
 
-  window.addEventListener("scroll", function() {
+  window.addEventListener("scroll", function () {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Keep navbar transparent
     navbar.style.backgroundColor = "transparent";
 
     if (scrollTop > lastScrollTop) {
@@ -260,9 +278,11 @@ body::after {
 
   menuBtn.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
+    menuBtn.classList.toggle("open"); // Toggle cross icon
   });
-
 </script>
+
+
 
 
 
@@ -297,78 +317,213 @@ body::after {
 
   <!-- LEFT SIDE (50%) -->
   <div class="col-12 d-flex justify-content-between align-items-center" style="height:100vh; position:relative; padding: 0 50px;">
-    <!-- Logo (already in nav, optional duplicate) -->
-    <div class="text-white" style="z-index:2;">
-      
-    </div>
+    <!-- Logo -->
+    <div class="text-white" style="z-index:2;"></div>
 
     <!-- Particles Animation Background -->
     <div id="particles-js" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
   </div>
 
-  <!-- RIGHT SIDE (50% => 2 PARTS) -->
-  <div class="grid grid-cols-2 gap-6 relative min-h-screen">
-    <!-- Vertical Divider -->
-    <!-- <div class="fixed left-1/2 top-0 bottom-0 w-[2px] bg-white/20"></div> -->
-
-    <!-- Text Section -->
-   <div class="flex flex-col justify-between pr-6">
+  <!-- RIGHT SIDE -->
+  <div class="grid grid-cols-2 gap-6 relative min-h-screen hero-section">
+    
+   <!-- Text Section -->
+<!-- Text Section -->
+<!-- Text Section -->
+<div class="flex flex-col justify-between pr-6">
   <div class="space-y-6">
-    <h1 style="display: inline-block; font-family: 'Inter', sans-serif; font-weight: 400; transform: scaleX(2); margin-left: 100px; margin-top: 220px; font-size: 25px; line-height: 1.6; white-space: nowrap; width: 100%; max-width: 1000px;">
+    <h1 class="hero-text">
       Break the System. <br> Build a Better One.
     </h1>
   </div>
 </div>
 
+<style>
+.hero-text {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  transform: scaleX(2);
+  margin-left: 100px;
+  margin-top: 220px;   /* 👈 Desktop ke liye */
+  font-size: 25px;
+  line-height: 1.6;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* ✅ Mobile ke liye override */
+@media (max-width: 768px) {
+  .hero-text {
+    margin-top: -500px !important;   /* 👈 Top se chipka do */
+    margin-left: 0 !important;
+    font-size: 18px !important;
+    transform: scaleX(1.2) !important;
+    white-space: normal !important; /* text wrap karega */
+  }
+}
+</style>
 
 
-    <!-- Image Section -->
+
+<style>
+@media (max-width: 768px) {
+  .left-side {
+    height: 200px !important;
+    padding: 0 20px !important;
+  }
+  #particles-js {
+    height: 200px !important;
+  }
+
+}
+</style>
+
+
+
+
+    <!-- Empty column (for spacing / image section) -->
     <div class="flex flex-col items-center pl-6"></div>
 
-    <!-- Thesis Buttons Row -->
- <div class="col-span-2 flex gap-4 mt-0" style="margin-top: -90px;">
-  <a href="Portfolio.html" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
-    Portfolio<span class="text-3xl">›</span>
+  <!-- Buttons Row -->
+<!-- Buttons Row -->
+<div class="col-span-2 flex gap-4 mt-0 buttons-row">
+  <a href="Portfolio.html" class="glitch-btn" data-text="Portfolio">
+    <span class="glitch-text">Portfolio</span>
+    <span class="arrow">›</span>
   </a>
-  <a href="Contect Us.html" class="glitch-btn flex-1 flex justify-center items-center gap-4 text-white hover:text-white hover:bg-black transition-all py-1 px-4 rounded" style="height: 100px;gap: 100px;">
-    Products <span class="text-3xl">›</span>
+
+  <a href="Contact Us.html" class="glitch-btn" data-text="Products">
+    <span class="glitch-text">Products</span>
+    <span class="arrow">›</span>
   </a>
 </div>
 
+<style>
+  .glitch-btn {
+  flex: 1;
+  height: 100px;
+  margin-top: -60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  color: white;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 17px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.glitch-btn:hover {
+  background: black;
+  color: white;
+}
+
+.arrow {
+  font-size: 2rem;
+}
+
+</style>
+<!-- buttons js  -->
+
 <script>
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+document.querySelectorAll(".glitch-btn").forEach(btn => {
+  const textEl = btn.querySelector(".glitch-text");
+  const originalText = btn.getAttribute("data-text");
+  let interval;
 
-  document.querySelectorAll(".glitch-btn").forEach((btn) => {
-    const span = btn.querySelector("span");
-    const originalText = btn.childNodes[0].textContent.trim(); // sirf text pick karna
-    btn.addEventListener("mouseenter", () => {
-      let i = 0;
-      const interval = setInterval(() => {
-        btn.childNodes[0].textContent = originalText
-          .split("")
-          .map((char, index) => {
-            if (index < i) {
-              return originalText[index];
-            }
-            return letters[Math.floor(Math.random() * letters.length)];
-          })
-          .join("");
-        if (i >= originalText.length) {
-          clearInterval(interval);
-        }
-        i += 1 / 3; // speed control
-      }, 30);
+  btn.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    clearInterval(interval);
 
-      // 2 second baad original text wapas
-      setTimeout(() => {
-        btn.childNodes[0].textContent = originalText;
-      }, 2000);
-    });
+    interval = setInterval(() => {
+      textEl.innerText = originalText
+        .split("")
+        .map((letter, index) => {
+          if(index < iteration) return originalText[index];
+          return String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random A-Z
+        })
+        .join("");
+
+      if(iteration >= originalText.length) {
+        clearInterval(interval);
+      }
+      iteration += 1 / 2; // speed control (1/2 = 2s total)
+    }, 50); // frame rate
   });
+
+  // reset on mouse leave (optional)
+  btn.addEventListener("mouseleave", () => {
+    clearInterval(interval);
+    textEl.innerText = originalText;
+  });
+});
 </script>
 
   </div>
 </div>
+
+
+
+<style>
+  .custom-heading {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    transform: scaleX(2);
+    margin-left: 100px;
+    margin-top: 220px; /* ✅ Desktop */
+    font-size: 25px;
+    line-height: 1.6;
+    white-space: nowrap;
+    width: 100%;
+    max-width: 1000px;
+    z-index: 5;
+    position: relative;
+  }
+
+  /* ✅ Only Mobile */
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: auto !important; /* mobile pe height fix hata do */
+    }
+    .text-buttons-wrap {
+      grid-column: span 2 / span 2; /* full width le */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 40px !important;
+      z-index: 5;
+      position: relative;
+    }
+    .custom-heading {
+      margin: 0 !important;
+      transform: scaleX(1.2);
+      font-size: 20px !important;
+      white-space: normal;
+    }
+    .buttons-row {
+      grid-column: span 2 / span 2;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px !important;
+      z-index: 5;
+      position: relative;
+    }
+    .buttons-row a {
+      height: 60px !important;
+      gap: 20px !important;
+     
+    }
+  }
+</style>
 
 
 
@@ -402,11 +557,33 @@ body::after {
 
 
   <!-- Full-width MASBOT Text at Bottom (moved up) -->
-<div class="col-span-3 w-full text-center" style="margin-top: -150px;">
-  <h1 class="text-6xl md:text-8xl font-extrabold text-black" style="transform: scaleX(1.5); font-size: 11rem;">
+<div class="col-span-3 w-full text-center masbot-wrapper">
+  <h1 class="masbot-text font-extrabold text-black">
     MASBOT
   </h1>
 </div>
+
+<style>
+  .masbot-text {
+    transform: scaleX(1.5);
+    font-size: 11rem;
+  }
+
+  .masbot-wrapper {
+    margin-top: -190px; /* default (desktop) */
+  }
+
+  @media (max-width: 768px) {
+    .masbot-text {
+      font-size: 3rem !important; /* mobile par chota text */
+    }
+
+    .masbot-wrapper {
+      margin-top: -400px !important; /* mobile par thoda uper */
+    }
+  }
+</style>
+
 
 
 
@@ -488,7 +665,7 @@ particlesJS("particles-js", {
   transition: all 0.8s ease;
 }
 
-/* different bar sizes (like your screenshot) */
+/* different bar sizes (desktop default) */
 .bar1 { height: 30px; }
 .bar2 { height: 100px; }
 .bar3 { height: 120px; }
@@ -507,6 +684,34 @@ particlesJS("particles-js", {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ✅ Tablet */
+@media (max-width: 991px) {
+  .bar1 { height: 20px; }
+  .bar2 { height: 70px; }
+  .bar3 { height: 90px; }
+  .bar4 { height: 50px; }
+
+  .text {
+    font-size: 18px;
+    padding-left: 30px;
+  }
+}
+
+/* ✅ Mobile */
+@media (max-width: 576px) {
+  .bar1 { height: 15px; }
+  .bar2 { height: 50px; }
+  .bar3 { height: 60px; }
+  .bar4 { height: 40px; }
+
+  .text {
+    font-size: 16px;
+    line-height: 1.4;
+    padding-left: 15px;
+  }
+}
+
 </style>
 
 
@@ -831,65 +1036,131 @@ observer.observe(document.querySelector('.section'));
 <!-- Projects Section -->
 <section id="my-projects" class="relative bg-[#303030]">
   <div class="sticky top-0 h-screen overflow-hidden">
-    <h1 class="text-center text-5xl text-white mb-16 sticky top-0 z-10" style="margin-top: -50px;">Projects</h1>
+<h1 id="projectsHeading" 
+    class="text-center text-5xl text-white mb-16 sticky top-0 z-10" 
+    style="margin-top: -50px;">
+  Projects
+</h1>
+
+
+
+
+<style>
+/* Hide class for heading */
+#projectsHeading.hide {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+</style>
 
     <div class="relative w-full h-full" id="projectsContainer">
       <!-- Project 01 -->
-      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#111]" style="margin-top: -100px;">
-        <div class="flex flex-col gap-4 text-white w-1/2">
+      <article class="project absolute inset-0 flex flex-col md:flex-row items-center justify-between p-8 bg-[#111]" style="margin-top: -100px;">
+        <!-- Text -->
+        <div class="flex flex-col gap-4 text-white w-full md:w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 01</span>
-          <h2 class="text-4xl font-bold">Institute for Art and Culture (IAC)</h2>
-          <p class="text-gray-300">Custom responsive website for IAC with Node.js, MongoDB, CMS, dashboards, galleries etc.</p>
+          <h2 class="text-2xl md:text-4xl font-bold">Institute for Art and Culture (IAC)</h2>
+          <p class="text-gray-300 text-sm md:text-base">Custom responsive website for IAC with Node.js, MongoDB, CMS, dashboards, galleries etc.</p>
         </div>
-        <!-- Right side with 4 images -->
-        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
-          <img src="iac.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="iac2.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="iac3.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="iac4.webp" class="w-full h-full object-cover rounded-xl">
+        <!-- Images -->
+        <div class="w-full md:w-1/2 h-auto md:h-[60vh] grid grid-cols-2 gap-4 mt-6 md:mt-0">
+          <img src="iac.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="iac2.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="iac3.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
+          <img src="iac4.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
         </div>
       </article>
 
       <!-- Project 02 -->
-      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#000]" style="margin-top: -100px;">
-        <div class="flex flex-col gap-4 text-white w-1/2">
+      <article class="project absolute inset-0 flex flex-col md:flex-row items-center justify-between p-8 bg-[#000]" style="margin-top: -100px;">
+        <div class="flex flex-col gap-4 text-white w-full md:w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 02</span>
-          <h2 class="text-4xl font-bold">J Brothers</h2>
-          <p class="text-gray-300">Custom multi-vertical website with backend CMS, responsive layouts and animations.</p>
+          <h2 class="text-2xl md:text-4xl font-bold">J Brothers</h2>
+          <p class="text-gray-300 text-sm md:text-base">Custom multi-vertical website with backend CMS, responsive layouts and animations.</p>
         </div>
-        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
-          <img src="j bros.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="jbros2.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="jbros3.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="jbros4.webp" class="w-full h-full object-cover rounded-xl">
+        <div class="w-full md:w-1/2 h-auto md:h-[60vh] grid grid-cols-2 gap-4 mt-6 md:mt-0">
+          <img src="j bros.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="jbros2.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="jbros3.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
+          <img src="jbros4.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
         </div>
       </article>
 
       <!-- Project 03 -->
-      <article class="project absolute inset-0 flex items-center justify-between p-8 bg-[#222]" style="margin-top: -100px;">
-        <div class="flex flex-col gap-4 text-white w-1/2">
+      <article class="project absolute inset-0 flex flex-col md:flex-row items-center justify-between p-8 bg-[#222]" style="margin-top: -100px;">
+        <div class="flex flex-col gap-4 text-white w-full md:w-1/2">
           <span class="uppercase text-sm text-gray-400 tracking-widest">Project 03</span>
-          <h2 class="text-4xl font-bold">Istrahat Waheed</h2>
-          <p class="text-gray-300">Creative fine arts website with galleries, portfolios and animations.</p>
+          <h2 class="text-2xl md:text-4xl font-bold">Istrahat Waheed</h2>
+          <p class="text-gray-300 text-sm md:text-base">Creative fine arts website with galleries, portfolios and animations.</p>
         </div>
-        <div class="w-1/2 h-[60vh] grid grid-cols-2 gap-4">
-          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
-          <img src="istrahat.webp" class="w-full h-full object-cover rounded-xl">
+        <div class="w-full md:w-1/2 h-auto md:h-[60vh] grid grid-cols-2 gap-4 mt-6 md:mt-0">
+          <img src="istrahat.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="istrahat.webp" class="w-full h-40 md:h-full object-cover rounded-xl">
+          <img src="istrahat.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
+          <img src="istrahat.webp" class="w-full h-40 md:h-full object-cover rounded-xl hide-mobile">
         </div>
       </article>
     </div>
   </div>
 </section>
 
+<style>
+@media (max-width: 768px) {
+  /* text aur images ke darmiyan gap hatao */
+  .project .grid {
+    margin-top: 0 !important; /* mt-6 ko override kar diya */
+  }
+
+  /* images ki height thodi chhoti rakhni ho to */
+  .project img {
+    height: 120px !important;
+    object-fit: cover;
+  }
+}
+</style>
+
+
+
+
+
+<!-- for heading  -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const heading = document.getElementById("projectsHeading");
+  const firstProject = document.querySelector(".project"); // first project block
+
+  if (window.innerWidth <= 768 && heading && firstProject) {
+    window.addEventListener("scroll", function () {
+      const projectTop = firstProject.getBoundingClientRect().top;
+
+      // Jab tak pehla project screen me enter nahi karta -> heading visible
+      if (projectTop <= window.innerHeight * 0.3) {
+        heading.classList.add("hide");
+      } else {
+        heading.classList.remove("hide");
+      }
+    });
+  }
+});
+</script>
+
+<style>
+/* Smooth hide effect */
+#projectsHeading.hide {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+</style>
+
+
+
+
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// Sab projects select karo
 const projects = gsap.utils.toArray("#projectsContainer .project");
 
-// Timeline banayenge jo ek-ek project ko right se slide kare
+// Timeline
 let tl = gsap.timeline({
   scrollTrigger: {
     trigger: "#my-projects",
@@ -900,12 +1171,13 @@ let tl = gsap.timeline({
   }
 });
 
-// Har project ko ek-ek karke slide in karna
+// Slide in projects
 projects.forEach((project, i) => {
   gsap.set(project, { xPercent: 100 });
   tl.to(project, { xPercent: 0, duration: 1 }, i);
 });
 </script>
+
 
 
 
@@ -1041,6 +1313,64 @@ projects.forEach((project, i) => {
   line-height: 1.6;
 }
 
+
+/* Default (desktop) layout tumhara hi rahega */
+
+/* Tablet aur Mobile ke liye */
+@media (max-width: 992px) {
+  .founders-section {
+    flex-direction: column;
+    text-align: center;   /* text center ho jaye */
+    padding: 30px 20px;
+  }
+
+  .founders-left {
+    order: 1;   /* pehle svg show ho */
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+
+  .founders-left svg {
+    width: 280px;   /* responsive resize */
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .founders-right {
+    order: 2;   /* svg ke baad text */
+    padding-left: 0;
+  }
+
+  .founders-right h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .founder-tabs {
+    justify-content: center;
+    flex-wrap: wrap;   /* mobile me line break allow */
+    gap: 20px;
+  }
+
+  #founder-text {
+    font-size: 16px;
+  }
+}
+
+/* Sirf chhoti screens (<600px) ke liye aur adjust */
+@media (max-width: 600px) {
+  .founders-left svg {
+    width: 220px;
+  }
+  .founders-right h2 {
+    font-size: 24px;
+  }
+  #founder-text {
+    font-size: 15px;
+  }
+}
+
+
 </style>
 <script>
 const texts = {
@@ -1109,7 +1439,7 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
       <div class="img-box">
         <img src="https://via.placeholder.com/300x300" alt="Vakar">
       </div>
-      <h5 class="mt-3">Waqar</h5>
+      <h5 class="mt-3">Waqar Azeem</h5>
       <p>DevOps & Microsoft Solutions Expert<br>Keeps businesses running seamlessly.</p>
     </div>
 
@@ -1230,6 +1560,35 @@ document.querySelectorAll(".shape, .founder-tabs span").forEach(el => {
 .team-card:hover .img-box img {
   /* transform: scale(1.1); */
 }
+
+/* Default (Desktop: 4 per row) */
+.team-card {
+  flex: 1 1 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+}
+
+/* Tablet view (2 per row) */
+@media (max-width: 992px) {
+  .team-card {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Mobile view (1 per row, equal width) */
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .team-card {
+    flex: 0 0 100%;   /* ✅ sabhi cards same full width */
+    max-width: 100%;
+    width: 100%;      /* ✅ equal width force */
+  }
+}
+
 </style>
 
 
