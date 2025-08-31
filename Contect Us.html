@@ -9,8 +9,8 @@
 </head>
 <body class="bg-[#303030] text-white font-sans relative">
 
-<!-- Background Grid Lines -->
-<div class="absolute inset-0 pointer-events-none z-0 hidden lg:flex">
+<!-- 🔹 Background Grid Lines (full page, including navbar) -->
+<div class="fixed inset-0 pointer-events-none z-0 hidden lg:flex">
   <div class="absolute left-[1.6%] top-0 bottom-0 border-r border-white/40"></div>
   <div class="flex w-full">
     <div class="flex-1 border-r border-white/20"></div>
@@ -20,114 +20,122 @@
   </div>
 </div>
 
-<!-- Navbar -->
-<!-- Navbar -->
-<!-- Navbar -->
-<nav id="navbar" class="w-full flex justify-between items-center p-4 z-50 fixed top-0 left-0 bg-transparent transition-all duration-300 relative">
 
-  <!-- ✅ Vertical Grid Lines -->
-  <div class="absolute inset-0 flex justify-between pointer-events-none">
-    <!-- <span class="w-px bg-white/20"></span>
-    <span class="w-px bg-white/20"></span>
-    <span class="w-px bg-white/20"></span>
-    <span class="w-px bg-white/20"></span> -->
-  </div>
+<!-- Navbar -->
+<!-- Navbar -->
+<!-- Navbar -->
+<div id="navbar" class="w-full flex justify-between items-center p-4 z-50 transition-all duration-300 fixed top-0 left-0 bg-transparent">
 
   <!-- Left: Logo -->
-  <div class="text-black relative z-10">
-    <a href="index.html">
-      <h1 class="font-bold text-lg sm:text-xl md:text-2xl transform scale-x-150 ml-6">MASBOT</h1>
-    </a>
+  <div class="flex items-center relative z-10 logo-wrap">
+    <!-- Rotating Logo -->
+    <img class="rotating-logo" style="width: 40px;" src="new logo.png" alt="Logo">
+    <!-- Text -->
+    <span class="ml-3 font-bold text-xl text-white">MASBOT</span>
   </div>
 
-  <!-- Desktop Menu -->
-  <div class="hidden lg:flex gap-6 items-center pr-6 relative z-10 text-sm sm:text-base">
+  <!-- Right: Navigation (Desktop) -->
+  <div class="hidden md:flex gap-6 items-center pr-6 relative z-10">
     <a href="#" class="nav-link">About</a>
     <a href="#" class="nav-link">Services</a>
     <a href="#" class="nav-link">Core Values</a>
     <a href="Contect Us.html" class="nav-link">Contact</a>
   </div>
 
-  <!-- Mobile Hamburger -->
-  <button id="menu-btn" class="lg:hidden text-white text-2xl mr-4 relative z-50">
-    <i class="fas fa-bars"></i>
-  </button>
-
-  <!-- ✅ Horizontal Line at Bottom -->
-  <div class="absolute bottom-0 left-0 w-full h-px bg-white/20"></div>
-</nav>
-
-
-<!-- Mobile Menu (hidden by default) -->
-<div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-6 text-xl hidden z-40">
-  
-  <!-- Vertical Grid Lines -->
-  <div class="absolute inset-0 grid-lines"></div>
-
-  <button id="close-btn" class="absolute top-6 right-6 text-white text-3xl z-50">
-    <i class="fas fa-times"></i>
-  </button>
-  <a href="#" class="nav-link text-2xl z-50">About</a>
-  <a href="#" class="nav-link text-2xl z-50">Services</a>
-  <a href="#" class="nav-link text-2xl z-50">Core Values</a>
-  <a href="Contect Us.html" class="nav-link text-2xl z-50">Contact</a>
+  <!-- Hamburger button (Mobile) -->
+  <div class="md:hidden flex items-center z-10">
+    <button id="menu-btn" class="relative w-8 h-8 flex flex-col justify-between p-1">
+      <span class="bar w-6 h-0.5 bg-white"></span>
+      <span class="bar w-6 h-0.5 bg-white"></span>
+      <span class="bar w-6 h-0.5 bg-white"></span>
+    </button>
+  </div>
 </div>
 
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden fixed top-16 right-4 w-48 bg-white rounded-md flex flex-col items-start py-3 space-y-2 z-50 md:hidden shadow-lg">
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">About</a>
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">Services</a>
+  <a href="#" class="mobile-link text-green-600 px-4 py-2 w-full">Core Values</a>
+  <a href="Contect Us.html" class="mobile-link text-green-600 px-4 py-2 w-full">Contact</a>
+</div>
 <style>
-  /* Links hover effect */
-  .nav-link {
-    position: relative;
-    color: white;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  .nav-link:hover {
-    color: rgba(53, 240, 137, 0.7);
-  }
-  .nav-link::after {
+  /* ✅ Navbar ke neeche ek thin horizontal line */
+  #navbar::after {
     content: "";
     position: absolute;
+    bottom: 0;
     left: 0;
-    bottom: -4px;
-    width: 0%;
-    height: 2px;
-    background-color: rgba(53, 240, 137, 0.7);
-    transition: width 0.3s ease;
-  }
-  .nav-link:hover::after {
     width: 100%;
-  }
-
-  /* ✅ Grid Lines Background */
-  .grid-lines {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .grid-lines::before,
-  .grid-lines::after,
-  .grid-lines div {
-    content: "";
-    display: block;
-    width: 1px;
-    background: rgba(255, 255, 255, 0.1);
-  }
-  .grid-lines {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .grid-lines > div {
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    height: 1px;               /* line ki motai */
+    background-color: rgba(255, 255, 255, 0.2); /* halka white/gray line */
   }
 </style>
 
+
+<style>
+/* Rotating Logo */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.rotating-logo {
+  animation: rotate 10s linear infinite;
+}
+
+/* Desktop nav links */
+.nav-link {
+  position: relative;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.nav-link:hover { color: rgba(255, 255, 255, 0.8); }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: green;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+/* Mobile nav links */
+.mobile-link { font-weight: 500; transition: color 0.3s ease; }
+.mobile-link:hover { color: #16a34a; }
+
+/* Hamburger bars default */
+#menu-btn .bar { background: white; height: 3px; }
+
+/* ✅ Sirf mobile ke liye adjustments */
+@media (max-width: 768px) {
+  /* Logo + text thoda left */
+  .logo-wrap { margin-left: 0px; }
+
+  /* Hamburger instantly visible */
+  #menu-btn { margin-right: 10px; opacity: 1 !important; }
+
+  /* ✅ Mobile par cross wali animation disable */
+  #menu-btn.open .bar:nth-child(1),
+  #menu-btn.open .bar:nth-child(2),
+  #menu-btn.open .bar:nth-child(3) {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+</style>
+
 <script>
-  // Navbar Hide/Show on Scroll
+  // Scroll hide/show navbar (desktop only)
   let lastScrollTop = 0;
   const navbar = document.getElementById("navbar");
-  window.addEventListener("scroll", function() {
+
+  window.addEventListener("scroll", function () {
+    if (window.innerWidth <= 768) return; // ✅ mobile par disable
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     navbar.style.backgroundColor = "transparent";
     if (scrollTop > lastScrollTop) {
@@ -136,22 +144,17 @@
       navbar.style.transform = "translateY(0)";
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-  }, false);
+  });
 
-  // Mobile Menu Toggle
+  // Mobile menu toggle
   const menuBtn = document.getElementById("menu-btn");
-  const closeBtn = document.getElementById("close-btn");
   const mobileMenu = document.getElementById("mobile-menu");
 
   menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.remove("hidden");
-  });
-
-  closeBtn.addEventListener("click", () => {
-    mobileMenu.classList.add("hidden");
+    mobileMenu.classList.toggle("hidden");
+    menuBtn.classList.toggle("open"); // ✅ but no animation on mobile
   });
 </script>
-
 <!-- Contact Page -->
 <section class="min-h-screen relative px-4 sm:px-8 py-16 mt-16 z-10">
   <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 relative">
