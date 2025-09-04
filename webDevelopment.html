@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web Development | MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="new logo.png">
 <style>
 * {margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif;}
 body {
@@ -324,11 +326,8 @@ body::before {
   <div class="text-side">
     
     <p>
-      Web development is the process of creating websites and applications. 
-      It combines coding, design, and user experience to deliver interactive 
-      and modern web solutions. Skilled web developers use technologies like 
-      HTML, CSS, JavaScript, and backend frameworks to build websites that are 
-      both functional and visually appealing.
+      We design and develop modern, responsive, and user-friendly websites tailored to your business needs. Our team ensures fast performance, secure coding, and seamless functionality across all devices. From corporate sites
+       to custom web applications, we deliver solutions that help your brand grow online.
     </p>
 
     <!-- Buttons -->
@@ -346,7 +345,7 @@ body::before {
   <!-- Right Side -->
   <div class="board-wrap">
     <div class="hook"></div>
-    <img src="chain img.png" alt="Chain" class="chain center-chain">
+    <img src="black_chain-removebg-preview.png" alt="Chain" class="chain center-chain">
     <img class="board" src="final lcd.png" alt="">
   </div>
 </section>
@@ -457,8 +456,8 @@ body::before {
 
 .chain {
   position: absolute;
-  width: 100px;
-  height: 190px;
+  width: 17px;
+  height: 170px;
   top: 22px;
   left: 50%;
   transform: translateX(-50%);
@@ -947,166 +946,126 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 
+<!-- Web Development Services Section -->
+<section class="webdev-services">
+  <h2>Our Web Development Services</h2>
 
-
-
-
-
-
-
-<!-- Services Section -->
-<section class="services">
-  <div class="container">
-    
-    <!-- Animated Heading -->
-    <h2 class="services-title" style="color: white;">
-     Our Web Development Services
-    </h2>
-
-    <!-- Service Cards Grid -->
-    <div class="service-list">
-      <div class="service-card">
-        <h3>Frontend Development</h3>
-        <p>Building responsive, interactive, and modern user interfaces using HTML, CSS, JS, React, and Bootstrap.</p>
-      </div>
-      <div class="service-card">
-        <h3>Backend Development</h3>
-        <p>Creating secure, scalable, and high-performance server-side applications using Node.js, Express, and MongoDB.</p>
-      </div>
-      <div class="service-card">
-        <h3>Full-Stack Development</h3>
-        <p>Integrating frontend and backend seamlessly to deliver complete web applications that scale.</p>
-      </div>
-      <div class="service-card">
-        <h3>API Development & Integration</h3>
-        <p>Designing and implementing RESTful APIs for seamless communication between apps, services, and databases.</p>
-      </div>
-      <div class="service-card">
-        <h3>UI/UX Design</h3>
-        <p>Designing intuitive and engaging interfaces with smooth interactions and modern aesthetics.</p>
-      </div>
-      <div class="service-card">
-        <h3>Web Optimization</h3>
-        <p>Performance tuning, SEO optimization, and responsive design for better speed and ranking.</p>
-      </div>
+  <div class="services-grid">
+    <!-- Row 1 -->
+    <div class="card">
+      <img src="web5.jpeg" alt="Frontend Development">
+      <div class="overlay"><p>Frontend Development</p></div>
     </div>
-  </div>
+    <div class="card">
+      <img src="web6.avif" alt="Backend Development">
+      <div class="overlay"><p>Backend Development</p></div>
+    </div>
+    <div class="card">
+      <img src="web7.jpg" alt="Full Stack Development">
+      <div class="overlay"><p>Full Stack Development</p></div>
+    </div>
+    <div class="empty"></div> <!-- Empty Column -->
 
-  <!-- Animated SVG Background -->
-  <svg class="animated-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <path d="M0,50 Q25,90 50,50 T100,50 V100 H0 Z"></path>
-  </svg>
+    <!-- Row 2 -->
+    <div class="card">
+      <img src="web8.jpg" alt="E-Commerce Solutions">
+      <div class="overlay"><p>E-Commerce Solutions</p></div>
+    </div>
+    <div class="card">
+      <img src="web9.jpg" alt="CMS Development">
+      <div class="overlay"><p>CMS Development</p></div>
+    </div>
+    <div class="card">
+      <img src="web6.avif" alt="API Integration">
+      <div class="overlay"><p>API Integration</p></div>
+    </div>
+    <div class="empty"></div> <!-- Empty Column -->
+  </div>
 </section>
 
-<!-- CSS -->
 <style>
-/* Section Styling */
-.services {
-  padding: 0px 20px;
+/* Section */
+.webdev-services {
  
   color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Animated Heading */
-.services-title {
+  padding: 60px 40px;
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-  position: relative;
-  color: white;
 }
 
-/* Grid Layout */
-.service-list {
+.webdev-services h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+/* Grid Layout - reuse same */
+.webdev-services .services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 25px;
 }
 
-/* Service Card Styling */
-/* Service Card Styling */
-.service-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 30px 25px;
-  text-align: center;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s ease;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-  cursor: pointer;
+/* Reuse same card styles */
+.webdev-services .card {
   position: relative;
   overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  cursor: pointer;
 }
 
-/* Gradient border hover */
-.service-card::before {
-  content: "";
+.webdev-services .card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+.webdev-services .card .overlay {
   position: absolute;
   inset: 0;
-  border-radius: 20px;
-  padding: 2px;
-  background: linear-gradient(135deg, #53F3C0, #40cda1, #1e90ff);
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  transition: transform 0.5s ease;
+}
+
+.webdev-services .card .overlay p {
+  font-size: 1.2rem;
+  font-weight: 600;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transform: translateX(50px);
+  transition: all 0.5s ease;
 }
 
-.service-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: white;
-  font-weight: 700;
+.webdev-services .card:hover .overlay {
+  transform: translateX(0);
 }
 
-.service-card p {
-  font-size: 1rem;
-  color: white;
-  line-height: 1.6;
-}
-
-/* Hover Effects */
-.service-card:hover {
-  transform: translateY(-10px) scale(1.03) rotateX(3deg);
-  box-shadow: 0 15px 35px rgba(83, 243, 192, 0.25);
-}
-
-.service-card:hover::before {
+.webdev-services .card:hover .overlay p {
   opacity: 1;
+  transform: translateX(0);
 }
 
-/* Animated SVG BG */
-.animated-bg {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  z-index: 0;
-}
-
-.animated-bg path {
-  fill: rgba(83, 243, 192, 0.15);
-  animation: wave 6s ease-in-out infinite;
-}
-
-@keyframes wave {
-  0%, 100% { d: path("M0,50 Q25,90 50,50 T100,50 V100 H0 Z"); }
-  50% { d: path("M0,50 Q25,10 50,50 T100,50 V100 H0 Z"); }
+/* Empty Placeholder Column */
+.webdev-services .empty {
+  background: transparent;
 }
 
 /* Responsive */
 @media (max-width: 992px) {
-  .service-list { grid-template-columns: repeat(2, 1fr); }
+  .webdev-services .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
 @media (max-width: 600px) {
-  .service-list { grid-template-columns: 1fr; }
+  .webdev-services .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 
