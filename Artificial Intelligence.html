@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Networking | MASBOT</title>
+<title>Artificial Intelligence| MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ✅ Favicon -->
   <link rel="icon" type="image/png" href="new logo.png">
@@ -318,28 +318,26 @@ body::before {
 
     <!-- Hero Section -->
 <!-- Hero Section -->
-<!-- Hero Section -->
+<!-- AI Hero Section -->
 <section class="container-fluid py-5 bg-white text-dark">
   <div class="hero-wrapper">
-    <!-- Left: Text -->
+    <!-- Left: AI Text -->
     <div class="content-box">
       <h1 class="display-5 fw-bold">
-        Optimize Your <span class="text-success">Networking</span> Solutions
+        Unlock the Power of <span class="text-primary">Artificial Intelligence</span>
       </h1>
       <p class="lead text-secondary mt-3">
-        We provide reliable and scalable networking services that ensure seamless connectivity
-        and high performance for your business. Let’s build a robust digital network together.
+        Harness AI to optimize processes, predict trends, and elevate your business intelligence. 
+        Our AI solutions simulate a neural network, connecting ideas like a digital brain.
       </p>
       <button class="btn custom-btn mt-3 shadow">
-  Get Started
-</button>
-
-
+        Explore AI Solutions
+      </button>
     </div>
 
-    <!-- Right: Networking Ball Animation -->
+    <!-- Right: AI Brain Animation -->
     <div class="animation-box-wrapper">
-      <canvas id="network-ball" class="hero-canvas"></canvas>
+      <canvas id="ai-brain-canvas" class="hero-canvas"></canvas>
     </div>
   </div>
 </section>
@@ -351,296 +349,186 @@ body::before {
   align-items: center;
   flex-wrap: wrap;
 }
-
 .content-box,
 .animation-box-wrapper {
   flex: 1 1 50%;
   max-width: 50%;
 }
-
-/* Shift only the inner text, not the whole box */
-.content-box {
-  padding-left: 40px; /* 👈 Adjust as per need */
-}
-
+.content-box { padding-left: 40px; }
 .animation-box-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .hero-canvas {
   width: 100%;
   max-width: 480px;
   height: 480px;
-  /* background-color: #0b0b0b; */
   border-radius: 50%;
   display: block;
-  /* box-shadow: 0 0 35px rgba(83, 243, 192, 0.5); */
 }
 
-/* Custom Get Started Button */
+/* Button styling */
 .custom-btn {
-  background-color: #ffffff; /* White background */
-  color: #28a745; /* Green text */
-  border: 2px solid #28a745; /* Green border */
+  background-color: #ffffff;
+  color: green;
+  border: 2px solid green;
   font-weight: 700;
-  font-size: 1.3rem; /* Increased font size */
-  padding: 16px 42px; /* Bigger height & width */
-  border-radius: 50px; /* Fully rounded pill style */
+  font-size: 1.3rem;
+  padding: 16px 42px;
+  border-radius: 50px;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2);
+  box-shadow: 0px 6px 18px rgba(75, 183, 116, 0.2);
   cursor: pointer;
   margin-top: 40px;
 }
-
-/* Hover Effect */
 .custom-btn:hover {
-  background-color: #28a745; /* Green background on hover */
-  color: #ffffff; /* White text on hover */
-  transform: scale(1.08); /* Smooth zoom-in effect */
-  box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45);
+  background-color: green;
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0px 10px 30px rgba(75, 183, 165, 0.45);
 }
-
-/* Focus Effect */
 .custom-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 5px rgba(83, 243, 192, 0.5); /* Soft glowing border */
+  box-shadow: 0 0 0 5px rgba(75, 183, 109, 0.5);
 }
 
-
-
-/* Mobile view */
-@media (max-width: 768px) {
-  .content-box,
-  .animation-box-wrapper {
-    flex: 1 1 100%;
-    max-width: 100%;
-    text-align: center;
-    padding-left: 0; /* Reset padding for mobile */
-  }
-
-  .animation-box-wrapper {
-    margin-top: 20px;
-  }
-
-  /* Smaller animation size on mobile */
-  .hero-canvas {
-    max-width: 320px;  /* Decrease width */
-    height: 320px;     /* Decrease height */
-  }
+@media (max-width:768px){
+  .content-box,.animation-box-wrapper{flex:1 1 100%;max-width:100%;text-align:center;padding-left:0;}
+  .animation-box-wrapper{margin-top:20px;}
+  .hero-canvas{max-width:320px;height:320px;}
 }
-
-
-
 </style>
 
-<canvas id="network-ball"></canvas>
-
 <script>
-const canvas = document.getElementById("network-ball");
+const canvas = document.getElementById("ai-brain-canvas");
 const ctx = canvas.getContext("2d");
 
 let width, height, centerX, centerY, radius;
 let particles = [];
-let nodes = [];
 let rotation = 0;
+let textPulse = 0;
 
+// ---------------- CANVAS SETUP ----------------
 function resizeCanvas() {
-  const size = Math.min(canvas.parentElement.offsetWidth, 300);
+  const size = canvas.parentElement.offsetWidth;
   canvas.width = size;
-  canvas.height = size;
-  width = size;
-  height = size;
+  canvas.height = size * 0.8;
+  width = canvas.width;
+  height = canvas.height;
   centerX = width / 2;
   centerY = height / 2;
-  radius = size * 0.35; // increased from 0.25 to 0.35 for a bigger ball
+  radius = Math.min(width, height) * 0.35;
 }
 resizeCanvas();
 window.addEventListener("resize", () => {
   resizeCanvas();
   createParticles();
-  createNodes();
-  createWireframePoints();
 });
+
 
 // ---------------- PARTICLES ----------------
 class Particle {
   constructor() { this.reset(); }
   reset() {
     const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random() * radius;
-    this.baseX = centerX + Math.cos(angle) * dist;
-    this.baseY = centerY + Math.sin(angle) * dist;
-    this.size = Math.random() * 2 + 1;
-    this.alpha = Math.random() * 0.7 + 0.3;
-    this.speedX = (Math.random() - 0.5) * 0.5;
-    this.speedY = (Math.random() - 0.5) * 0.5;
+    const dist = Math.random() * radius * 1.5;
+    this.x = centerX + Math.cos(angle) * dist;
+    this.y = centerY + Math.sin(angle) * dist;
+    this.size = Math.random() * 2 + 0.5;
+    this.alpha = Math.random() * 0.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.25;
+    this.speedY = (Math.random() - 0.5) * 0.25;
   }
   update() {
-    this.baseX += this.speedX;
-    this.baseY += this.speedY;
-    const dx = this.baseX - centerX;
-    const dy = this.baseY - centerY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist > radius) { this.speedX *= -1; this.speedY *= -1; }
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (Math.hypot(this.x - centerX, this.y - centerY) > radius * 1.8) {
+      this.reset();
+    }
   }
   draw() {
     ctx.beginPath();
-    ctx.arc(this.baseX, this.baseY, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(83, 243, 192, ${this.alpha})`;
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,255,255,${this.alpha})`;
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "cyan";
     ctx.fill();
   }
 }
-
 function createParticles() {
   particles = [];
-  for (let i = 0; i < 40; i++) particles.push(new Particle());
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
 }
 createParticles();
 
-// ---------------- WIREFRAME (diamond pattern) ----------------
-const rings = 8;
-const steps = 12;
-let points = [];
 
-function createWireframePoints() {
-  points = [];
-  for (let r = 0; r <= rings; r++) {
-    const theta = (Math.PI * r) / rings;
-    for (let s = 0; s < steps; s++) {
-      const phi = (2 * Math.PI * s) / steps;
-      const x = radius * Math.sin(theta) * Math.cos(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(theta);
-      points.push({ x, y, z });
-    }
-  }
-}
+// ---------------- GLOWING WAVES ----------------
+const waves = [
+  { offset: 0, speed: 1,  color: "rgba(0,255,255,0.7)", scaleX: 1.1, scaleY: 0.6 },
+  { offset: Math.PI / 3, speed: -1.2, color: "rgba(0,200,255,0.5)", scaleX: 1.2, scaleY: 0.7 },
+  { offset: Math.PI / 2, speed: 0.8, color: "rgba(0,255,200,0.5)", scaleX: 0.9, scaleY: 0.55 },
+  { offset: Math.PI / 4, speed: -0.9, color: "rgba(0,180,255,0.4)", scaleX: 1.3, scaleY: 0.65 },
+  { offset: Math.PI / 6, speed: 1.5, color: "rgba(0,255,255,0.3)", scaleX: 1.05, scaleY: 0.75 }
+];
 
-createWireframePoints();
+function drawWave(wave) {
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.rotate(rotation * wave.speed + wave.offset);
 
-function project3D(x, y, z) {
-  const cosR = Math.cos(rotation);
-  const sinR = Math.sin(rotation);
-  const rotX = x * cosR - z * sinR;
-  const rotZ = x * sinR + z * cosR;
-  const scale = 150 / (150 + rotZ);
-  return {
-    x: centerX + rotX * scale,
-    y: centerY + y * scale,
-    alpha: Math.max(0.2, Math.min(1, scale)),
-    z: rotZ
-  };
-}
+  // glowing ellipse
+  ctx.beginPath();
+  ctx.ellipse(0, 0, radius * wave.scaleX, radius * wave.scaleY, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = wave.color;
+  ctx.shadowBlur = 35;
+  ctx.shadowColor = wave.color;
+  ctx.lineWidth = 2;
+  ctx.stroke();
 
-// Draw diamond-faceted wireframe
-function drawWireframe() {
-  ctx.strokeStyle = "rgba(83, 243, 192, 0.5)";
-  ctx.lineWidth = 1;
-  for (let r = 0; r < rings; r++) {
-    for (let s = 0; s < steps; s++) {
-      const nextS = (s + 1) % steps;
-      const nextR = r + 1;
-      if (nextR > rings) continue;
-      const i1 = r * steps + s;
-      const i2 = r * steps + nextS;
-      const i3 = nextR * steps + s;
-      const i4 = nextR * steps + nextS;
+  // orbiting white circles
+  const numCircles = 8;
+  for (let i = 0; i < numCircles; i++) {
+    const angle = (i / numCircles) * Math.PI * 2 + rotation * wave.speed * 1.2;
+    const x = Math.cos(angle) * radius * wave.scaleX;
+    const y = Math.sin(angle) * radius * wave.scaleY;
 
-      const p1 = project3D(points[i1].x, points[i1].y, points[i1].z);
-      const p2 = project3D(points[i2].x, points[i2].y, points[i2].z);
-      const p3 = project3D(points[i4].x, points[i4].y, points[i4].z);
-      const p4 = project3D(points[i3].x, points[i3].y, points[i3].z);
-
-      ctx.beginPath();
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
-      ctx.lineTo(p3.x, p3.y);
-      ctx.lineTo(p4.x, p4.y);
-      ctx.closePath();
-      ctx.stroke();
-    }
-  }
-}
-
-// ---------------- NODES (inside sphere) ----------------
-class Node {
-  constructor() {
-    const theta = Math.random() * Math.PI;
-    const phi = Math.random() * Math.PI * 2;
-    const r = Math.random() * radius * 0.9;
-    this.x0 = r * Math.sin(theta) * Math.cos(phi);
-    this.y0 = r * Math.sin(theta) * Math.sin(phi);
-    this.z0 = r * Math.cos(theta);
-    this.size = 5;
-  }
-
-  getProjected() { return project3D(this.x0, this.y0, this.z0); }
-
-  draw() {
-    const p = this.getProjected();
     ctx.beginPath();
-    ctx.arc(p.x, p.y, this.size, 0, Math.PI*2);
+    ctx.arc(x, y, 3, 0, Math.PI * 2);
     ctx.fillStyle = "white";
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "white";
     ctx.fill();
   }
 
-  connect(nodes) {
-    const p = this.getProjected();
-    for (let other of nodes) {
-      if (other === this) continue;
-      const o = other.getProjected();
-      const dx = p.x - o.x;
-      const dy = p.y - o.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 80 && Math.random() > 0.3) {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(o.x, o.y);
-        ctx.strokeStyle = "rgba(83, 243, 192, 0.3)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    }
-  }
+  ctx.restore();
 }
 
-function createNodes() {
-  nodes = [];
-  for (let i = 0; i < 12; i++) nodes.push(new Node());
-}
-createNodes();
-
-// ---------------- CONNECTIONS ----------------
-function drawParticleConnections() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].baseX - particles[j].baseX;
-      const dy = particles[i].baseY - particles[j].baseY;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 60) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].baseX, particles[i].baseY);
-        ctx.lineTo(particles[j].baseX, particles[j].baseY);
-        ctx.strokeStyle = `rgba(83, 243, 192, ${0.3 - dist/200})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    }
-  }
-}
 
 // ---------------- ANIMATE ----------------
 function animate() {
   ctx.clearRect(0, 0, width, height);
 
-  drawWireframe();
+  // Particles
   particles.forEach(p => { p.update(); p.draw(); });
-  drawParticleConnections();
 
-  nodes.forEach(n => n.connect(nodes));
-  nodes.forEach(n => n.draw());
+  // Waves + orbiting circles
+  waves.forEach(w => drawWave(w));
+
+  // Pulsing "AI" text
+  textPulse += 0.05;
+  const scale = 1 + Math.sin(textPulse) * 0.1;
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.scale(scale, scale);
+  ctx.font = "bold 72px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "rgba(0,255,255,0.95)";
+  ctx.shadowColor = "cyan";
+  ctx.shadowBlur = 30;
+  ctx.fillText("AI", 0, 0);
+  ctx.restore();
 
   rotation += 0.01;
   requestAnimationFrame(animate);
@@ -661,56 +549,56 @@ animate();
 
 
 
+
 <!-- ✅ Google Font Link -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
-<!-- ✅ Networking Section -->
+<!-- ✅ AI Tools Section -->
 <section class="tools-section" style="margin-top: -50px;">
   <div class="container">
     <div class="tools-grid">
       
       <!-- Column 1 -->
       <div class="tools-col">
-        <h2>Networking Tools</h2>
+        <h2>AI Tools</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/3179/3179068.png" alt="Router">
-          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Switch">
-          <img src="https://cdn-icons-png.flaticon.com/512/3208/3208710.png" alt="Firewall">
-          <img src="https://cdn-icons-png.flaticon.com/512/1039/1039328.png" alt="Server">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712105.png" alt="Chatbot">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712108.png" alt="Machine Learning">
+          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048920.png" alt="Neural Network">
+          <img src="https://cdn-icons-png.flaticon.com/512/2977/2977375.png" alt="AI Assistant">
         </div>
       </div>
 
       <!-- Column 2 -->
       <div class="tools-col">
-        <h2>Protocols</h2>
+        <h2>AI Models</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048927.png" alt="TCP/IP">
-            <img src="https://www.svgrepo.com/show/331488/dns.svg" alt="DNS" width="100">
-
-          <img src="https://cdn-icons-png.flaticon.com/512/906/906349.png" alt="HTTP/HTTPS">
-          <img src="https://cdn-icons-png.flaticon.com/512/3616/3616930.png" alt="FTP">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712095.png" alt="Deep Learning">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Computer Vision">
+          <img src="https://cdn-icons-png.flaticon.com/512/1087/1087815.png" alt="Natural Language Processing">
+          <img src="https://cdn-icons-png.flaticon.com/512/2920/2920258.png" alt="Reinforcement Learning">
         </div>
       </div>
 
       <!-- Column 3 -->
       <div class="tools-col">
-        <h2>Network Features</h2>
+        <h2>AI Features</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="LAN">
-          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829569.png" alt="WAN">
-          <img src="https://cdn-icons-png.flaticon.com/512/3132/3132693.png" alt="VPN">
-          <img src="https://cdn-icons-png.flaticon.com/512/3067/3067578.png" alt="Cloud Networking">
+          <img src="https://cdn-icons-png.flaticon.com/512/3989/3989985.png" alt="Automation">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712102.png" alt="AI Predictions">
+          <img src="https://cdn-icons-png.flaticon.com/512/3616/3616945.png" alt="Voice Recognition">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712121.png" alt="AI Security">
         </div>
       </div>
 
       <!-- Column 4 -->
       <div class="tools-col">
-        <h2>Why Networking?</h2>
+        <h2>Why AI?</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Speed">
-          <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Scalability">
-          <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Security">
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Reliability">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712090.png" alt="Efficiency">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712086.png" alt="Scalability">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712112.png" alt="Accuracy">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712125.png" alt="Innovation">
         </div>
       </div>
 
@@ -718,7 +606,7 @@ animate();
   </div>
 </section>
 
-<!-- ✅ CSS -->
+<!-- ✅ CSS (same as before) -->
 <style>
 .tools-section {
   padding: 80px 0;
@@ -796,16 +684,16 @@ animate();
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
 <!-- ✅ Curtain Projects Section -->
-<!-- ✅ Networking Curtain Section -->
+<!-- ✅ AI Curtain Section -->
 <section class="curtain-section">
   <!-- 🔹 Curtain Overlay -->
   <div class="curtain-overlay"></div>
 
   <!-- 🔹 Foreground Content -->
   <div class="curtain-content">
-    <h2>Powerful <span class="highlight">Networking</span> Solutions</h2>
-    <p>We build secure, scalable, and high-performance networking solutions to keep your business connected 24/7.</p>
-    <a href="#" class="btn-learn">Learn More</a>
+    <h2>Powerful <span class="highlight">AI</span> Solutions</h2>
+    <p>We create intelligent, scalable, and secure AI-driven systems that transform businesses and empower innovation.</p>
+    <a href="#" class="btn-learn">Explore AI</a>
   </div>
 </section>
 
@@ -814,8 +702,8 @@ animate();
 .curtain-section {
   position: relative;
   height: 500px;
-  background: url("network8.jpg") no-repeat center center / cover;
-  background-attachment: fixed; /* ✅ Background fixed */
+  background: url("ai.jpg") no-repeat center center / cover; /* ✅ Replace with AI background */
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -831,7 +719,7 @@ animate();
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(3px);
   clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.8s ease-in-out; /* ✅ Smooth animation */
+  transition: clip-path 1.8s ease-in-out;
   z-index: 1;
 }
 
@@ -850,7 +738,6 @@ animate();
   margin-left: 80px;
 }
 
-/* Heading */
 .curtain-content h2 {
   font-size: 2.8rem;
   line-height: 1.3;
@@ -859,10 +746,9 @@ animate();
 }
 
 .highlight {
-  color: #53F3C0; /* Networking word color */
+  color: #53F3C0; /* ✅ AI word color */
 }
 
-/* Paragraph */
 .curtain-content p {
   font-size: 1.1rem;
   margin-bottom: 25px;
@@ -945,46 +831,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-<!-- Netwroking Services Section -->
+
+<!-- ✅ AI Services Section -->
 <section class="uiux-services">
-  <h2>Our Networking Services</h2>
+  <h2>Our AI Services</h2>
 
   <div class="services-grid">
     <!-- Row 1 -->
     <div class="card">
-      <img src="network3.jpeg" alt="Wireframing">
-      <div class="overlay"><p>Network Setup</p></div>
+      <img src="ai1.webp" alt="AI Development">
+      <div class="overlay"><p>AI Model Development</p></div>
     </div>
     <div class="card">
-      <img src="network4.jpg" alt="Prototyping">
-      <div class="overlay"><p>LAN / WAN Configuration</p></div>
+      <img src="ai2.jpg" alt="Machine Learning">
+      <div class="overlay"><p>Machine Learning Solutions</p></div>
     </div>
     <div class="card">
-      <img src="network5.jpg" alt="User Research">
-      <div class="overlay"><p>Network Security</p></div>
+      <img src="ai3.webp" alt="AI Security">
+      <div class="overlay"><p>AI-Powered Security</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
 
     <!-- Row 2 -->
     <div class="card">
-      <img src="network6.jpg" alt="Visual Design">
-      <div class="overlay"><p>Server Management</p></div>
+      <img src="ai4.webp" alt="Data Analytics">
+      <div class="overlay"><p>Data Analytics</p></div>
     </div>
     <div class="card">
-      <img src="network7.webp" alt="Interaction Design">
-      <div class="overlay"><p>Firewall Setup</p></div>
+      <img src="ai5.webp" alt="NLP">
+      <div class="overlay"><p>Natural Language Processing</p></div>
     </div>
     <div class="card">
-      <img src="network8.jpg" alt="Usability Testing">
-      <div class="overlay"><p>Troubleshooting</p></div>
+      <img src="ai6.webp" alt="AI Automation">
+      <div class="overlay"><p>AI Automation</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
   </div>
 </section>
+
 <style>
-    /* Section */
+/* Section */
 .uiux-services {
-  
   color: white;
   padding: 60px 40px;
   text-align: center;
@@ -1067,8 +954,7 @@ document.addEventListener("DOMContentLoaded", () => {
     grid-template-columns: 1fr;
   }
 }
-
-</style><!-- ✅ Networking Services Section -->
+</style>
 
 
 
@@ -1077,35 +963,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- ✅ Profile Section -->
+<!-- ✅ Profile Section (AI) -->
 <section class="profile-section">
   <div class="profile-grid">
 
     <!-- Column 1: Profile Card -->
     <div class="profile-card">
-      <img src="ahmad anjum.png" alt="Profile">
-      <h3>Muhammad Ahmad Anjum</h3>
-      <p>IT Infrastructure & Network Specialist</p> <!-- ✅ Updated Here -->
+      <img src="Asad profile.png" alt="Profile">
+      <h3>Muhammad Asad</h3>
+      <p>AI & Machine Learning Specialist</p> <!-- ✅ Updated Here -->
     </div>
 
     <!-- Column 2: Completed Projects -->
     <div class="info-box">
       <h4>Completed Projects</h4>
       <ul>
-        <li>10+ Enterprise Networks</li>
-        <li>8+ Firewall Configurations</li>
-        <li>12+ VPN Deployments</li>
-        <li>Multiple Cloud Integrations</li>
+        <li>15+ AI-Powered Applications</li>
+        <li>12+ Machine Learning Models</li>
+        <li>10+ NLP & Chatbot Systems</li>
+        <li>Multiple Predictive Analytics Solutions</li>
       </ul>
     </div>
 
-    <!-- Column 3: Skills / Strengths (Updated for Networking) -->
+    <!-- Column 3: Skills / Strengths (AI) -->
     <div class="info-box">
       <h4>Key Strengths</h4>
       <ul>
-        <li>⚡ Network Architecture & Design</li>
-        <li>⚡ Routing & Switching (Cisco, Mikrotik)</li>
-        <li>⚡ Firewall & Security Configurations</li>
-        <li>⚡ VPN & Remote Access Solutions</li>
+        <li>⚡ Deep Learning (TensorFlow, PyTorch)</li>
+        <li>⚡ Natural Language Processing (NLP)</li>
+        <li>⚡ Computer Vision & Image Recognition</li>
+        <li>⚡ AI Strategy & Business Integration</li>
       </ul>
     </div>
 
@@ -1122,6 +1009,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   </div>
 </section>
+
 
 <!-- ✅ CSS -->
 <style>

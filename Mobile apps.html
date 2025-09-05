@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Networking | MASBOT</title>
+<title>Mobile Apps | MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ✅ Favicon -->
   <link rel="icon" type="image/png" href="new logo.png">
@@ -317,339 +317,285 @@ body::before {
 
 
     <!-- Hero Section -->
-<!-- Hero Section -->
-<!-- Hero Section -->
+<!-- ✅ Hero Section with Canvas Animation -->
 <section class="container-fluid py-5 bg-white text-dark">
   <div class="hero-wrapper">
     <!-- Left: Text -->
     <div class="content-box">
       <h1 class="display-5 fw-bold">
-        Optimize Your <span class="text-success">Networking</span> Solutions
+        Optimize Your <span class="text-success">Mobile App</span> Solutions
       </h1>
       <p class="lead text-secondary mt-3">
-        We provide reliable and scalable networking services that ensure seamless connectivity
-        and high performance for your business. Let’s build a robust digital network together.
+        We craft intuitive and engaging mobile applications that deliver seamless user experiences. 
+        Let's bring your app idea to life.
       </p>
-      <button class="btn custom-btn mt-3 shadow">
-  Get Started
-</button>
-
-
+      <button class="btn custom-btn mt-3 shadow">Get Started</button>
     </div>
 
-    <!-- Right: Networking Ball Animation -->
+    <!-- Right: Canvas Animation -->
     <div class="animation-box-wrapper">
-      <canvas id="network-ball" class="hero-canvas"></canvas>
+      <canvas id="appsCanvas"></canvas>
     </div>
   </div>
 </section>
 
+<!-- ✅ Styles -->
 <style>
 .hero-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* ✅ force side-by-side */
 }
 
-.content-box,
+.content-box {
+  flex: 1 1 50%;
+  max-width: 50%;
+  margin-left: 60px; /* ✅ left se space */
+}
+
 .animation-box-wrapper {
   flex: 1 1 50%;
   max-width: 50%;
 }
 
-/* Shift only the inner text, not the whole box */
-.content-box {
-  padding-left: 40px; /* 👈 Adjust as per need */
-}
 
-.animation-box-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-canvas {
+#appsCanvas {
   width: 100%;
-  max-width: 480px;
-  height: 480px;
-  /* background-color: #0b0b0b; */
-  border-radius: 50%;
+  height: 600px;
   display: block;
-  /* box-shadow: 0 0 35px rgba(83, 243, 192, 0.5); */
 }
 
-/* Custom Get Started Button */
 .custom-btn {
-  background-color: #ffffff; /* White background */
-  color: #28a745; /* Green text */
-  border: 2px solid #28a745; /* Green border */
+  background-color: #ffffff;
+  color: #28a745;
+  border: 2px solid #28a745;
   font-weight: 700;
-  font-size: 1.3rem; /* Increased font size */
-  padding: 16px 42px; /* Bigger height & width */
-  border-radius: 50px; /* Fully rounded pill style */
+  font-size: 1.3rem;
+  padding: 16px 42px;
+  border-radius: 50px;
   transition: all 0.3s ease-in-out;
   box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2);
   cursor: pointer;
   margin-top: 40px;
 }
 
-/* Hover Effect */
 .custom-btn:hover {
-  background-color: #28a745; /* Green background on hover */
-  color: #ffffff; /* White text on hover */
-  transform: scale(1.08); /* Smooth zoom-in effect */
+  background-color: #28a745;
+  color: #ffffff;
+  transform: scale(1.08);
   box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45);
 }
 
-/* Focus Effect */
-.custom-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 5px rgba(83, 243, 192, 0.5); /* Soft glowing border */
-}
-
-
-
-/* Mobile view */
 @media (max-width: 768px) {
+  .hero-wrapper {
+    flex-direction: column; /* ✅ mobile me upar neeche */
+    align-items: center;    /* ✅ center align */
+  }
+
   .content-box,
   .animation-box-wrapper {
     flex: 1 1 100%;
     max-width: 100%;
     text-align: center;
-    padding-left: 0; /* Reset padding for mobile */
+    margin-left: 0; /* ✅ mobile me margin remove */
   }
 
-  .animation-box-wrapper {
-    margin-top: 20px;
+  .content-box {
+    margin-bottom: 30px; /* ✅ text aur canvas ke beech gap */
   }
 
-  /* Smaller animation size on mobile */
-  .hero-canvas {
-    max-width: 320px;  /* Decrease width */
-    height: 320px;     /* Decrease height */
+  #appsCanvas {
+    height: 400px;
   }
 }
-
-
 
 </style>
 
-<canvas id="network-ball"></canvas>
-
 <script>
-const canvas = document.getElementById("network-ball");
-const ctx = canvas.getContext("2d");
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("appsCanvas");
+  const ctx = canvas.getContext("2d");
 
-let width, height, centerX, centerY, radius;
-let particles = [];
-let nodes = [];
-let rotation = 0;
-
-function resizeCanvas() {
-  const size = Math.min(canvas.parentElement.offsetWidth, 300);
-  canvas.width = size;
-  canvas.height = size;
-  width = size;
-  height = size;
-  centerX = width / 2;
-  centerY = height / 2;
-  radius = size * 0.35; // increased from 0.25 to 0.35 for a bigger ball
-}
-resizeCanvas();
-window.addEventListener("resize", () => {
+  function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+  }
   resizeCanvas();
-  createParticles();
-  createNodes();
-  createWireframePoints();
-});
+  window.addEventListener("resize", resizeCanvas);
 
-// ---------------- PARTICLES ----------------
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    const angle = Math.random() * Math.PI * 2;
-    const dist = Math.random() * radius;
-    this.baseX = centerX + Math.cos(angle) * dist;
-    this.baseY = centerY + Math.sin(angle) * dist;
-    this.size = Math.random() * 2 + 1;
-    this.alpha = Math.random() * 0.7 + 0.3;
-    this.speedX = (Math.random() - 0.5) * 0.5;
-    this.speedY = (Math.random() - 0.5) * 0.5;
-  }
-  update() {
-    this.baseX += this.speedX;
-    this.baseY += this.speedY;
-    const dx = this.baseX - centerX;
-    const dy = this.baseY - centerY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist > radius) { this.speedX *= -1; this.speedY *= -1; }
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.baseX, this.baseY, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(83, 243, 192, ${this.alpha})`;
-    ctx.fill();
-  }
-}
+  const colors = ["#28a745", "#007bff", "#ffc107", "#dc3545", "#6610f2"];
+  const messages = [
+    "User-Friendly Interface",
+    "Strong Security",
+    "Reliable Performance",
+    "Offline Functionality",
+    "Cross-Platform Compatibility"
+  ];
 
-function createParticles() {
-  particles = [];
-  for (let i = 0; i < 40; i++) particles.push(new Particle());
-}
-createParticles();
+  let icons = [];
 
-// ---------------- WIREFRAME (diamond pattern) ----------------
-const rings = 8;
-const steps = 12;
-let points = [];
-
-function createWireframePoints() {
-  points = [];
-  for (let r = 0; r <= rings; r++) {
-    const theta = (Math.PI * r) / rings;
-    for (let s = 0; s < steps; s++) {
-      const phi = (2 * Math.PI * s) / steps;
-      const x = radius * Math.sin(theta) * Math.cos(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(theta);
-      points.push({ x, y, z });
+  function initIcons() {
+    icons = [];
+    for (let i = 0; i < messages.length; i++) {
+      icons.push({
+        x: canvas.width / 4,
+        y: canvas.height / 2,
+        r: 0,
+        targetX: canvas.width / 2 + 120,
+        // ✅ chhoti screen pe vertical spacing kam (overlap thoda)
+        targetY: canvas.width < 600 ? 100 + i * 65 : 120 + i * 90,
+        color: colors[i],
+        text: messages[i],
+        progress: 0,
+        delay: i * 40
+      });
     }
   }
-}
+  initIcons();
 
-createWireframePoints();
+  function wrapText(text, x, y, maxWidth, lineHeight) {
+    const words = text.split(" ");
+    let line = "";
+    let lines = [];
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + " ";
+      const testWidth = ctx.measureText(testLine).width;
+      if (testWidth > maxWidth && n > 0) {
+        lines.push(line.trim());
+        line = words[n] + " ";
+      } else {
+        line = testLine;
+      }
+    }
+    lines.push(line.trim());
 
-function project3D(x, y, z) {
-  const cosR = Math.cos(rotation);
-  const sinR = Math.sin(rotation);
-  const rotX = x * cosR - z * sinR;
-  const rotZ = x * sinR + z * cosR;
-  const scale = 150 / (150 + rotZ);
-  return {
-    x: centerX + rotX * scale,
-    y: centerY + y * scale,
-    alpha: Math.max(0.2, Math.min(1, scale)),
-    z: rotZ
-  };
-}
+    const startY = y - ((lines.length - 1) * lineHeight) / 2;
+    lines.forEach((l, i) => {
+      ctx.fillText(l, x, startY + i * lineHeight);
+    });
+  }
 
-// Draw diamond-faceted wireframe
-function drawWireframe() {
-  ctx.strokeStyle = "rgba(83, 243, 192, 0.5)";
-  ctx.lineWidth = 1;
-  for (let r = 0; r < rings; r++) {
-    for (let s = 0; s < steps; s++) {
-      const nextS = (s + 1) % steps;
-      const nextR = r + 1;
-      if (nextR > rings) continue;
-      const i1 = r * steps + s;
-      const i2 = r * steps + nextS;
-      const i3 = nextR * steps + s;
-      const i4 = nextR * steps + nextS;
+  function drawMobile() {
+    const mobileX = canvas.width / 6;
+    const mobileY = 50;
 
-      const p1 = project3D(points[i1].x, points[i1].y, points[i1].z);
-      const p2 = project3D(points[i2].x, points[i2].y, points[i2].z);
-      const p3 = project3D(points[i4].x, points[i4].y, points[i4].z);
-      const p4 = project3D(points[i3].x, points[i3].y, points[i3].z);
+    let mobileW = canvas.width < 600 ? 180 : 260;
+    let mobileH = canvas.height - (canvas.width < 600 ? 100 : 150);
 
+    const radius = 20;
+
+    // Body
+    ctx.beginPath();
+    ctx.moveTo(mobileX + radius, mobileY);
+    ctx.lineTo(mobileX + mobileW - radius, mobileY);
+    ctx.quadraticCurveTo(mobileX + mobileW, mobileY, mobileX + mobileW, mobileY + radius);
+    ctx.lineTo(mobileX + mobileW, mobileY + mobileH - radius);
+    ctx.quadraticCurveTo(mobileX + mobileW, mobileY + mobileH, mobileX + mobileW - radius, mobileY + mobileH);
+    ctx.lineTo(mobileX + radius, mobileY + mobileH);
+    ctx.quadraticCurveTo(mobileX, mobileY + mobileH, mobileX, mobileY + mobileH - radius);
+    ctx.lineTo(mobileX, mobileY + radius);
+    ctx.quadraticCurveTo(mobileX, mobileY, mobileX + radius, mobileY);
+    ctx.closePath();
+    ctx.fillStyle = "#111";
+    ctx.fill();
+
+    // Screen
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(mobileX + 10, mobileY + 20, mobileW - 20, mobileH - 40);
+
+    // Heading (centered, 2 lines)
+    const text = ["Mobile Apps", "Development"];
+    ctx.fillStyle = "#000";
+    ctx.font = canvas.width < 600 ? "bold 14px Arial" : "bold 20px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const textY = mobileY + mobileH / 2;
+    ctx.fillText(text[0], mobileX + mobileW / 2, textY - 12);
+    ctx.fillText(text[1], mobileX + mobileW / 2, textY + 12);
+
+    return { mobileX, mobileY, mobileW, mobileH };
+  }
+
+  let animationFinished = false;
+  let restartTimeout;
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const { mobileX, mobileY, mobileW, mobileH } = drawMobile();
+
+    let allComplete = true;
+
+    icons.forEach((icon, i) => {
+      if (icon.delay > 0) {
+        icon.delay--;
+        allComplete = false;
+        return;
+      }
+
+      if (icon.progress < 1) {
+        icon.progress += 0.02;
+        allComplete = false;
+      }
+
+      const ease = icon.progress * icon.progress * (3 - 2 * icon.progress);
+      const x = icon.x + (icon.targetX - icon.x) * ease;
+      const y = icon.y + (icon.targetY - icon.y) * ease;
+
+      const baseR = canvas.width < 600 ? 30 : 50;
+      const r = baseR * ease;
+
+      // Line
+      const lineStartY = mobileY + 100 + i * ((mobileH - 180) / (icons.length - 1));
+      const lineStartX = mobileX + mobileW;
       ctx.beginPath();
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
-      ctx.lineTo(p3.x, p3.y);
-      ctx.lineTo(p4.x, p4.y);
-      ctx.closePath();
+      ctx.moveTo(lineStartX, lineStartY);
+      ctx.lineTo(x - r, y);
+      ctx.strokeStyle = "#ccc";
+      ctx.lineWidth = 2;
       ctx.stroke();
+
+      // Glow + circle
+      ctx.save();
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = icon.color;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = icon.color;
+      ctx.fill();
+      ctx.restore();
+
+      // White outline
+      ctx.beginPath();
+      ctx.arc(x, y, r + 10, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(255,255,255,0.8)";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Text
+      ctx.font = "bold 11px Arial";
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      wrapText(icon.text, x, y, r * 1.6, 14);
+    });
+
+    if (allComplete && !animationFinished) {
+      animationFinished = true;
+      clearTimeout(restartTimeout);
+      restartTimeout = setTimeout(() => {
+        initIcons(); // reset icons
+        animationFinished = false;
+      }, 2500); // 2.5s wait before restart
     }
+
+    requestAnimationFrame(animate);
   }
-}
-
-// ---------------- NODES (inside sphere) ----------------
-class Node {
-  constructor() {
-    const theta = Math.random() * Math.PI;
-    const phi = Math.random() * Math.PI * 2;
-    const r = Math.random() * radius * 0.9;
-    this.x0 = r * Math.sin(theta) * Math.cos(phi);
-    this.y0 = r * Math.sin(theta) * Math.sin(phi);
-    this.z0 = r * Math.cos(theta);
-    this.size = 5;
-  }
-
-  getProjected() { return project3D(this.x0, this.y0, this.z0); }
-
-  draw() {
-    const p = this.getProjected();
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, this.size, 0, Math.PI*2);
-    ctx.fillStyle = "white";
-    ctx.fill();
-  }
-
-  connect(nodes) {
-    const p = this.getProjected();
-    for (let other of nodes) {
-      if (other === this) continue;
-      const o = other.getProjected();
-      const dx = p.x - o.x;
-      const dy = p.y - o.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 80 && Math.random() > 0.3) {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(o.x, o.y);
-        ctx.strokeStyle = "rgba(83, 243, 192, 0.3)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-function createNodes() {
-  nodes = [];
-  for (let i = 0; i < 12; i++) nodes.push(new Node());
-}
-createNodes();
-
-// ---------------- CONNECTIONS ----------------
-function drawParticleConnections() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].baseX - particles[j].baseX;
-      const dy = particles[i].baseY - particles[j].baseY;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 60) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].baseX, particles[i].baseY);
-        ctx.lineTo(particles[j].baseX, particles[j].baseY);
-        ctx.strokeStyle = `rgba(83, 243, 192, ${0.3 - dist/200})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-// ---------------- ANIMATE ----------------
-function animate() {
-  ctx.clearRect(0, 0, width, height);
-
-  drawWireframe();
-  particles.forEach(p => { p.update(); p.draw(); });
-  drawParticleConnections();
-
-  nodes.forEach(n => n.connect(nodes));
-  nodes.forEach(n => n.draw());
-
-  rotation += 0.01;
-  requestAnimationFrame(animate);
-}
-animate();
+  animate();
+});
 </script>
-
-
-
 
 
 
@@ -664,52 +610,51 @@ animate();
 <!-- ✅ Google Font Link -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
-<!-- ✅ Networking Section -->
+<!-- ✅ Mobile Apps Section -->
 <section class="tools-section" style="margin-top: -50px;">
   <div class="container">
     <div class="tools-grid">
       
       <!-- Column 1 -->
       <div class="tools-col">
-        <h2>Networking Tools</h2>
+        <h2>App Development Tools</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/3179/3179068.png" alt="Router">
-          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png" alt="Switch">
-          <img src="https://cdn-icons-png.flaticon.com/512/3208/3208710.png" alt="Firewall">
-          <img src="https://cdn-icons-png.flaticon.com/512/1039/1039328.png" alt="Server">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888859.png" alt="Android Studio">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888841.png" alt="Xcode">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="React Native">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="Flutter">
         </div>
       </div>
 
       <!-- Column 2 -->
       <div class="tools-col">
-        <h2>Protocols</h2>
+        <h2>App Platforms</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/1048/1048927.png" alt="TCP/IP">
-            <img src="https://www.svgrepo.com/show/331488/dns.svg" alt="DNS" width="100">
-
-          <img src="https://cdn-icons-png.flaticon.com/512/906/906349.png" alt="HTTP/HTTPS">
-          <img src="https://cdn-icons-png.flaticon.com/512/3616/3616930.png" alt="FTP">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888839.png" alt="iOS">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888846.png" alt="Android">
+          <img src="https://cdn-icons-png.flaticon.com/512/1006/1006363.png" alt="Cross-Platform">
+          <img src="https://cdn-icons-png.flaticon.com/512/1006/1006367.png" alt="Progressive Web App">
         </div>
       </div>
 
       <!-- Column 3 -->
       <div class="tools-col">
-        <h2>Network Features</h2>
+        <h2>App Features</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="LAN">
-          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829569.png" alt="WAN">
-          <img src="https://cdn-icons-png.flaticon.com/512/3132/3132693.png" alt="VPN">
-          <img src="https://cdn-icons-png.flaticon.com/512/3067/3067578.png" alt="Cloud Networking">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828859.png" alt="UI/UX">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Notifications">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828854.png" alt="Offline Support">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Security">
         </div>
       </div>
 
       <!-- Column 4 -->
       <div class="tools-col">
-        <h2>Why Networking?</h2>
+        <h2>Why Mobile Apps?</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Speed">
+          <img src="https://cdn-icons-png.flaticon.com/512/1006/1006365.png" alt="Engagement">
+          <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Performance">
           <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Scalability">
-          <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Security">
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Reliability">
         </div>
       </div>
@@ -796,16 +741,16 @@ animate();
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
 <!-- ✅ Curtain Projects Section -->
-<!-- ✅ Networking Curtain Section -->
+<!-- ✅ Mobile Apps Curtain Section -->
 <section class="curtain-section">
   <!-- 🔹 Curtain Overlay -->
   <div class="curtain-overlay"></div>
 
   <!-- 🔹 Foreground Content -->
   <div class="curtain-content">
-    <h2>Powerful <span class="highlight">Networking</span> Solutions</h2>
-    <p>We build secure, scalable, and high-performance networking solutions to keep your business connected 24/7.</p>
-    <a href="#" class="btn-learn">Learn More</a>
+    <h2>Innovative <span class="highlight">Mobile Apps</span> Development</h2>
+    <p>We design and build intuitive, high-performance mobile applications that deliver seamless user experiences and accelerate your business growth.</p>
+    <a href="#" class="btn-learn">Get Started</a>
   </div>
 </section>
 
@@ -814,7 +759,7 @@ animate();
 .curtain-section {
   position: relative;
   height: 500px;
-  background: url("network8.jpg") no-repeat center center / cover;
+  background: url("mobile\ app1.webp") no-repeat center center / cover;
   background-attachment: fixed; /* ✅ Background fixed */
   display: flex;
   align-items: center;
@@ -859,7 +804,7 @@ animate();
 }
 
 .highlight {
-  color: #53F3C0; /* Networking word color */
+  color: #53F3C0; /* ✅ Mobile Apps highlight color */
 }
 
 /* Paragraph */
@@ -945,46 +890,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-<!-- Netwroking Services Section -->
+<!-- ✅ Mobile Apps Services Section -->
 <section class="uiux-services">
-  <h2>Our Networking Services</h2>
+  <h2>Our Mobile Apps Services</h2>
 
   <div class="services-grid">
     <!-- Row 1 -->
     <div class="card">
-      <img src="network3.jpeg" alt="Wireframing">
-      <div class="overlay"><p>Network Setup</p></div>
+      <img src="network3.jpeg" alt="App UI/UX Design">
+      <div class="overlay"><p>App UI/UX Design</p></div>
     </div>
     <div class="card">
-      <img src="network4.jpg" alt="Prototyping">
-      <div class="overlay"><p>LAN / WAN Configuration</p></div>
+      <img src="network4.jpg" alt="iOS Development">
+      <div class="overlay"><p>iOS Development</p></div>
     </div>
     <div class="card">
-      <img src="network5.jpg" alt="User Research">
-      <div class="overlay"><p>Network Security</p></div>
+      <img src="network5.jpg" alt="Android Development">
+      <div class="overlay"><p>Android Development</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
 
     <!-- Row 2 -->
     <div class="card">
-      <img src="network6.jpg" alt="Visual Design">
-      <div class="overlay"><p>Server Management</p></div>
+      <img src="network6.jpg" alt="Cross-Platform Apps">
+      <div class="overlay"><p>Cross-Platform Apps</p></div>
     </div>
     <div class="card">
-      <img src="network7.webp" alt="Interaction Design">
-      <div class="overlay"><p>Firewall Setup</p></div>
+      <img src="network7.webp" alt="App Security">
+      <div class="overlay"><p>App Security</p></div>
     </div>
     <div class="card">
-      <img src="network8.jpg" alt="Usability Testing">
-      <div class="overlay"><p>Troubleshooting</p></div>
+      <img src="network8.jpg" alt="App Maintenance">
+      <div class="overlay"><p>App Maintenance</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
   </div>
 </section>
+
 <style>
-    /* Section */
+/* Section */
 .uiux-services {
-  
   color: white;
   padding: 60px 40px;
   text-align: center;
@@ -1067,45 +1012,43 @@ document.addEventListener("DOMContentLoaded", () => {
     grid-template-columns: 1fr;
   }
 }
-
-</style><!-- ✅ Networking Services Section -->
-
+</style>
 
 
 
 
 
 
-<!-- ✅ Profile Section -->
+<!-- ✅ Profile Section (Mobile Apps Development) -->
 <section class="profile-section">
   <div class="profile-grid">
 
     <!-- Column 1: Profile Card -->
     <div class="profile-card">
-      <img src="ahmad anjum.png" alt="Profile">
-      <h3>Muhammad Ahmad Anjum</h3>
-      <p>IT Infrastructure & Network Specialist</p> <!-- ✅ Updated Here -->
+      <img src="Asad profile.png" alt="Profile">
+      <h3>Muhammad Asad</h3>
+      <p>Mobile Apps Development Specialist</p> <!-- ✅ Updated -->
     </div>
 
     <!-- Column 2: Completed Projects -->
     <div class="info-box">
       <h4>Completed Projects</h4>
       <ul>
-        <li>10+ Enterprise Networks</li>
-        <li>8+ Firewall Configurations</li>
-        <li>12+ VPN Deployments</li>
-        <li>Multiple Cloud Integrations</li>
+        <li>15+ iOS & Android Apps</li>
+        <li>8+ Cross-Platform Solutions</li>
+        <li>12+ UI/UX Optimized Apps</li>
+        <li>Multiple API Integrations</li>
       </ul>
     </div>
 
-    <!-- Column 3: Skills / Strengths (Updated for Networking) -->
+    <!-- Column 3: Skills / Strengths (Updated for Mobile Apps) -->
     <div class="info-box">
       <h4>Key Strengths</h4>
       <ul>
-        <li>⚡ Network Architecture & Design</li>
-        <li>⚡ Routing & Switching (Cisco, Mikrotik)</li>
-        <li>⚡ Firewall & Security Configurations</li>
-        <li>⚡ VPN & Remote Access Solutions</li>
+        <li>⚡ Native iOS & Android Development</li>
+        <li>⚡ Cross-Platform Apps (Flutter, React Native)</li>
+        <li>⚡ Mobile UI/UX Design & Prototyping</li>
+        <li>⚡ App Deployment & Maintenance</li>
       </ul>
     </div>
 
@@ -1123,7 +1066,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 
-<!-- ✅ CSS -->
+<!-- ✅ CSS (same as before) -->
 <style>
 .profile-section {
   padding: 80px 20px;
@@ -1230,7 +1173,6 @@ form button:hover {
   }
 }
 </style>
-
 
 
 

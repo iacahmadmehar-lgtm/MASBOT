@@ -317,28 +317,40 @@ body::before {
 
 
     <!-- Hero Section -->
-<!-- Hero Section -->
-<section class="container-fluid py-5 bg-white text-dark">
-  <div class="hero-wrapper">
-    <!-- Left: Text -->
-    <div class="content-box">
-      <h1 class="display-5 fw-bold">
-        Elevate Your <span class="text-success">UI/UX</span> Experience
-      </h1>
-      <p class="lead text-secondary mt-3">
-        We craft intuitive and beautiful designs that boost engagement and usability.
-        Let’s turn your ideas into immersive digital experiences.
-      </p>
-      <button class="btn btn-success btn-lg rounded-pill px-4 py-2 mt-3 shadow">
-        Let’s Talk Design
-      </button>
-    </div>
+<!-- ✅ Hero Section with LCD Frame -->
+<section class="hero-wrapper">
+  <!-- Left Content -->
+  <div class="content-box">
+    <h1>
+      Elevate Your <span>UI/UX</span> Experience
+    </h1>
+    <p>
+      We design immersive digital experiences with powerful visuals,
+      interactive layouts, and smooth usability. Let's create something amazing.
+    </p>
+    <button class="custom-btn">Let’s Talk Design</button>
+  </div>
 
-    <!-- Right: Image -->
-    <div class="animation-box-wrapper">
-      <img src="uiux.gif" 
-           alt="UI/UX Illustration" 
-           class="hero-img">
+  <!-- Right Side LCD + Animation -->
+  <div class="animation-box-wrapper">
+    <!-- LCD Frame Image -->
+    <img src="lcd_2-removebg-preview.png" alt="LCD Frame" class="lcd-frame" />
+
+    <!-- Animation Content -->
+    <div class="code-editor">
+      <div class="editor-header">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <pre id="code-display"></pre>
+
+      <!-- Tools Floating Icons on Right Side -->
+      <div class="tools1">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Figma" class="tool-icon" />
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968520.png" alt="Adobe XD" class="tool-icon" />
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968526.png" alt="Photoshop" class="tool-icon" />
+      </div>
     </div>
   </div>
 </section>
@@ -349,35 +361,236 @@ body::before {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: 60px 5%;
+  position: relative;
+  overflow: hidden;
 }
-.content-box,
-.animation-box-wrapper {
+
+/* Left Content */
+.content-box {
   flex: 1 1 50%;
   max-width: 50%;
 }
+
+.content-box h1 {
+  font-size: 2.7rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.content-box span { color: #28a745; }
+
+.content-box p {
+  margin-top: 15px;
+  font-size: 1.05rem;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.custom-btn {
+  background-color: #fff;
+  color: #28a745;
+  border: 2px solid #28a745;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 14px 34px;
+  margin-top: 20px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  cursor: pointer;
+}
+
+.custom-btn:hover {
+  background-color: #28a745;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0px 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+/* Right Side */
 .animation-box-wrapper {
+  flex: 1 1 50%;
+  max-width: 45%;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 500px; /* LCD height */
 }
-.hero-img {
+
+/* LCD Frame Image */
+.lcd-frame {
   width: 100%;
-  max-width: 450px;
-  height: auto;
+  height: 100%;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
 }
-/* Mobile view */
+
+/* Code Editor over LCD – position adjustment */
+.code-editor {
+  width: 85%;
+  max-width: 500px;
+  background: transparent; /* Frame visible behind */
+  border-radius: 20px;
+  padding: 20px;
+  color: #00ff95;
+  font-family: "Fira Code", monospace;
+  position: absolute;
+  top: 40%;       /* upar shift */
+  left: 55%;      /* right shift */
+  transform: translate(-50%, -50%);
+  min-height: 220px; 
+  height: 220px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Header dots */
+.editor-header {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.editor-header .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+/* Code Display */
+#code-display {
+  min-height: 180px;
+  white-space: pre-line;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+
+/* Tools Floating Icons – smooth circular + floating + self rotation */
+.tools1 {
+  position: absolute;
+  top: 40px;      
+  right: 100px;    
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 3;
+}
+
+.tool-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  animation: smoothCircleRotate 6s linear infinite; /* smooth circular + rotate */
+  transform-origin: 20px 20px; /* center for circular motion */
+}
+
+/* Circular motion + vertical floating + self rotation */
+@keyframes smoothCircleRotate {
+  0%   { transform: rotate(0deg) translate(-30px, -15px) rotate(0deg); }
+  25%  { transform: rotate(90deg) translate(-30px, -15px) rotate(90deg); }
+  50%  { transform: rotate(180deg) translate(-30px, -15px) rotate(180deg); }
+  75%  { transform: rotate(270deg) translate(-30px, -15px) rotate(270deg); }
+  100% { transform: rotate(360deg) translate(-30px, -15px) rotate(360deg); }
+}
+
+
+
+/* Responsive */
 @media (max-width: 768px) {
-  .content-box,
-  .animation-box-wrapper { 
-    flex: 1 1 100%; 
-    max-width: 100%; 
-    text-align: center; 
+  .content-box, .animation-box-wrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
+    text-align: center;
   }
-  .animation-box-wrapper { 
-    margin-top: 20px; 
+
+  .animation-box-wrapper {
+    margin-top: 25px;
+    height: auto;
+  }
+
+  .code-editor {
+    max-width: 100%;
+    height: 220px;
+  }
+
+  .lcd-frame {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .tools1 {
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+    gap: 15px;
   }
 }
 </style>
+
+<script>
+const codeLines = [
+  "/* Modern UI/UX Experience */",
+  "const designSystem = {",
+  "   framework: 'Figma + XD',",
+  "   prototype: true,",
+  "   usability: 'excellent',",
+  "};",
+  "",
+  "function improveUX() {",
+  "   return 'Seamless User Journey ✨';",
+  "} ",
+  "",
+  "console.log(improveUX());"
+];
+
+let index = 0;
+let currentLine = 0;
+const codeDisplay = document.getElementById("code-display");
+
+function typeCode() {
+  if (currentLine < codeLines.length) {
+    if (index < codeLines[currentLine].length) {
+      codeDisplay.textContent += codeLines[currentLine][index];
+      index++;
+      setTimeout(typeCode, 25);
+    } else {
+      codeDisplay.textContent += "\n";
+      currentLine++;
+      index = 0;
+      setTimeout(typeCode, 150);
+    }
+  } else {
+    setTimeout(() => {
+      codeDisplay.textContent = "";
+      index = 0;
+      currentLine = 0;
+      typeCode();
+    }, 2000);
+  }
+}
+
+typeCode();
+</script>
+
+
+
 
 
 
@@ -515,55 +728,19 @@ body::before {
 
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
-<!-- ✅ Curtain Projects Section -->
+<!-- ✅ Curtain Section with Background Image -->
 <section class="curtain-section">
-  <!-- 🔹 Animated Projects -->
-  <div class="projects-wrapper">
-    <!-- Project 1 -->
-    <div class="project">
-      <div class="project-text">
-        <h2>Project One</h2>
-        <p>This is our first project, showing modern responsive design.</p>
-      </div>
-        <div class="project-media">
-            <img src="web1.jpeg" alt="Project 1">
-            <div class="bot">🤖</div>
-        </div>
-    </div>
-
-    <!-- Project 2 -->
-    <div class="project">
-      <div class="project-text">
-        <h2>Project Two</h2>
-        <p>This project highlights creative layouts and animations.</p>
-      </div>
-      <div class="project-media">
-        <img src="web2.jpeg" alt="Project 2">
-        <div class="bot">🤖</div>
-      </div>
-    </div>
-
-    <!-- Project 3 -->
-    <div class="project">
-      <div class="project-text">
-        <h2>Project Three</h2>
-        <p>Here we showcase scalability and performance optimization.</p>
-      </div>
-      <div class="project-media">
-        <img src="web3.jpeg" alt="Project 3">
-        <div class="bot">🤖</div>
-      </div>
-    </div>
-  </div>
-
   <!-- 🔹 Curtain Overlay -->
   <div class="curtain-overlay"></div>
 
-  <!-- 🔹 Foreground Content (optional fixed heading) -->
+  <!-- 🔹 Foreground Content -->
   <div class="curtain-content">
-    <h2>Web Development Excellence</h2>
-    <p>We create modern, responsive, and scalable websites that deliver results.</p>
-    <a href="#" class="btn-learn">Learn More</a>
+    <h2>Crafting Intuitive <span class="highlight">UI/UX</span> Experiences</h2>
+    <p>
+      We design sleek, modern, and user-friendly interfaces that deliver seamless 
+      digital experiences. Our focus is on creating designs that users love to interact with.
+    </p>
+    <a href="#" class="btn-learn">Explore Designs</a>
   </div>
 </section>
 
@@ -572,178 +749,113 @@ body::before {
 .curtain-section {
   position: relative;
   height: 100vh;
-  background: lightgreen;
+  background: url('uiux1.jpg') no-repeat center center / cover;
+  background-attachment: fixed; /* ✅ Background Fixed */
   display: flex;
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-}
-
-/* 🔹 Projects Background */
-.projects-wrapper {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 0;
-}
-
-/* 🔹 Project Layout */
-.project {
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 60px 80px;
-  box-sizing: border-box;
-  opacity: 0;
-}
-
-.project-text {
-  flex: 1;
-  color: black;
-  max-width: 500px;
-}
-.project-text h2 {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-}
-.project-text p {
-  font-size: 1.1rem;
-  line-height: 1.6;
- 
-}
-
-/* 🔹 Project Media (right side) */
-.project-media {
-  position: relative;
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.project-media img {
-  width: 420px;
-  height: 260px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-}
-
-/* 🔹 Bot (on right side of project) */
-.bot {
-  position: absolute;
-  right: -50px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  animation: bounce 0.6s infinite alternate;
-}
-@keyframes bounce {
-  from { transform: translateY(-50%) translateX(0); }
-  to   { transform: translateY(-60%) translateX(8px); }
-}
-
-/* 🔹 Active Project Animation */
-.project.active {
-  left: 0;
-  opacity: 1;
-  animation: slideAcross 6s linear forwards;
-}
-@keyframes slideAcross {
-  0%   { left: -100%; opacity: 1; }
-  80%  { left: 0; opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  font-family: "Poppins", sans-serif;
 }
 
 /* 🔹 Curtain Overlay */
 .curtain-overlay {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.55);
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(3px);
   clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.5s ease-in-out;
+  transition: clip-path 1.8s ease-in-out; /* ✅ Smooth Animation */
   z-index: 1;
 }
 .curtain-overlay.active {
   clip-path: polygon(0 0, 50% 0, 70% 100%, 0 100%);
 }
 
-/* 🔹 Foreground Curtain Content */
+/* 🔹 Foreground Content */
 .curtain-content {
   position: relative;
   z-index: 2;
-  max-width: 500px;
+  max-width: 550px;
   padding: 40px;
   text-align: left;
   color: #fff;
   margin-left: 80px;
 }
+.curtain-content h2 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  line-height: 1.3;
+  margin-bottom: 15px;
+}
+.curtain-content .highlight {
+  color: #00ff95;
+}
+.curtain-content p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+/* 🔹 Explore Button */
 .btn-learn {
   padding: 12px 28px;
-  background: linear-gradient(135deg, #4cec94, #5fa033);
+  background: white;
   border-radius: 30px;
-  color: #fff;
+  color: green;
   font-weight: 600;
   text-decoration: none;
   transition: 0.3s ease;
-  margin-top: 20px; /* ✅ button ko text se neeche karne ke liye */
 }
-
 .btn-learn:hover {
-  background: linear-gradient(135deg, #ff3300, #ff6600);
+  background: green;
   transform: translateY(-2px);
+  color: white;
 }
 
-.curtain-content p {
-  margin-bottom: 25px; /* ✅ paragraph ke niche space */
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+  .curtain-content {
+    margin-left: 20px;
+    max-width: 90%;
+    padding: 20px;
+    text-align: center;
+  }
+  .curtain-content h2 {
+    font-size: 2rem;
+  }
+  .curtain-content p {
+    font-size: 1rem;
+  }
 }
-
-.btn-learn {
-  display: inline-block; /* safe layout */
-  margin-top: 10px;      /* agar aur neeche chahiye to value barha lena */
-}
-
 </style>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const projects = document.querySelectorAll(".project");
   const curtain = document.querySelector(".curtain-overlay");
-  let index = 0;
+  const section = document.querySelector(".curtain-section");
 
-  // Sequential project animation
-  function showNextProject() {
-    if (index < projects.length) {
-      const project = projects[index];
-      project.classList.add("active");
-
-      setTimeout(() => {
-        project.classList.remove("active");
-        index++;
-        showNextProject();
-      }, 6200); // slightly more than animation duration
-    }
-  }
-  showNextProject();
-
-  // Curtain scroll animation
+  // ✅ Curtain animation trigger when visible
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           curtain.classList.add("active");
+        } else {
+          curtain.classList.remove("active");
         }
       });
     },
-    { threshold: 0.3 }
+    { threshold: 0.4 }
   );
-  observer.observe(document.querySelector(".curtain-section"));
+
+  observer.observe(section);
 });
 </script>
+
 
 
 <!-- UI/UX Services Section -->
