@@ -320,19 +320,23 @@ body::before {
 <!-- Hero Section -->
 <!-- Hero Section -->
 <section class="container-fluid py-5 bg-white text-dark">
+  <div id="particles-bg"></div>
+
   <div class="hero-wrapper">
     <!-- Left: Text -->
     <div class="content-box">
-      <h1 class="display-5 fw-bold">
+      <h1 class="display-5 fw-bold" style="font-size: 40px;">
         Optimize Your <span class="text-success">Networking</span> Solutions
       </h1>
       <p class="lead text-secondary mt-3">
         We provide reliable and scalable networking services that ensure seamless connectivity
         and high performance for your business. Let’s build a robust digital network together.
       </p>
-      <button class="btn custom-btn mt-3 shadow">
-  Get Started
+      <button class="btn custom-btn mt-3 shadow" data-text="Get Started">
+  <span class="btn-text">Get Started</span>
+  <span class="btn-arrow">></span>
 </button>
+
 
 
     </div>
@@ -351,6 +355,17 @@ body::before {
   align-items: center;
   flex-wrap: wrap;
 }
+
+#particles-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Below content */
+  pointer-events: none;
+}
+
 
 .content-box,
 .animation-box-wrapper {
@@ -381,26 +396,40 @@ body::before {
 
 /* Custom Get Started Button */
 .custom-btn {
-  background-color: #ffffff; /* White background */
-  color: #28a745; /* Green text */
-  border: 2px solid #28a745; /* Green border */
+ 
+  color: white; /* Green text */
+ background-color: #303030;
   font-weight: 700;
   font-size: 1.3rem; /* Increased font size */
   padding: 16px 42px; /* Bigger height & width */
-  border-radius: 50px; /* Fully rounded pill style */
+  
   transition: all 0.3s ease-in-out;
-  box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2);
+  /* box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2); */
   cursor: pointer;
   margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Gap between text & arrow */
+  position: relative;
+  overflow: hidden;
 }
 
-/* Hover Effect */
 .custom-btn:hover {
-  background-color: #28a745; /* Green background on hover */
-  color: #ffffff; /* White text on hover */
-  transform: scale(1.08); /* Smooth zoom-in effect */
-  box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45);
+  background-color: black; /* Green background */
+  color: #ffffff; /* White text */
+  transform: scale(1.08);
+  /* box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45); */
 }
+
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.custom-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
 
 /* Focus Effect */
 .custom-btn:focus {
@@ -434,6 +463,68 @@ body::before {
 
 
 </style>
+
+<!-- button js  -->
+<script>
+  document.querySelectorAll(".custom-btn").forEach(button => {
+  const btnText = button.querySelector(".btn-text");
+  const originalText = button.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  button.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    let interval;
+
+    clearInterval(interval); // Reset animation if already running
+
+    interval = setInterval(() => {
+      btnText.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) return originalText[index];
+          return letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        btnText.textContent = originalText; // Reset text after animation
+      }
+
+      iteration += 0.5;
+    }, 50);
+  });
+
+  button.addEventListener("mouseleave", () => {
+    btnText.textContent = originalText;
+  });
+});
+
+
+
+// Particles.js
+particlesJS("particles-bg", {
+  "particles": {
+    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#53F3C0" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.5 },
+    "size": { "value": 3 },
+    "line_linked": { "enable": true, "color": "#53F3C0" },
+    "move": { "enable": true, "speed": 4 }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    }
+  },
+  "retina_detect": true
+});
+
+
+</script>
+
 
 <canvas id="network-ball"></canvas>
 
@@ -796,152 +887,208 @@ animate();
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
 <!-- ✅ Curtain Projects Section -->
-<!-- ✅ Networking Curtain Section -->
-<section class="curtain-section">
-  <!-- 🔹 Curtain Overlay -->
-  <div class="curtain-overlay"></div>
+  <!-- ✅ Networking Curtain Section -->
+  <section class="curtain-section">
+    <!-- 🔹 Curtain Overlay -->
+    <div class="curtain-overlay"></div>
 
-  <!-- 🔹 Foreground Content -->
-  <div class="curtain-content">
-    <h2>Powerful <span class="highlight">Networking</span> Solutions</h2>
-    <p>We build secure, scalable, and high-performance networking solutions to keep your business connected 24/7.</p>
-    <a href="#" class="btn-learn">Learn More</a>
-  </div>
-</section>
+    <!-- 🔹 Foreground Content -->
+    <div class="curtain-content">
+      <h2>Powerful <span class="highlight">Networking</span> Solutions</h2>
+      <p>We build secure, scalable, and high-performance networking solutions to keep your business connected 24/7.</p>
+     <a href="#" class="btn-learn" data-text="Learn More">
+  <span class="btn-text">Learn More</span>
+  <span class="btn-arrow">></span>
+</a>
 
-<style>
-/* 🔹 Curtain Section */
-.curtain-section {
-  position: relative;
-  height: 500px;
-  background: url("network8.jpg") no-repeat center center / cover;
-  background-attachment: fixed; /* ✅ Background fixed */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+    </div>
+  </section>
 
-/* 🔹 Curtain Overlay */
-.curtain-overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(3px);
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.8s ease-in-out; /* ✅ Smooth animation */
-  z-index: 1;
-}
+  <style>
+  /* 🔹 Curtain Section */
+  .curtain-section {
+    position: relative;
+    height: 500px;
+    background: url("network8.jpg") no-repeat center center / cover;
+    background-attachment: fixed; /* ✅ Background fixed */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-.curtain-overlay.active {
-  clip-path: polygon(0 0, 50% 0, 70% 100%, 0 100%);
-}
+  /* 🔹 Curtain Overlay */
+  .curtain-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    transition: clip-path 1.8s ease-in-out; /* ✅ Smooth animation */
+    z-index: 1;
+  }
 
-/* 🔹 Foreground Curtain Content */
-.curtain-content {
-  position: relative;
-  z-index: 2;
-  max-width: 500px;
-  padding: 40px;
-  text-align: left;
-  color: #fff;
-  margin-left: 80px;
-}
+  .curtain-overlay.active {
+    clip-path: polygon(0 0, 50% 0, 70% 100%, 0 100%);
+  }
 
-/* Heading */
-.curtain-content h2 {
-  font-size: 2.8rem;
-  line-height: 1.3;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
+  /* 🔹 Foreground Curtain Content */
+  .curtain-content {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    padding: 40px;
+    text-align: left;
+    color: #fff;
+    margin-left: 80px;
+  }
 
-.highlight {
-  color: #53F3C0; /* Networking word color */
-}
+  /* Heading */
+  .curtain-content h2 {
+    font-size: 2.8rem;
+    line-height: 1.3;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
 
-/* Paragraph */
-.curtain-content p {
-  font-size: 1.1rem;
-  margin-bottom: 25px;
-  line-height: 1.6;
-  color: #eaeaea;
-}
+  .highlight {
+    color: #53F3C0; /* Networking word color */
+  }
 
-/* 🔹 Button */
-.btn-learn {
+  /* Paragraph */
+  .curtain-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    color: #eaeaea;
+  }
+
+  /* 🔹 Button */
+  .btn-learn {
   padding: 14px 35px;
-  background: #ffffff;
-  border-radius: 35px;
-  color: #28a745;
+  
+  
+  color: white;
   font-weight: 600;
   font-size: 1.1rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  display: inline-block;
-  border: 2px solid #28a745;
-  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Gap between text & arrow */
+  /* border: 2px solid #28a745; */
+  /* box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2); */
+  overflow: hidden;
 }
 
 .btn-learn:hover {
-  background: #28a745;
+  background: black;
   color: #fff;
   transform: scale(1.08);
-  box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4);
+  /* box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4); */
 }
 
-/* 🔹 Mobile Responsive */
-@media (max-width: 768px) {
-  .curtain-section {
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .curtain-content {
-    margin-left: 0;
-    padding: 20px;
-    max-width: 90%;
-  }
-
-  .curtain-content h2 {
-    font-size: 2rem;
-  }
-
-  .curtain-content p {
-    font-size: 1rem;
-  }
-
-  .btn-learn {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
 }
-</style>
 
+.btn-learn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+  /* 🔹 Mobile Responsive */
+  @media (max-width: 768px) {
+    .curtain-section {
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .curtain-content {
+      margin-left: 0;
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    .curtain-content h2 {
+      font-size: 2rem;
+    }
+
+    .curtain-content p {
+      font-size: 1rem;
+    }
+
+    .btn-learn {
+      padding: 12px 30px;
+      font-size: 1rem;
+    }
+  }
+  </style>
+
+  <!-- button js  -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const curtain = document.querySelector(".curtain-overlay");
-  const section = document.querySelector(".curtain-section");
+  document.querySelectorAll(".btn-learn").forEach(button => {
+  const btnText = button.querySelector(".btn-text");
+  const originalText = button.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-  // ✅ Curtain animation trigger when visible
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          curtain.classList.add("active");
-        } else {
-          curtain.classList.remove("active");
-        }
-      });
-    },
-    { threshold: 0.4 }
-  );
+  button.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    let interval;
 
-  observer.observe(section);
+    clearInterval(interval);
+
+    interval = setInterval(() => {
+      btnText.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) return originalText[index];
+          return letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        btnText.textContent = originalText;
+      }
+
+      iteration += 0.5;
+    }, 50);
+  });
+
+  button.addEventListener("mouseleave", () => {
+    btnText.textContent = originalText;
+  });
 });
+
 </script>
+
+  
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const curtain = document.querySelector(".curtain-overlay");
+    const section = document.querySelector(".curtain-section");
+
+    // ✅ Curtain animation trigger when visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            curtain.classList.add("active");
+          } else {
+            curtain.classList.remove("active");
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(section);
+  });
+  </script>
 
 
 

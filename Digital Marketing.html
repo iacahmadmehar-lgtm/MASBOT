@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Development | MASBOT</title>
+<title>UI/UX Design | MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ✅ Favicon -->
   <link rel="icon" type="image/png" href="new logo.png">
@@ -316,179 +316,144 @@ body::before {
 
 
 
-<!-- Intro Section -->
-<!-- hanging board -->
-<!-- hanging board -->
-<section class="hanging-section" id="hanging-section">
-  <!-- Particles Background (Inside Section) -->
-  <div id="particles-js" class="particles-container"></div>
-
-  <!-- Left Side -->
-  <div class="text-side">
-    <h2>
-      <span class="highlight">Web Development</span> Services
-    </h2>
+<!-- ✅ Hero Section -->
+<section class="hero-wrapper" id="particles-js">
+  <!-- Left Content -->
+  <div class="content-box">
+    <h1>
+      Supercharge Your <span>Digital Marketing</span> 🚀
+    </h1>
     <p>
-      We design and develop modern, responsive, and user-friendly websites tailored to your business needs. Our team ensures fast performance, secure coding, and seamless functionality across all devices. From corporate sites
-      to custom web applications, we deliver solutions that help your brand grow online.
+      Drive more traffic, boost your conversions, and grow your business with
+      data-driven strategies powered by AI.
     </p>
-
-    <!-- Buttons -->
-    <div class="btn-group">
-      <a href="#" class="custom-btn" data-text="Learn More">
-        <span class="btn-text">Learn More</span>
-        <span class="arrow">›</span>
-      </a>
-      <a href="#" class="custom-btn" data-text="Get Started">
-        <span class="btn-text">Get Started</span>
-        <span class="arrow">›</span>
-      </a>
-    </div>
+    <button class="custom-btn">Get Started</button>
   </div>
 
-  <!-- Right Side -->
-  <div class="board-wrap">
-    <img class="board" src="lcd3.png" alt="">
+  <!-- Right Side New 3D Marketing Animation -->
+  <div class="animation-box-wrapper">
+    <canvas id="marketing-canvas"></canvas>
   </div>
 </section>
 
-<!-- ===================== CSS ===================== -->
 <style>
-.hanging-section {
-  margin-top: 0px;
-  position: relative;
+/* Hero Section Layout */
+.hero-wrapper {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 60px 50px;
-  margin-bottom: 120px;
-  min-height: 500px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 60px 5%;
+  position: relative;
+  min-height: 600px;
   overflow: hidden;
-  
+  z-index: 1;
 }
 
-/* ✅ Particles container (Scoped to section only) */
-.particles-container {
-  position: absolute;
+/* Particles Background Layer */
+#particles-js {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+#particles-js canvas {
+  position: absolute !important;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
 }
 
-/* Text Content */
-.text-side {
-  flex: 1;
-  padding-right: 40px;
+/* Left Content */
+.content-box {
+  flex: 1 1 50%;
+  max-width: 50%;
   position: relative;
   z-index: 2;
 }
 
-.text-side h2 {
-  font-size: 45px;
-  margin-bottom: 20px;
-  color: white;
+.content-box h1 {
+  font-size: 2.7rem;
   font-weight: 700;
+  color: #fff;
 }
 
-.text-side h2 .highlight {
-  color: #35F089;
+.content-box span {
+  color: #28a745;
 }
 
-.text-side p {
-  font-size: 18px;
-  line-height: 1.8;
-  color: white;
-  margin-bottom: 25px;
-}
-
-/* Buttons */
-.btn-group {
-  display: flex;
-  gap: 18px;
+.content-box p {
+  margin-top: 15px;
+  font-size: 1.05rem;
+  color: #ccc;
+  line-height: 1.7;
 }
 
 .custom-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 26px;
-  background: transparent;
-  color: white;
-  font-size: 16px;
+  background-color: #fff;
+  color: #28a745;
+  border: 2px solid #28a745;
   font-weight: 600;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: 0.3s ease;
+  font-size: 1.1rem;
+  padding: 14px 34px;
+  margin-top: 20px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  cursor: pointer;
   position: relative;
-  overflow: hidden;
   z-index: 2;
 }
 
 .custom-btn:hover {
-  background: black;
-  color: white;
+  background-color: #28a745;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0px 8px 25px rgba(40, 167, 69, 0.4);
 }
 
-.arrow {
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.custom-btn:hover .arrow {
-  transform: translateX(5px);
-}
-
-/* LCD Image */
-.board-wrap {
-  flex: 1;
+/* Right Side Animation */
+.animation-box-wrapper {
+  flex: 1 1 50%;
+  max-width: 45%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  height: 500px;
   z-index: 2;
 }
 
-.board {
-  width: 500px;
-  height: 400px;
-  border-radius: 8px;
-  position: relative;
-  z-index: 3;
+#marketing-canvas {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: block;
 }
 
-/* Responsive Layout */
+/* Responsive */
 @media (max-width: 768px) {
-  .hanging-section {
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 20px;
-  }
-
-  .board-wrap {
-    order: 1;
-    margin-bottom: 20px;
-    padding-top: 0;
-  }
-
-  .text-side {
-    order: 2;
-    padding-right: 0;
+  .content-box,
+  .animation-box-wrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
     text-align: center;
-    margin-top: 20px;
   }
 
-  .btn-group {
-    justify-content: center;
+  .animation-box-wrapper {
+    margin-top: 30px;
+    height: 350px;
+  }
+
+  #marketing-canvas {
+    height: 350px;
   }
 }
 </style>
 
-<!-- ===================== JS ===================== -->
+<!-- ✅ Particles.js Background -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-/* ✅ Particles animation applied ONLY to #particles-js inside this section */
 particlesJS("particles-js", {
   "particles": {
     "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
@@ -497,7 +462,7 @@ particlesJS("particles-js", {
     "opacity": { "value": 0.5 },
     "size": { "value": 3 },
     "line_linked": { "enable": true, "color": "#53F3C0" },
-    "move": { "enable": true, "speed": 4 }
+    "move": { "enable": true, "speed": 3 }
   },
   "interactivity": {
     "events": {
@@ -507,43 +472,78 @@ particlesJS("particles-js", {
   },
   "retina_detect": true
 });
-
-/* ✅ Button text animation (glitch typing effect) */
-document.querySelectorAll(".custom-btn").forEach(button => {
-  const btnText = button.querySelector(".btn-text");
-  const originalText = button.dataset.text;
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-  button.addEventListener("mouseenter", () => {
-    let iteration = 0;
-    let interval;
-
-    clearInterval(interval);
-    interval = setInterval(() => {
-      btnText.textContent = originalText
-        .split("")
-        .map((char, index) => {
-          if (index < iteration) {
-            return originalText[index];
-          }
-          return letters[Math.floor(Math.random() * letters.length)];
-        })
-        .join("");
-
-      if (iteration >= originalText.length) {
-        clearInterval(interval);
-        btnText.textContent = originalText;
-      }
-
-      iteration += 1 / 2;
-    }, 50);
-  });
-
-  button.addEventListener("mouseleave", () => {
-    btnText.textContent = originalText;
-  });
-});
 </script>
+
+<!-- ✅ New Smooth Digital Marketing Animation -->
+<script>
+const canvas = document.getElementById("marketing-canvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const bubbles = [];
+const icons = ["📊", "📈", "📱", "💻", "📢", "🌐"];
+const labels = ["SEO", "Sales", "Growth", "Leads", "Analytics", "Marketing"];
+
+// Create animated marketing bubbles
+for (let i = 0; i < 20; i++) {
+  bubbles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 35 + 30,
+    dx: (Math.random() - 0.5) * 2,
+    dy: (Math.random() - 0.5) * 2,
+    icon: icons[Math.floor(Math.random() * icons.length)],
+    label: labels[Math.floor(Math.random() * labels.length)],
+    color: `hsl(${Math.random() * 360}, 80%, 60%)`
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  bubbles.forEach(b => {
+    // Bubble shape
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = b.color;
+    ctx.globalAlpha = 0.15;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Icon inside bubble
+    ctx.font = "22px Poppins";
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.fillText(b.icon, b.x, b.y + 6);
+
+    // Label under bubble
+    ctx.font = "bold 12px Poppins";
+    ctx.fillText(b.label, b.x, b.y + b.r + 16);
+
+    b.x += b.dx;
+    b.y += b.dy;
+
+    if (b.x + b.r > canvas.width || b.x - b.r < 0) b.dx *= -1;
+    if (b.y + b.r > canvas.height || b.y - b.r < 0) b.dy *= -1;
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+
+
+
+
+
+
 
 
 
@@ -553,52 +553,49 @@ document.querySelectorAll(".custom-btn").forEach(button => {
 <!-- ✅ Tools Section -->
 <section class="tools-section" style="margin-top: -50px;">
   <div class="container">
-    
-    
-
     <div class="tools-grid">
       
       <!-- Column 1 -->
       <div class="tools-col">
-        <h2>Frontend Tools</h2>
+        <h2>UI/UX Tools</h2>
         <div class="tools">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Adobe XD">
+          <img src="https://cdn-icons-png.flaticon.com/512/888/888846.png" alt="Sketch">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968520.png" alt="Photoshop">
         </div>
       </div>
 
       <!-- Column 2 -->
       <div class="tools-col">
-        <h2>Backend Tools</h2>
+        <h2>Prototyping Tools</h2>
         <div class="tools">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968472.png" alt="InVision">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968700.png" alt="Marvel">
+          <img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png" alt="Framer">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968899.png" alt="Zeplin">
         </div>
       </div>
 
       <!-- Column 3 -->
       <div class="tools-col">
-        <h2>Upcoming Features</h2>
+        <h2>Design Features</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/906/906361.png" alt="AI">
-          <img src="https://cdn-icons-png.flaticon.com/512/4149/4149670.png" alt="Cloud">
-          <img src="https://cdn-icons-png.flaticon.com/512/3197/3197957.png" alt="Blockchain">
-          <img src="https://cdn-icons-png.flaticon.com/512/3145/3145765.png" alt="AR/VR">
+          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="Wireframing">
+          <img src="https://cdn-icons-png.flaticon.com/512/1829/1829576.png" alt="User Flow">
+          <img src="https://cdn-icons-png.flaticon.com/512/2541/2541988.png" alt="Mockups">
+          <img src="https://cdn-icons-png.flaticon.com/512/3176/3176363.png" alt="Personas">
         </div>
       </div>
 
       <!-- Column 4 -->
       <div class="tools-col">
-        <h2>Why Choose Us?</h2>
+        <h2>Why UI/UX?</h2>
         <div class="tools">
-          <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Fast">
-          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Support">
-          <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Secure">
-          <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Scalable">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png" alt="User Friendly">
+          <img src="https://cdn-icons-png.flaticon.com/512/1034/1034158.png" alt="Creative">
+          <img src="https://cdn-icons-png.flaticon.com/512/4206/4206277.png" alt="Engaging">
+          <img src="https://cdn-icons-png.flaticon.com/512/906/906175.png" alt="Modern">
         </div>
       </div>
 
@@ -617,7 +614,6 @@ document.querySelectorAll(".custom-btn").forEach(button => {
   flex-direction: column;
 }
 
-/* 🔹 Section Heading */
 .section-heading {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
@@ -625,7 +621,7 @@ document.querySelectorAll(".custom-btn").forEach(button => {
   color: #fff;
   text-align: center;
   margin-bottom: 50px;
-  letter-spacing: 2px; /* extra spacing */
+  letter-spacing: 2px;
 }
 
 .tools-grid {
@@ -635,14 +631,13 @@ document.querySelectorAll(".custom-btn").forEach(button => {
   width: 100%;
 }
 
-/* 🔹 Headings inside columns */
 .tools-col h2 {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 20px;
-  letter-spacing: 1.5px; /* thoda barhaya */
+  letter-spacing: 1.5px;
   margin-bottom: 20px;
-  color: #fff; /* ab white */
+  color: #fff;
   text-align: center;
 }
 
@@ -664,22 +659,19 @@ document.querySelectorAll(".custom-btn").forEach(button => {
   transform: scale(1.2) rotate(10deg);
 }
 
-/* ✅ Mobile Responsive (max-width: 768px) */
+/* ✅ Mobile Responsive */
 @media (max-width: 768px) {
   .tools-grid {
-    grid-template-columns: repeat(1, 1fr); /* 1 column layout for sections */
+    grid-template-columns: repeat(1, 1fr);
   }
-
   .tools {
-    grid-template-columns: repeat(2, 1fr); /* har row me 2 tools */
+    grid-template-columns: repeat(2, 1fr);
   }
-
   .tools img {
     width: 60px;
-    height: 60px; /* thoda chhota mobile ke liye */
+    height: 60px;
   }
 }
-
 </style>
 
 
@@ -687,19 +679,19 @@ document.querySelectorAll(".custom-btn").forEach(button => {
 
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
-<!-- ✅ Curtain Projects Section -->
+<!-- ✅ Curtain Section with Background Image -->
 <section class="curtain-section">
   <!-- 🔹 Curtain Overlay -->
   <div class="curtain-overlay"></div>
 
   <!-- 🔹 Foreground Content -->
   <div class="curtain-content">
-    <h2>Web Development Excellence</h2>
-    <p>We create modern, responsive, and scalable websites that deliver results.</p>
-    <a href="#" class="btn-learn" data-text="Learn More">
-      <span class="btn-text">Learn More</span>
-      <span class="arrow">›</span>
-    </a>
+    <h2>Crafting Intuitive <span class="highlight">UI/UX</span> Experiences</h2>
+    <p>
+      We design sleek, modern, and user-friendly interfaces that deliver seamless 
+      digital experiences. Our focus is on creating designs that users love to interact with.
+    </p>
+    <a href="#" class="btn-learn">Explore Designs</a>
   </div>
 </section>
 
@@ -707,9 +699,9 @@ document.querySelectorAll(".custom-btn").forEach(button => {
 /* 🔹 Curtain Section */
 .curtain-section {
   position: relative;
-  height: 500px;
-  background: url("web6.avif") no-repeat center center / cover;
-  background-attachment: fixed; /* ✅ FIXED BACKGROUND IMAGE */
+  height: 100vh;
+  background: url('uiux1.jpg') no-repeat center center / cover;
+  background-attachment: fixed; /* ✅ Background Fixed */
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -717,92 +709,65 @@ document.querySelectorAll(".custom-btn").forEach(button => {
   font-family: "Poppins", sans-serif;
 }
 
-/* 🔹 Curtain Overlay Animation */
+/* 🔹 Curtain Overlay */
 .curtain-overlay {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
+  top: 0; 
+  left: 0;
+  width: 100%; 
   height: 100%;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(3px);
   clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.8s ease-in-out;
+  transition: clip-path 1.8s ease-in-out; /* ✅ Smooth Animation */
   z-index: 1;
 }
-
 .curtain-overlay.active {
   clip-path: polygon(0 0, 50% 0, 70% 100%, 0 100%);
 }
 
-/* 🔹 Foreground Curtain Content */
+/* 🔹 Foreground Content */
 .curtain-content {
   position: relative;
   z-index: 2;
-  max-width: 500px;
+  max-width: 550px;
   padding: 40px;
   text-align: left;
   color: #fff;
   margin-left: 80px;
 }
-
 .curtain-content h2 {
   font-size: 2.8rem;
   font-weight: bold;
+  line-height: 1.3;
   margin-bottom: 15px;
-  color: #fff;
 }
-
+.curtain-content .highlight {
+  color: #00ff95;
+}
 .curtain-content p {
   font-size: 1.2rem;
   line-height: 1.7;
   margin-bottom: 25px;
-  color: #eaeaea;
 }
 
-/* 🔹 Learn More Button */
+/* 🔹 Explore Button */
 .btn-learn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   padding: 12px 28px;
-  /* background: linear-gradient(135deg, white); */
-  /* border-radius: 30px; */
-  color: white;
+  background: white;
+  border-radius: 30px;
+  color: green;
   font-weight: 600;
-  font-size: 16px;
   text-decoration: none;
   transition: 0.3s ease;
-  margin-top: 10px;
-  overflow: hidden;
-  position: relative;
-  /* border: 2px solid green; */
 }
-
 .btn-learn:hover {
-  background: black;
+  background: green;
   transform: translateY(-2px);
   color: white;
-  box-shadow: 0 0 12px rgba(0, 255, 100, 0.6);
 }
 
-.btn-learn .arrow {
-  font-size: 22px;
-  font-weight: bold;
-  transition: transform 0.3s ease;
-  color: green;
-}
-
-.btn-learn:hover .arrow {
-  transform: translateX(5px);
-  color: white;
-}
-
-.btn-text {
-  position: relative;
-  z-index: 2;
-}
-
-/* 🔹 Responsive Design */
+/* 🔹 Responsive */
 @media (max-width: 768px) {
   .curtain-content {
     margin-left: 20px;
@@ -824,7 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const curtain = document.querySelector(".curtain-overlay");
   const section = document.querySelector(".curtain-section");
 
-  // ✅ Animate curtain when section is visible
+  // ✅ Curtain animation trigger when visible
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -839,110 +804,72 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   observer.observe(section);
-
-  // ✅ Button glitch effect on hover
-  document.querySelectorAll(".btn-learn").forEach(button => {
-    const btnText = button.querySelector(".btn-text");
-    const originalText = button.dataset.text;
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-    button.addEventListener("mouseenter", () => {
-      let iteration = 0;
-      let interval;
-
-      clearInterval(interval); // Reset previous animation
-
-      interval = setInterval(() => {
-        btnText.textContent = originalText
-          .split("")
-          .map((char, index) => {
-            if (index < iteration) {
-              return originalText[index];
-            }
-            return letters[Math.floor(Math.random() * letters.length)];
-          })
-          .join("");
-
-        if (iteration >= originalText.length) {
-          clearInterval(interval);
-          btnText.textContent = originalText;
-        }
-
-        iteration += 1 / 2; // Speed control (~2 sec total)
-      }, 50);
-    });
-
-    button.addEventListener("mouseleave", () => {
-      btnText.textContent = originalText;
-    });
-  });
 });
 </script>
 
 
 
-
-<!-- Web Development Services Section -->
-<section class="webdev-services">
-  <h2>Our Web Development Services</h2>
+<!-- UI/UX Services Section -->
+<!-- UI/UX Services Section -->
+<section class="uiux-services">
+  <h2>Our UI/UX Design Services</h2>
 
   <div class="services-grid">
     <!-- Row 1 -->
     <div class="card">
-      <img src="web5.jpeg" alt="Frontend Development">
-      <div class="overlay"><p>Frontend Development</p></div>
+      <img src="uiux1.jpg" alt="Wireframing">
+      <div class="overlay"><p>Wireframing</p></div>
     </div>
     <div class="card">
-      <img src="web6.avif" alt="Backend Development">
-      <div class="overlay"><p>Backend Development</p></div>
+      <img src="uiux2.jpeg" alt="Prototyping">
+      <div class="overlay"><p>Prototyping</p></div>
     </div>
     <div class="card">
-      <img src="web7.jpg" alt="Full Stack Development">
-      <div class="overlay"><p>Full Stack Development</p></div>
+      <img src="uiux3.jpg" alt="User Research">
+      <div class="overlay"><p>User Research</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
 
     <!-- Row 2 -->
     <div class="card">
-      <img src="web8.jpg" alt="E-Commerce Solutions">
-      <div class="overlay"><p>E-Commerce Solutions</p></div>
+      <img src="uiux4.jpg" alt="Visual Design">
+      <div class="overlay"><p>Visual Design</p></div>
     </div>
     <div class="card">
-      <img src="web9.jpg" alt="CMS Development">
-      <div class="overlay"><p>CMS Development</p></div>
+      <img src="uiux5.jpg" alt="Interaction Design">
+      <div class="overlay"><p>Interaction Design</p></div>
     </div>
     <div class="card">
-      <img src="web6.avif" alt="API Integration">
-      <div class="overlay"><p>API Integration</p></div>
+      <img src="uiux2.jpeg" alt="Usability Testing">
+      <div class="overlay"><p>Usability Testing</p></div>
     </div>
     <div class="empty"></div> <!-- Empty Column -->
   </div>
 </section>
-
 <style>
-/* Section */
-.webdev-services {
- 
+    /* Section */
+.uiux-services {
+  
   color: white;
   padding: 60px 40px;
   text-align: center;
 }
 
-.webdev-services h2 {
+.uiux-services h2 {
   font-size: 2.2rem;
   margin-bottom: 40px;
   font-weight: bold;
 }
 
-/* Grid Layout - reuse same */
-.webdev-services .services-grid {
+/* Grid Layout */
+.services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 25px;
 }
 
-/* Reuse same card styles */
-.webdev-services .card {
+/* Card Styling */
+.card {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
@@ -950,7 +877,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cursor: pointer;
 }
 
-.webdev-services .card img {
+.card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
@@ -958,7 +885,8 @@ document.addEventListener("DOMContentLoaded", () => {
   border-radius: 16px;
 }
 
-.webdev-services .card .overlay {
+/* Overlay Styling */
+.card .overlay {
   position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.65);
@@ -969,7 +897,7 @@ document.addEventListener("DOMContentLoaded", () => {
   transition: transform 0.5s ease;
 }
 
-.webdev-services .card .overlay p {
+.card .overlay p {
   font-size: 1.2rem;
   font-weight: 600;
   opacity: 0;
@@ -977,33 +905,36 @@ document.addEventListener("DOMContentLoaded", () => {
   transition: all 0.5s ease;
 }
 
-.webdev-services .card:hover .overlay {
+/* Hover Effect */
+.card:hover .overlay {
   transform: translateX(0);
 }
 
-.webdev-services .card:hover .overlay p {
+.card:hover .overlay p {
   opacity: 1;
   transform: translateX(0);
 }
 
 /* Empty Placeholder Column */
-.webdev-services .empty {
+.empty {
   background: transparent;
 }
 
 /* Responsive */
 @media (max-width: 992px) {
-  .webdev-services .services-grid {
+  .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
-  .webdev-services .services-grid {
+  .services-grid {
     grid-template-columns: 1fr;
   }
 }
+
 </style>
+
 
 
 

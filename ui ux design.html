@@ -316,9 +316,8 @@ body::before {
 
 
 
-    <!-- Hero Section -->
-<!-- ✅ Hero Section with LCD Frame -->
-<section class="hero-wrapper">
+<!-- Hero Section -->
+<section class="hero-wrapper" id="particles-js">
   <!-- Left Content -->
   <div class="content-box">
     <h1>
@@ -328,7 +327,12 @@ body::before {
       We design immersive digital experiences with powerful visuals,
       interactive layouts, and smooth usability. Let's create something amazing.
     </p>
-    <button class="custom-btn">Let’s Talk Design</button>
+    <button class="custom-btn" data-text="Let’s Talk Design">
+  <span class="btn-text">Let’s Talk Design</span>
+  <span class="btn-arrow">></span>
+</button>
+
+
   </div>
 
   <!-- Right Side LCD + Animation -->
@@ -364,12 +368,30 @@ body::before {
   padding: 60px 5%;
   position: relative;
   overflow: hidden;
+  z-index: 1;
+  min-height: 600px;
+}
+
+/* Particles Background Layer */
+#particles-js {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+#particles-js canvas {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
 /* Left Content */
 .content-box {
   flex: 1 1 50%;
   max-width: 50%;
+  position: relative;
+  z-index: 2;
 }
 
 .content-box h1 {
@@ -378,7 +400,9 @@ body::before {
   color: #fff;
 }
 
-.content-box span { color: #28a745; }
+.content-box span {
+  /* color: #28a745; */
+}
 
 .content-box p {
   margin-top: 15px;
@@ -387,25 +411,43 @@ body::before {
   line-height: 1.7;
 }
 
+/* Button */
 .custom-btn {
-  background-color: #fff;
-  color: #28a745;
-  border: 2px solid #28a745;
+  background-color: #303030;
+  color: white;
+  /* border: 2px solid #28a745; */
   font-weight: 600;
   font-size: 1.1rem;
   padding: 14px 34px;
   margin-top: 20px;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  /* border-radius: 30px; */
+  /* transition: all 0.3s ease; */
+  /* box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2); */
   cursor: pointer;
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  margin-left: 20px;
+}
+
+/* Hover par arrow thoda move kare */
+.custom-btn:hover .btn-arrow {
+  transform: translateX(4px);
 }
 
 .custom-btn:hover {
-  background-color: #28a745;
+  background-color: black;
   color: #fff;
-  transform: scale(1.05);
-  box-shadow: 0px 8px 25px rgba(40, 167, 69, 0.4);
+  /* transform: scale(1.05); */
+  /* box-shadow: 0px 8px 25px rgba(40, 167, 69, 0.4); */
 }
 
 /* Right Side */
@@ -416,7 +458,8 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px; /* LCD height */
+  height: 500px;
+  z-index: 2;
 }
 
 /* LCD Frame Image */
@@ -432,20 +475,20 @@ body::before {
   pointer-events: none;
 }
 
-/* Code Editor over LCD – position adjustment */
+/* Code Editor */
 .code-editor {
   width: 85%;
   max-width: 500px;
-  background: transparent; /* Frame visible behind */
+  background: transparent;
   border-radius: 20px;
   padding: 20px;
   color: #00ff95;
   font-family: "Fira Code", monospace;
   position: absolute;
-  top: 40%;       /* upar shift */
-  left: 55%;      /* right shift */
+  top: 40%;
+  left: 55%;
   transform: translate(-50%, -50%);
-  min-height: 220px; 
+  min-height: 220px;
   height: 220px;
   overflow: hidden;
   z-index: 2;
@@ -477,13 +520,11 @@ body::before {
   line-height: 1.6;
 }
 
-
-
-/* Tools Floating Icons – smooth circular + floating + self rotation */
+/* Tools Floating Icons */
 .tools1 {
   position: absolute;
-  top: 40px;      
-  right: 100px;    
+  top: 40px;
+  right: 100px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -495,11 +536,10 @@ body::before {
   height: 45px;
   border-radius: 50%;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-  animation: smoothCircleRotate 6s linear infinite; /* smooth circular + rotate */
-  transform-origin: 20px 20px; /* center for circular motion */
+  animation: smoothCircleRotate 6s linear infinite;
+  transform-origin: 20px 20px;
 }
 
-/* Circular motion + vertical floating + self rotation */
 @keyframes smoothCircleRotate {
   0%   { transform: rotate(0deg) translate(-30px, -15px) rotate(0deg); }
   25%  { transform: rotate(90deg) translate(-30px, -15px) rotate(90deg); }
@@ -508,11 +548,10 @@ body::before {
   100% { transform: rotate(360deg) translate(-30px, -15px) rotate(360deg); }
 }
 
-
-
 /* Responsive */
 @media (max-width: 768px) {
-  .content-box, .animation-box-wrapper {
+  .content-box,
+  .animation-box-wrapper {
     flex: 1 1 100%;
     max-width: 100%;
     text-align: center;
@@ -544,7 +583,69 @@ body::before {
 }
 </style>
 
+<!-- Particles.js Script -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#53F3C0" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.5 },
+    "size": { "value": 3 },
+    "line_linked": { "enable": true, "color": "#53F3C0" },
+    "move": { "enable": true, "speed": 4 }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    }
+  },
+  "retina_detect": true
+});
+</script>
+
+<script>
+/* Random Letter Replacement Button Hover Animation */
+const button = document.querySelector(".custom-btn");
+const btnText = button.querySelector(".btn-text");
+const originalText = button.dataset.text;
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+button.addEventListener("mouseenter", () => {
+  let iteration = 0;
+  let interval;
+
+  clearInterval(interval);
+
+  interval = setInterval(() => {
+    btnText.textContent = originalText
+      .split("")
+      .map((char, index) => {
+        if (index < iteration) {
+          return originalText[index];
+        }
+        return letters[Math.floor(Math.random() * letters.length)];
+      })
+      .join("");
+
+    if (iteration >= originalText.length) {
+      clearInterval(interval);
+      btnText.textContent = originalText;
+    }
+
+    iteration += 1 / 2;
+  }, 50);
+});
+
+button.addEventListener("mouseleave", () => {
+  btnText.textContent = originalText;
+});
+</script>
+
+<script>
+/* Code typing effect */
 const codeLines = [
   "/* Modern UI/UX Experience */",
   "const designSystem = {",
@@ -585,7 +686,6 @@ function typeCode() {
     }, 2000);
   }
 }
-
 typeCode();
 </script>
 
@@ -740,7 +840,11 @@ typeCode();
       We design sleek, modern, and user-friendly interfaces that deliver seamless 
       digital experiences. Our focus is on creating designs that users love to interact with.
     </p>
-    <a href="#" class="btn-learn">Explore Designs</a>
+   <a href="#" class="btn-learn" data-text="Explore Designs">
+  <span class="btn-text">Explore Designs</span>
+  <span class="btn-arrow">></span>
+</a>
+
   </div>
 </section>
 
@@ -803,18 +907,34 @@ typeCode();
 /* 🔹 Explore Button */
 .btn-learn {
   padding: 12px 28px;
-  background: white;
-  border-radius: 30px;
-  color: green;
+  /* background: white; */
+  /* border-radius: 30px; */
+  color: white;
   font-weight: 600;
   text-decoration: none;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Text aur arrow ke beech gap */
+  position: relative;
+  overflow: hidden;
 }
+
 .btn-learn:hover {
-  background: green;
-  transform: translateY(-2px);
+  background: black;
   color: white;
+  transform: translateY(-2px);
 }
+
+.btn-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-learn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
 
 /* 🔹 Responsive */
 @media (max-width: 768px) {
@@ -832,6 +952,45 @@ typeCode();
   }
 }
 </style>
+
+<!-- button js  -->
+
+<script>
+  document.querySelectorAll(".btn-learn").forEach(button => {
+  const btnText = button.querySelector(".btn-text");
+  const originalText = button.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  button.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    let interval;
+
+    clearInterval(interval); // Reset animation if already running
+
+    interval = setInterval(() => {
+      btnText.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) return originalText[index];
+          return letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        btnText.textContent = originalText; // Set original text after animation
+      }
+
+      iteration += 0.5; // Controls speed of replacement
+    }, 50);
+  });
+
+  button.addEventListener("mouseleave", () => {
+    btnText.textContent = originalText;
+  });
+});
+
+</script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

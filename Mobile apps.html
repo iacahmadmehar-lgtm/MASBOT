@@ -316,20 +316,26 @@ body::before {
 
 
 
-    <!-- Hero Section -->
-<!-- ✅ Hero Section with Canvas Animation -->
-<section class="container-fluid py-5 bg-white text-dark">
-  <div class="hero-wrapper">
+  <!-- HERO SECTION (Mobile + Apps Animation + Particles Background) -->
+<!-- HERO SECTION (Mobile + Apps Animation + Particles Background) -->
+<section class="container-fluid py-5 bg-white text-dark position-relative hero-section" style="overflow: hidden;">
+  <!-- 🔹 Particles Background Canvas (Limited to this section only) -->
+  <div id="particlesCanvas" class="particles-bg"></div>
+
+  <div class="hero-wrapper position-relative">
     <!-- Left: Text -->
     <div class="content-box">
       <h1 class="display-5 fw-bold">
-        Optimize Your <span class="text-success">Mobile App</span> Solutions
+        Optimize Your <span class="highlight">Mobile App</span> Solutions
       </h1>
       <p class="lead text-secondary mt-3">
-        We craft intuitive and engaging mobile applications that deliver seamless user experiences. 
+        We craft intuitive and engaging mobile applications that deliver seamless user experiences.
         Let's bring your app idea to life.
       </p>
-      <button class="btn custom-btn mt-3 shadow">Get Started</button>
+      <button class="btn custom-btn mt-3 shadow" data-text="Get Started">
+        <span class="btn-text">Get Started</span>
+        <span class="arrow">></span>
+      </button>
     </div>
 
     <!-- Right: Canvas Animation -->
@@ -339,261 +345,456 @@ body::before {
   </div>
 </section>
 
-<!-- ✅ Styles -->
 <style>
+/* ✅ Layout */
 .hero-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap; /* ✅ force side-by-side */
+  gap: 24px;
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 2;
 }
 
 .content-box {
   flex: 1 1 50%;
   max-width: 50%;
-  margin-left: 60px; /* ✅ left se space */
+  margin-left: 40px;
+  position: relative;
+  z-index: 3;
 }
 
+/* ✅ Heading Styling */
+.content-box h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.content-box h1 .highlight {
+  color: #53F3C0;
+}
+
+/* ✅ Right Side Animation Box */
 .animation-box-wrapper {
   flex: 1 1 50%;
   max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
 }
 
-
+/* ✅ Apps Animation Canvas */
 #appsCanvas {
   width: 100%;
-  height: 600px;
+  height: 620px;
   display: block;
+  background: transparent;
+  border-radius: 12px;
+  margin-top: -10px;
+  position: relative;
+  z-index: 3;
 }
 
+/* ✅ Particles Background (LIMITED TO HERO SECTION) */
+#particlesCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ✅ Button Styling */
 .custom-btn {
-  background-color: #ffffff;
-  color: #28a745;
-  border: 2px solid #28a745;
+  background-color: #303030;
+  color: white;
   font-weight: 700;
-  font-size: 1.3rem;
-  padding: 16px 42px;
-  border-radius: 50px;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2);
+  font-size: 1.1rem;
+  padding: 12px 34px;
+  transition: all 0.4s ease-in-out;
   cursor: pointer;
-  margin-top: 40px;
+  z-index: 3;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
 }
 
+/* ✅ Arrow Styling */
+.custom-btn .arrow {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+}
+
+/* ✅ Hover Effect */
 .custom-btn:hover {
-  background-color: #28a745;
-  color: #ffffff;
-  transform: scale(1.08);
-  box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45);
+  background-color: black;
+  color: #fff;
+  transform: scale(1.05);
 }
 
-@media (max-width: 768px) {
-  .hero-wrapper {
-    flex-direction: column; /* ✅ mobile me upar neeche */
-    align-items: center;    /* ✅ center align */
-  }
+.custom-btn:hover .arrow {
+  transform: translateX(5px);
+}
 
+/* ✅ Text Replacement Animation */
+.custom-btn .btn-text {
+  display: inline-block;
+  position: relative;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* ✅ Responsive */
+@media (max-width: 900px) {
+  .hero-wrapper {
+    flex-direction: column;
+    padding: 20px;
+  }
   .content-box,
   .animation-box-wrapper {
-    flex: 1 1 100%;
     max-width: 100%;
+    width: 100%;
+    margin-left: 0;
     text-align: center;
-    margin-left: 0; /* ✅ mobile me margin remove */
   }
-
-  .content-box {
-    margin-bottom: 30px; /* ✅ text aur canvas ke beech gap */
+  .content-box h1 {
+    font-size: 2.4rem;
   }
-
   #appsCanvas {
-    height: 400px;
+    height: 520px;
   }
 }
 
+@media (max-width: 600px) {
+  #appsCanvas {
+    height: 540px;
+  }
+}
 </style>
+
+<!-- ✅ Particles.js CDN -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+/* ============================================================
+   ✅ Particles.js Background (ONLY inside #particlesCanvas)
+============================================================ */
+particlesJS("particlesCanvas", {
+  "particles": {
+    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#53F3C0" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.5 },
+    "size": { "value": 3 },
+    "line_linked": { "enable": true, "color": "#53F3C0" },
+    "move": { "enable": true, "speed": 4 }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    }
+  },
+  "retina_detect": true
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.querySelector(".custom-btn");
+  const btnText = button.querySelector(".btn-text");
+  const originalText = button.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  button.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    let interval;
+
+    clearInterval(interval); // Reset animation if already running
+
+    interval = setInterval(() => {
+      btnText.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) {
+            return originalText[index];
+          }
+          return letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        btnText.textContent = originalText; // Restore original text
+      }
+
+      iteration += 1 / 2; // Speed control (~2 sec animation)
+    }, 50);
+  });
+
+  // Instantly reset when mouse leaves
+  button.addEventListener("mouseleave", () => {
+    btnText.textContent = originalText;
+  });
+});
+</script>
+
+
+
+
+
+<!-- ✅ Particles.js CDN -->
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("appsCanvas");
   const ctx = canvas.getContext("2d");
 
-  function resizeCanvas() {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+  function resize() {
+    canvas.width = Math.floor(canvas.clientWidth * window.devicePixelRatio);
+    canvas.height = Math.floor(canvas.clientHeight * window.devicePixelRatio);
+    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
   }
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
+  resize();
+  window.addEventListener("resize", () => { resize(); setupSlots(); });
 
-  const colors = ["#28a745", "#007bff", "#ffc107", "#dc3545", "#6610f2"];
-  const messages = [
-    "User-Friendly Interface",
-    "Strong Security",
-    "Reliable Performance",
-    "Offline Functionality",
-    "Cross-Platform Compatibility"
+  // ✅ 15 Popular Apps Icons
+  const appUrls = [
+    "https://img.icons8.com/color/96/instagram-new.png",
+    "https://img.icons8.com/color/96/facebook.png",
+    "https://img.icons8.com/color/96/youtube-play.png",
+    "https://img.icons8.com/color/96/gmail-new.png",
+    "https://img.icons8.com/color/96/whatsapp.png",
+    "https://img.icons8.com/color/96/linkedin.png",
+    "https://img.icons8.com/color/96/twitterx--v1.png",
+    "https://img.icons8.com/color/96/tiktok.png",
+    "https://img.icons8.com/color/96/snapchat.png",
+    "https://img.icons8.com/color/96/spotify.png",
+    "https://img.icons8.com/color/96/pinterest.png",
+    "https://img.icons8.com/color/96/reddit.png",
+    "https://img.icons8.com/color/96/facebook-messenger.png",
+    "https://img.icons8.com/color/96/netflix.png",
+    "https://img.icons8.com/color/96/uber.png"
   ];
 
+  const apps = appUrls.map(src => ({ src }));
+
+  // Load images
+  function loadImages(apps, callback) {
+    let loaded = 0;
+    apps.forEach(app => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => { app.img = img; if (++loaded === apps.length) callback(); };
+      img.onerror = () => { app.img = null; if (++loaded === apps.length) callback(); };
+      img.src = app.src;
+    });
+  }
+
+  // Mobile geometry
+  let mobile = {};
+  function setupMobile() {
+    const cw = canvas.clientWidth;
+    const ch = canvas.clientHeight;
+
+    let mobileW;
+    if (cw <= 600) mobileW = Math.min(320, Math.floor(cw * 0.65));
+    else if (cw <= 900) mobileW = Math.min(300, Math.floor(cw * 0.55));
+    else mobileW = Math.min(320, Math.floor(cw * 0.4));
+
+    const mobileH = Math.floor(ch - 100);
+    const mobileX = Math.floor(cw * 0.06);
+    const mobileY = Math.floor((ch - mobileH) / 2 - 30);
+    mobile = { mobileX, mobileY, mobileW, mobileH, r: 18 };
+  }
+
+  // Slots
+  let slots = [];
+  function setupSlots() {
+    setupMobile();
+    slots = [];
+    const cols = 3;
+    const rows = 5;
+    const gap = 12;
+    const gridX = mobile.mobileX + 12;
+    const gridY = mobile.mobileY + 30;
+    const gridW = mobile.mobileW - 24;
+    const gridH = mobile.mobileH - 60;
+    const cellW = Math.floor((gridW - (cols - 1) * gap) / cols);
+    const cellH = Math.floor((gridH - (rows - 1) * gap) / rows);
+
+    let idx = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (idx >= apps.length) continue;
+        const x = gridX + c * (cellW + gap) + cellW / 2;
+        const y = gridY + r * (cellH + gap) + cellH / 2;
+        slots.push({ x, y, w: cellW, h: cellH });
+        idx++;
+      }
+    }
+  }
+
+  // Initialize icons
   let icons = [];
+  let animationStage = 1;
+  let stageTimer = 0;
 
   function initIcons() {
     icons = [];
-    for (let i = 0; i < messages.length; i++) {
+    apps.forEach((app, i) => {
+      const slot = slots[i % slots.length];
       icons.push({
-        x: canvas.width / 4,
-        y: canvas.height / 2,
-        r: 0,
-        targetX: canvas.width / 2 + 120,
-        // ✅ chhoti screen pe vertical spacing kam (overlap thoda)
-        targetY: canvas.width < 600 ? 100 + i * 65 : 120 + i * 90,
-        color: colors[i],
-        text: messages[i],
-        progress: 0,
-        delay: i * 40
+        img: app.img,
+        x: Math.random() * canvas.clientWidth,
+        y: -50 - Math.random() * 200,
+        tx: slot.x,
+        ty: slot.y,
+        w: 10,
+        h: 10,
+        targetW: slot.w * 0.9,
+        targetH: slot.h * 0.9,
+        landed: false,
+        delay: i * 180,
+        t: 0
       });
-    }
-  }
-  initIcons();
-
-  function wrapText(text, x, y, maxWidth, lineHeight) {
-    const words = text.split(" ");
-    let line = "";
-    let lines = [];
-    for (let n = 0; n < words.length; n++) {
-      const testLine = line + words[n] + " ";
-      const testWidth = ctx.measureText(testLine).width;
-      if (testWidth > maxWidth && n > 0) {
-        lines.push(line.trim());
-        line = words[n] + " ";
-      } else {
-        line = testLine;
-      }
-    }
-    lines.push(line.trim());
-
-    const startY = y - ((lines.length - 1) * lineHeight) / 2;
-    lines.forEach((l, i) => {
-      ctx.fillText(l, x, startY + i * lineHeight);
     });
+    animationStage = 1;
+    stageTimer = 0;
   }
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
   function drawMobile() {
-    const mobileX = canvas.width / 6;
-    const mobileY = 50;
-
-    let mobileW = canvas.width < 600 ? 180 : 260;
-    let mobileH = canvas.height - (canvas.width < 600 ? 100 : 150);
-
-    const radius = 20;
-
-    // Body
-    ctx.beginPath();
-    ctx.moveTo(mobileX + radius, mobileY);
-    ctx.lineTo(mobileX + mobileW - radius, mobileY);
-    ctx.quadraticCurveTo(mobileX + mobileW, mobileY, mobileX + mobileW, mobileY + radius);
-    ctx.lineTo(mobileX + mobileW, mobileY + mobileH - radius);
-    ctx.quadraticCurveTo(mobileX + mobileW, mobileY + mobileH, mobileX + mobileW - radius, mobileY + mobileH);
-    ctx.lineTo(mobileX + radius, mobileY + mobileH);
-    ctx.quadraticCurveTo(mobileX, mobileY + mobileH, mobileX, mobileY + mobileH - radius);
-    ctx.lineTo(mobileX, mobileY + radius);
-    ctx.quadraticCurveTo(mobileX, mobileY, mobileX + radius, mobileY);
-    ctx.closePath();
-    ctx.fillStyle = "#111";
-    ctx.fill();
-
-    // Screen
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(mobileX + 10, mobileY + 20, mobileW - 20, mobileH - 40);
-
-    // Heading (centered, 2 lines)
-    const text = ["Mobile Apps", "Development"];
+    const m = mobile;
     ctx.fillStyle = "#000";
-    ctx.font = canvas.width < 600 ? "bold 14px Arial" : "bold 20px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    const textY = mobileY + mobileH / 2;
-    ctx.fillText(text[0], mobileX + mobileW / 2, textY - 12);
-    ctx.fillText(text[1], mobileX + mobileW / 2, textY + 12);
-
-    return { mobileX, mobileY, mobileW, mobileH };
+    ctx.beginPath();
+    ctx.moveTo(m.mobileX + m.r, m.mobileY);
+    ctx.lineTo(m.mobileX + m.mobileW - m.r, m.mobileY);
+    ctx.quadraticCurveTo(m.mobileX + m.mobileW, m.mobileY, m.mobileX + m.mobileW, m.mobileY + m.r);
+    ctx.lineTo(m.mobileX + m.mobileW, m.mobileY + m.mobileH - m.r);
+    ctx.quadraticCurveTo(m.mobileX + m.mobileW, m.mobileY + m.mobileH, m.mobileX + m.mobileW - m.r, m.mobileY + m.mobileH);
+    ctx.lineTo(m.mobileX + m.r, m.mobileY + m.mobileH);
+    ctx.quadraticCurveTo(m.mobileX, m.mobileY + m.mobileH, m.mobileX, m.mobileY + m.mobileH - m.r);
+    ctx.lineTo(m.mobileX, m.mobileY + m.r);
+    ctx.quadraticCurveTo(m.mobileX, m.mobileY, m.mobileX + m.r, m.mobileY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(m.mobileX + 10, m.mobileY + 20, m.mobileW - 20, m.mobileH - 40);
   }
 
-  let animationFinished = false;
-  let restartTimeout;
+  function drawIcon(icon) {
+    if (icon.img) {
+      const x = icon.x - icon.w / 2;
+      const y = icon.y - icon.h / 2;
+      ctx.drawImage(icon.img, x, y, icon.w, icon.h);
+    }
+  }
 
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let last = performance.now();
+  function animate(now) {
+    const dt = now - last;
+    last = now;
+    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    drawMobile();
 
-    const { mobileX, mobileY, mobileW, mobileH } = drawMobile();
-
-    let allComplete = true;
-
-    icons.forEach((icon, i) => {
-      if (icon.delay > 0) {
-        icon.delay--;
-        allComplete = false;
-        return;
+    if (animationStage === 1) {
+      let landedCount = 0;
+      icons.forEach(icon => {
+        if (icon.delay > 0) {
+          icon.delay -= dt;
+        } else if (!icon.landed) {
+          icon.t += dt * 0.0025;
+          const t = Math.min(1, easeOutCubic(icon.t));
+          icon.x = icon.x + (icon.tx - icon.x) * t;
+          icon.y = icon.y + (icon.ty - icon.y) * t;
+          icon.w = icon.targetW * t;
+          icon.h = icon.targetH * t;
+          if (t >= 1) icon.landed = true;
+        }
+        drawIcon(icon);
+        if (icon.landed) landedCount++;
+      });
+      if (landedCount === icons.length) {
+        animationStage = 2;
+        stageTimer = 1200;
       }
+    }
 
-      if (icon.progress < 1) {
-        icon.progress += 0.02;
-        allComplete = false;
+    else if (animationStage === 2) {
+      icons.forEach(drawIcon);
+      stageTimer -= dt;
+      if (stageTimer <= 0) {
+        animationStage = 3;
       }
+    }
 
-      const ease = icon.progress * icon.progress * (3 - 2 * icon.progress);
-      const x = icon.x + (icon.targetX - icon.x) * ease;
-      const y = icon.y + (icon.targetY - icon.y) * ease;
+    else if (animationStage === 3) {
+      let allGone = true;
+      icons.forEach(icon => {
+        icon.w += dt * 0.15;
+        icon.h += dt * 0.15;
+        icon.y -= dt * 0.3;
+        if (icon.y + icon.h > 0) allGone = false;
+        drawIcon(icon);
+      });
+      if (allGone) {
+        animationStage = 4;
+        stageTimer = 500;
+      }
+    }
 
-      const baseR = canvas.width < 600 ? 30 : 50;
-      const r = baseR * ease;
-
-      // Line
-      const lineStartY = mobileY + 100 + i * ((mobileH - 180) / (icons.length - 1));
-      const lineStartX = mobileX + mobileW;
-      ctx.beginPath();
-      ctx.moveTo(lineStartX, lineStartY);
-      ctx.lineTo(x - r, y);
-      ctx.strokeStyle = "#ccc";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Glow + circle
-      ctx.save();
-      ctx.shadowBlur = 25;
-      ctx.shadowColor = icon.color;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = icon.color;
-      ctx.fill();
-      ctx.restore();
-
-      // White outline
-      ctx.beginPath();
-      ctx.arc(x, y, r + 10, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,255,255,0.8)";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      // Text
-      ctx.font = "bold 11px Arial";
-      ctx.fillStyle = "#000";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      wrapText(icon.text, x, y, r * 1.6, 14);
-    });
-
-    if (allComplete && !animationFinished) {
-      animationFinished = true;
-      clearTimeout(restartTimeout);
-      restartTimeout = setTimeout(() => {
-        initIcons(); // reset icons
-        animationFinished = false;
-      }, 2500); // 2.5s wait before restart
+    else if (animationStage === 4) {
+      stageTimer -= dt;
+      if (stageTimer <= 0) {
+        initIcons();
+      }
     }
 
     requestAnimationFrame(animate);
   }
-  animate();
+
+  // Load images & start animation
+  loadImages(apps, () => {
+    setupSlots();
+    initIcons();
+    last = performance.now();
+    requestAnimationFrame(animate);
+  });
+
+  /* ============================================================
+     ✅ Particles.js Background Animation (LIMITED TO HERO ONLY)
+  ============================================================ */
+  particlesJS("particlesCanvas", {
+    "particles": {
+      "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+      "color": { "value": "#53F3C0" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 3 },
+      "line_linked": { "enable": true, "color": "#53F3C0" },
+      "move": { "enable": true, "speed": 4 }
+    },
+    "interactivity": {
+      "events": {
+        "onhover": { "enable": true, "mode": "repulse" },
+        "onclick": { "enable": true, "mode": "push" }
+      }
+    },
+    "retina_detect": true
+  });
 });
 </script>
 
@@ -750,7 +951,10 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="curtain-content">
     <h2>Innovative <span class="highlight">Mobile Apps</span> Development</h2>
     <p>We design and build intuitive, high-performance mobile applications that deliver seamless user experiences and accelerate your business growth.</p>
-    <a href="#" class="btn-learn">Get Started</a>
+    <a href="#" class="btn-learn" data-text="Get Started">
+      <span class="btn-text">Get Started</span>
+      <span class="arrow">›</span>
+    </a>
   </div>
 </section>
 
@@ -760,7 +964,7 @@ document.addEventListener("DOMContentLoaded", () => {
   position: relative;
   height: 500px;
   background: url("mobile\ app1.webp") no-repeat center center / cover;
-  background-attachment: fixed; /* ✅ Background fixed */
+  background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -776,7 +980,7 @@ document.addEventListener("DOMContentLoaded", () => {
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(3px);
   clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transition: clip-path 1.8s ease-in-out; /* ✅ Smooth animation */
+  transition: clip-path 1.8s ease-in-out;
   z-index: 1;
 }
 
@@ -804,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 .highlight {
-  color: #53F3C0; /* ✅ Mobile Apps highlight color */
+  color: #53F3C0;
 }
 
 /* Paragraph */
@@ -815,26 +1019,48 @@ document.addEventListener("DOMContentLoaded", () => {
   color: #eaeaea;
 }
 
-/* 🔹 Button */
+/* 🔹 Button Styling */
 .btn-learn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   padding: 14px 35px;
-  background: #ffffff;
+  /* background: #ffffff; */
   border-radius: 35px;
-  color: #28a745;
+  color: white;
   font-weight: 600;
   font-size: 1.1rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  display: inline-block;
-  border: 2px solid #28a745;
-  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  /* border: 2px solid #28a745; */
+  /* box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2); */
+  overflow: hidden;
+  position: relative;
 }
 
+/* Hover Styling */
 .btn-learn:hover {
-  background: #28a745;
+  background: black;
   color: #fff;
   transform: scale(1.08);
-  box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4);
+  /* box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4); */
+}
+
+/* Arrow Styling */
+.btn-learn .arrow {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-learn:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Button Text */
+.btn-learn .btn-text {
+  display: inline-block;
+  position: relative;
+  transition: opacity 0.3s ease-in-out;
 }
 
 /* 🔹 Mobile Responsive */
@@ -885,6 +1111,43 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   observer.observe(section);
+
+  // ✅ Random Letter Replacement Animation for Button
+  const button = document.querySelector(".btn-learn");
+  const btnText = button.querySelector(".btn-text");
+  const originalText = button.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  button.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    let interval;
+
+    clearInterval(interval);
+
+    interval = setInterval(() => {
+      btnText.textContent = originalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) {
+            return originalText[index];
+          }
+          return letters[Math.floor(Math.random() * letters.length)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        btnText.textContent = originalText;
+      }
+
+      iteration += 1 / 2; // Speed control (~2 sec total)
+    }, 50);
+  });
+
+  // Instantly reset on mouse leave
+  button.addEventListener("mouseleave", () => {
+    btnText.textContent = originalText;
+  });
 });
 </script>
 
