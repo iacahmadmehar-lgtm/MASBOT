@@ -6,7 +6,7 @@
 <title>UI/UX Design | MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="new logo.png">
+  <link rel="icon" type="image/png" href="logo.png">
 <style>
 * {margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif;}
 body {
@@ -77,7 +77,7 @@ body::before {
   position:relative;
   transition:color 0.3s ease;
 }
-.nav-link:hover {color:#35F089;}
+.nav-link:hover {color:#f37021;}
 .nav-link::after {
   content:"";
   position:absolute;
@@ -85,7 +85,7 @@ body::before {
   left:0;
   width:0%;
   height:2px;
-  background:#35F089;
+  background:#f37021;
   transition:width 0.3s ease;
 }
 .nav-link:hover::after {width:100%;}
@@ -152,15 +152,15 @@ body::before {
 
 /* Tools Section */
 .tools-section {margin:0px 0; text-align:center;}
-.tools-section h2 {font-size:2.5rem; color:#35F089; margin-bottom:40px;}
+.tools-section h2 {font-size:2.5rem; color:#f37021; margin-bottom:40px;}
 .tools {display:flex; flex-wrap:wrap; justify-content:center; gap:30px;}
 .tool {display:flex; flex-direction:column; align-items:center; cursor:pointer;}
 .logo-wrapper {
   width:100px; height:100px; display:flex; justify-content:center; align-items:center;
-  background:#1e1e1e; border-radius:50%; filter: drop-shadow(0 0 5px #35F089);
+  background:#1e1e1e; border-radius:50%; filter: drop-shadow(0 0 5px #f37021);
 }
 .tool img {width:50px; height:50px; transition: transform 1.5s ease;}
-.tool span {margin-top:10px; font-size:0.9rem; color:#35F089; pointer-events:none;}
+.tool span {margin-top:10px; font-size:0.9rem; color:#f37021; pointer-events:none;}
 .logo-spin-html:hover {transform: rotate(1080deg);}
 .logo-spin-css:hover {transform: rotate(1080deg);}
 .logo-spin-js:hover {transform: rotate(1080deg);}
@@ -171,7 +171,7 @@ body::before {
 
 /* Services Section */
 .services {margin:100px 0;}
-.services h2 {text-align:center; font-size:2.5rem; color:#35F089; margin-bottom:50px;}
+.services h2 {text-align:center; font-size:2.5rem; color:#f37021; margin-bottom:50px;}
 .service-list {display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px;}
 .service-card {
   background:#1e1e1e; padding:30px; border-radius:15px;
@@ -181,10 +181,10 @@ body::before {
 .service-card:hover {
   transform: translateY(-10px);
   /* box-shadow:0 0 20px #35F089; */
-  border-left:6px solid #35F089;
-  border-bottom:6px solid #35F089;
+  border-left:6px solid #f37021;
+  border-bottom:6px solid #f37021;
 }
-.service-card h3 {color:#35F089; margin-bottom:15px;}
+.service-card h3 {color:#f37021; margin-bottom:15px;}
 .service-card p {color:#ccc;}
 
 /* Responsive */
@@ -204,7 +204,7 @@ body::before {
   <!-- Left: Logo -->
   <a href="index.html" style="text-decoration: none;">
     <div class="logo-wrap">
-      <img src="new logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
       <span class="logo">MASBOT</span>
     </div>
   </a>
@@ -247,7 +247,7 @@ body::before {
   font-weight: 700;
   color: white;
   text-transform: uppercase;
-  transform: scaleX(1.3);
+  transform: scaleX(1.0);    /* stretch letters horizontally */
 }
 
 .nav-links {
@@ -264,7 +264,7 @@ body::before {
 }
 
 .nav-link:hover {
-  color: #53F3C0;
+  color: #f37021;
 }
 
 /* Hamburger Button */
@@ -290,7 +290,7 @@ body::before {
   }
 
   .nav-links a {
-    color: lightgreen;     /* Links ka color */
+    color: #f37021;     /* Links ka color */
     text-decoration: none;
   }
 
@@ -589,11 +589,11 @@ body::before {
 particlesJS("particles-js", {
   "particles": {
     "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-    "color": { "value": "#53F3C0" },
+    "color": { "value": "#f37021" },
     "shape": { "type": "circle" },
     "opacity": { "value": 0.5 },
     "size": { "value": 3 },
-    "line_linked": { "enable": true, "color": "#53F3C0" },
+    "line_linked": { "enable": true, "color": "#f37021" },
     "move": { "enable": true, "speed": 4 }
   },
   "interactivity": {
@@ -702,11 +702,14 @@ typeCode();
 <!-- ✅ Tools Section -->
 <section class="tools-section" style="margin-top: -50px;">
   <div class="container">
+    
+    <!-- 🔹 Main Heading -->
+    <h2 class="section-heading" style="color: white;">Our UI/UX Tools</h2>
+
     <div class="tools-grid">
       
       <!-- Column 1 -->
       <div class="tools-col">
-        <h2>UI/UX Tools</h2>
         <div class="tools">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
           <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="Adobe XD">
@@ -717,7 +720,6 @@ typeCode();
 
       <!-- Column 2 -->
       <div class="tools-col">
-        <h2>Prototyping Tools</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/5968/5968472.png" alt="InVision">
           <img src="https://cdn-icons-png.flaticon.com/512/5968/5968700.png" alt="Marvel">
@@ -728,7 +730,6 @@ typeCode();
 
       <!-- Column 3 -->
       <div class="tools-col">
-        <h2>Design Features</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png" alt="Wireframing">
           <img src="https://cdn-icons-png.flaticon.com/512/1829/1829576.png" alt="User Flow">
@@ -739,7 +740,6 @@ typeCode();
 
       <!-- Column 4 -->
       <div class="tools-col">
-        <h2>Why UI/UX?</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png" alt="User Friendly">
           <img src="https://cdn-icons-png.flaticon.com/512/1034/1034158.png" alt="Creative">
@@ -780,15 +780,7 @@ typeCode();
   width: 100%;
 }
 
-.tools-col h2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  letter-spacing: 1.5px;
-  margin-bottom: 20px;
-  color: #fff;
-  text-align: center;
-}
+.tools-col h2 { display: none; } /* 🔹 Column headings hidden */
 
 .tools {
   display: grid;
@@ -896,7 +888,7 @@ typeCode();
   margin-bottom: 15px;
 }
 .curtain-content .highlight {
-  color: #00ff95;
+  color: #f37021;
 }
 .curtain-content p {
   font-size: 1.2rem;
@@ -1244,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .info-box h4 {
   font-size: 18px;
   margin-bottom: 15px;
-  border-bottom: 2px solid #53F3C0;
+  border-bottom: 2px solid #f37021;
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -1274,7 +1266,7 @@ form input, form textarea {
 form button {
   width: 100%;
   padding: 12px;
-  background: #53F3C0;
+  background: #f37021;
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -1282,7 +1274,7 @@ form button {
   transition: 0.3s;
 }
 form button:hover {
-  background: #3ad1a6;
+  background: #f37021;
 }
 
 /* ✅ Responsive */
@@ -1390,7 +1382,7 @@ form button:hover {
 }
 
 .cs-button {
-  background-color: rgba(53, 240, 137, 0.5);
+  background-color: #f37021;
   color: #fff;
   font-weight: 600;
   padding: 12px 20px;
@@ -1401,7 +1393,7 @@ form button:hover {
 }
 
 .cs-button:hover {
-  box-shadow: 0 0 15px rgba(53, 240, 137, 0.5);
+  box-shadow: 0 0 15px #f37021;
   transform: translateY(-2px);
 }
 
@@ -1435,9 +1427,9 @@ form button:hover {
 /* Hover effect: left + bottom orange border */
 .cs-info-card:hover {
   transform: translateY(-6px);
-  border-left: 4px solid rgba(53, 240, 137, 0.5);
-  border-bottom: 4px solid rgba(53, 240, 137, 0.5);
-  box-shadow: 0 12px 25px rgba(53, 240, 137, 0.5);
+  border-left: 4px solid #f37021;
+  border-bottom: 4px solid #f37021;
+  box-shadow: 0 12px 25px #f37021;
 }
 
 /* Responsive */

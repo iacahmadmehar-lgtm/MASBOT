@@ -6,7 +6,7 @@
 <title>ERP | MASBOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="new logo.png">
+  <link rel="icon" type="image/png" href="logo.png">
 <style>
 * {margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif;}
 body {
@@ -152,15 +152,15 @@ body::before {
 
 /* Tools Section */
 .tools-section {margin:0px 0; text-align:center;}
-.tools-section h2 {font-size:2.5rem; color:#35F089; margin-bottom:40px;}
+.tools-section h2 {font-size:2.5rem; color:#f37021; margin-bottom:40px;}
 .tools {display:flex; flex-wrap:wrap; justify-content:center; gap:30px;}
 .tool {display:flex; flex-direction:column; align-items:center; cursor:pointer;}
 .logo-wrapper {
   width:100px; height:100px; display:flex; justify-content:center; align-items:center;
-  background:#1e1e1e; border-radius:50%; filter: drop-shadow(0 0 5px #35F089);
+  background:#1e1e1e; border-radius:50%; filter: drop-shadow(0 0 5px #f37021);
 }
 .tool img {width:50px; height:50px; transition: transform 1.5s ease;}
-.tool span {margin-top:10px; font-size:0.9rem; color:#35F089; pointer-events:none;}
+.tool span {margin-top:10px; font-size:0.9rem; color:#f37021; pointer-events:none;}
 .logo-spin-html:hover {transform: rotate(1080deg);}
 .logo-spin-css:hover {transform: rotate(1080deg);}
 .logo-spin-js:hover {transform: rotate(1080deg);}
@@ -171,7 +171,7 @@ body::before {
 
 /* Services Section */
 .services {margin:100px 0;}
-.services h2 {text-align:center; font-size:2.5rem; color:#35F089; margin-bottom:50px;}
+.services h2 {text-align:center; font-size:2.5rem; color:#f37021; margin-bottom:50px;}
 .service-list {display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px;}
 .service-card {
   background:#1e1e1e; padding:30px; border-radius:15px;
@@ -181,10 +181,10 @@ body::before {
 .service-card:hover {
   transform: translateY(-10px);
   /* box-shadow:0 0 20px #35F089; */
-  border-left:6px solid #35F089;
-  border-bottom:6px solid #35F089;
+  border-left:6px solid #f37021;
+  border-bottom:6px solid #f37021;
 }
-.service-card h3 {color:#35F089; margin-bottom:15px;}
+.service-card h3 {color:#f37021; margin-bottom:15px;}
 .service-card p {color:#ccc;}
 
 /* Responsive */
@@ -204,7 +204,7 @@ body::before {
   <!-- Left: Logo -->
   <a href="index.html" style="text-decoration: none;">
     <div class="logo-wrap">
-      <img src="new logo.png" alt="Logo">
+      <img src="logo.png" alt="Logo">
       <span class="logo">MASBOT</span>
     </div>
   </a>
@@ -241,14 +241,19 @@ body::before {
   align-items: center;
 }
 
+
+
+
 .logo {
-  font-size: 30px;
-  margin-left: 15px;
-  font-weight: 700;
-  color: white;
+  font-size: 25px; 
+  margin-left: 10px;          /* bigger font size */
+  font-weight: 700;          /* bolder for logo feel */
+  color: white;              /* text color */
+  display: inline-block;
   text-transform: uppercase;
-  transform: scaleX(1.3);
+  transform: scaleX(1.0);    /* stretch letters horizontally */
 }
+
 
 .nav-links {
   display: flex;
@@ -315,22 +320,26 @@ body::before {
 <!-- hanging board  -->
 
 
-
-    <!-- Hero Section -->
-<!-- ✅ Hero Section with ERP Canvas Animation -->
-<section class="container-fluid py-5 bg-white text-dark">
-  <div class="hero-wrapper">
+<!-- ✅ Hero Section with ERP Canvas Animation + Fixed Particles Background -->
+<section class="container-fluid py-5 bg-white text-dark position-relative hero-section" style="overflow: hidden;">
+  
+  <!-- 🔹 Particles Background (ONLY FOR THIS SECTION) -->
+  <div id="erp-particles" class="particles-bg"></div>
+  
+  <div class="hero-wrapper position-relative">
     
     <!-- Left: Text -->
     <div class="content-box">
-      <h1 class="display-5 fw-bold">
+      <h1 class="display-4 fw-bold hero-heading">
         Optimize Your <span class="text-success">ERP</span> Solutions
       </h1>
       <p class="lead text-secondary mt-3">
         We build powerful ERP systems that simplify operations, integrate processes, 
         and improve decision-making for businesses.
       </p>
-      <button class="btn custom-btn mt-3 shadow">Get Started</button>
+      <button class="btn custom-btn mt-3 shadow" data-text="Get Started">
+        <span class="btn-text">Get Started</span> <span class="arrow">›</span>
+      </button>
     </div>
 
     <!-- Right: Animation -->
@@ -341,8 +350,33 @@ body::before {
   </div>
 </section>
 
+<!-- ✅ CSS -->
 <style>
-    /* ✅ Styles */
+/* ✅ Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 650px; /* Fix section height */
+}
+
+/* ✅ Particles Background (LIMITED TO SECTION ONLY) */
+#erp-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Sirf is section tak limited */
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ✅ Heading badi */
+.hero-heading {
+  font-size: 3rem; 
+}
+
 .hero-wrapper {
   display: flex;
   justify-content: space-between;
@@ -350,6 +384,7 @@ body::before {
   flex-wrap: nowrap;
   position: relative;
   margin-top: -40px;
+  z-index: 1;
 }
 
 .content-box {
@@ -357,48 +392,52 @@ body::before {
   max-width: 50%;
   margin-left: 60px;
   position: relative;
-  z-index: 1; /* Text neeche */
+  z-index: 5;
 }
 
 .animation-box-wrapper {
-  flex: 1 1 55%; /* thoda bara */
+  flex: 1 1 55%;
   max-width: 55%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 5; /* Animation upar */
-  margin-left: -60px; /* thoda overlap */
+  z-index: 5;
+  margin-left: -60px;
 }
 
 #erpCanvas {
-  width: 110%;   /* thoda bada canvas */
-  height: 650px; /* height bhi barha di */
+  width: 110%;
+  height: 650px;
   display: block;
-  pointer-events: none; /* animation ke clicks na le */
+  pointer-events: none;
 }
 
+/* ✅ Button */
 .custom-btn {
-  background-color: #ffffff;
-  color: #28a745;
-  border: 2px solid #28a745;
-  font-weight: 700;
+  background-color: #303030;
+  color: white;
+  font-weight: 400;
   font-size: 1.3rem;
   padding: 16px 42px;
-  border-radius: 50px;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0px 6px 18px rgba(40, 167, 69, 0.2);
   cursor: pointer;
   margin-top: 40px;
   position: relative;
-  z-index: 10; /* Button animation ke upar bhi click ho */
+  z-index: 10;
+  overflow: hidden;
 }
 
-.custom-btn:hover {
-  background-color: #28a745;
-  color: #ffffff;
-  transform: scale(1.08);
-  box-shadow: 0px 10px 30px rgba(40, 167, 69, 0.45);
+.custom-btn .arrow {
+  margin-left: 12px;
+  font-size: 1.5rem;
+  vertical-align: middle;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.custom-btn:hover .arrow {
+  transform: translateX(6px);
 }
 
 /* ✅ Responsive */
@@ -424,32 +463,80 @@ body::before {
     margin-left: 0;
   }
 }
-
 </style>
 
+<!-- ✅ Particles.js CDN -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+/* ✅ Particles.js Initialization ONLY for ERP Hero Section */
+particlesJS("erp-particles", {
+  "particles": {
+    "number": { "value": 90, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#f37021" },
+    "shape": { "type": "circle" },
+    "opacity": { "value": 0.4 },
+    "size": { "value": 3 },
+    "line_linked": { "enable": true, "color": "#f37021" },
+    "move": { "enable": true, "speed": 3 }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "repulse" },
+      "onclick": { "enable": true, "mode": "push" }
+    }
+  },
+  "retina_detect": true
+});
+
+/* ✅ Button Hover Random Letter Effect */
+document.querySelectorAll(".custom-btn").forEach(btn => {
+  const textSpan = btn.querySelector(".btn-text");
+  const originalText = btn.dataset.text;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let interval;
+
+  btn.addEventListener("mouseenter", () => {
+    let iteration = 0;
+    clearInterval(interval);
+
+    interval = setInterval(() => {
+      textSpan.innerText = textSpan.innerText
+        .split("")
+        .map((letter, idx) => {
+          if (idx < iteration) {
+            return originalText[idx];
+          }
+          return letters[Math.floor(Math.random() * 26)];
+        })
+        .join("");
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+      }
+      iteration += 1 / 3;
+    }, 30);
+  });
+
+  btn.addEventListener("mouseleave", () => {
+    clearInterval(interval);
+    textSpan.innerText = originalText;
+  });
+});
+</script>
 
 
-
-
-<!-- ✅ Three.js (CDN) -->
+<!-- ✅ Three.js (CDN) + ERP Animation (UNCHANGED) -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-
 <script>
 (() => {
   const canvas = document.getElementById("erpCanvas");
-
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias: true,
-    alpha: true
-  });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.set(0, 0, 12); // z aur kam -> compact
+  camera.position.set(0, 0, 12);
   scene.add(camera);
-
   const amb = new THREE.AmbientLight(0xffffff, 0.8);
   scene.add(amb);
   const dir = new THREE.DirectionalLight(0xffffff, 0.6);
@@ -457,21 +544,13 @@ body::before {
   scene.add(dir);
 
   function makeTextSpriteTexture(text, opts = {}) {
-    const {
-      font = "bold 44px Poppins, Arial, sans-serif", // aur chhota font
-      textColor = "#53F3C0",
-      glowColor = "#53F3C0",
-      glow = 18,
-      padding = 24
-    } = opts;
-
+    const { font = "bold 44px Poppins, Arial, sans-serif", textColor = "#53F3C0", glowColor = "#53F3C0", glow = 18, padding = 24 } = opts;
     const tmp = document.createElement("canvas");
     const ctx = tmp.getContext("2d");
     ctx.font = font;
     const metrics = ctx.measureText(text);
     const w = Math.ceil(metrics.width) + padding * 2;
     const h = 44 + padding * 2;
-
     tmp.width = w; tmp.height = h;
     const ctx2 = tmp.getContext("2d");
     ctx2.font = font;
@@ -481,66 +560,52 @@ body::before {
     ctx2.shadowBlur = glow;
     ctx2.fillStyle = textColor;
     ctx2.fillText(text, w / 2, h / 2);
-
     const tex = new THREE.CanvasTexture(tmp);
     tex.needsUpdate = true;
     return tex;
   }
 
   function makeIconTexture(emoji, label) {
-    const size = 160; // aur chhota canvas
+    const size = 160;
     const c = document.createElement("canvas");
     c.width = c.height = size;
     const g = c.getContext("2d");
-
     const cx = size/2, cy = size/2, r = size*0.32;
     g.shadowColor = "#53F3C0";
     g.shadowBlur = 20;
     g.fillStyle = "rgba(83,243,192,0.12)";
     g.beginPath(); g.arc(cx, cy, r, 0, Math.PI*2); g.fill();
-
     g.shadowBlur = 0;
     g.lineWidth = 4;
     g.strokeStyle = "#53F3C0";
     g.beginPath(); g.arc(cx, cy, r, 0, Math.PI*2); g.stroke();
-
     g.font = "bold 64px Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif";
     g.textAlign = "center";
     g.textBaseline = "middle";
     g.fillStyle = "#1b1b1b";
     g.fillText(emoji, cx, cy - 6);
-
     g.font = "bold 18px Poppins, Arial, sans-serif";
     g.fillStyle = "#53F3C0";
     g.shadowColor = "#53F3C0";
     g.shadowBlur = 5;
     g.fillText(label, cx, size - 24);
-
     const tex = new THREE.CanvasTexture(c);
     tex.needsUpdate = true;
     return tex;
   }
 
-  // --- Center ERP ---
   const erpTex = makeTextSpriteTexture("ERP", { font: "bold 54px Poppins, Arial, sans-serif" });
   const erpMat = new THREE.SpriteMaterial({ map: erpTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
   const erp = new THREE.Sprite(erpMat);
-  erp.scale.set(3.2, 1.4, 1); // aur chhota
+  erp.scale.set(3.2, 1.4, 1);
   scene.add(erp);
 
-  const ring = new THREE.Mesh(
-    new THREE.TorusGeometry(2.4, 0.04, 16, 128), // radius aur kam
-    new THREE.MeshPhongMaterial({ color: 0x53f3c0, emissive: 0x53f3c0, emissiveIntensity: 0.6, transparent: true, opacity: 0.7 })
-  );
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.04, 16, 128), new THREE.MeshPhongMaterial({ color: 0x53f3c0, emissive: 0x53f3c0, emissiveIntensity: 0.6, transparent: true, opacity: 0.7 }));
   scene.add(ring);
 
-  const outer = new THREE.Mesh(
-    new THREE.TorusGeometry(3.2, 0.015, 8, 128), // radius aur kam
-    new THREE.MeshBasicMaterial({ color: 0x53f3c0, transparent: true, opacity: 0.35 })
-  );
+  const outer = new THREE.Mesh(new THREE.TorusGeometry(3.2, 0.015, 8, 128), new THREE.MeshBasicMaterial({ color: 0x53f3c0, transparent: true, opacity: 0.35 }));
   scene.add(outer);
 
-  // --- Orbiting Modules ---
   const modules = [
     { emoji: "💰", label: "Finance" },
     { emoji: "📦", label: "Inventory" },
@@ -552,16 +617,15 @@ body::before {
 
   const group = new THREE.Group();
   scene.add(group);
-
   const iconNodes = [];
-  const radiusDesktop = 4.2;  // orbit aur chhota
+  const radiusDesktop = 4.2;
   const radiusMobile  = 3.2;
 
   modules.forEach((m, i) => {
     const tex = makeIconTexture(m.emoji, m.label);
     const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
     const sprite = new THREE.Sprite(mat);
-    sprite.scale.set(1.4, 1.4, 1); // aur chhote icons
+    sprite.scale.set(1.4, 1.4, 1);
     group.add(sprite);
 
     const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
@@ -571,17 +635,14 @@ body::before {
     iconNodes.push({ sprite, line, phase: (i / modules.length) * Math.PI * 2 });
   });
 
-  // --- Resize ---
   function resize() {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-
     const isMobile = w < 600;
     const r = isMobile ? radiusMobile : radiusDesktop;
-
     iconNodes.forEach(n => {
       n.sprite.scale.set(isMobile ? 1.0 : 1.4, isMobile ? 1.0 : 1.4, 1);
       n.radius = r;
@@ -590,28 +651,22 @@ body::before {
   resize();
   window.addEventListener("resize", resize);
 
-  // --- Animate ---
   const clock = new THREE.Clock();
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
-
     ring.scale.setScalar(1 + Math.sin(t * 2.0) * 0.05);
     outer.rotation.z = t * 0.15;
-
     group.rotation.z = t * (0.35 * Math.PI / 180);
-
     iconNodes.forEach((n, idx) => {
       const angle = n.phase + t * 0.6;
       const rad = (n.radius || radiusDesktop) + Math.sin(t * 1.2 + idx) * 0.12;
       const x = Math.cos(angle) * rad;
       const y = Math.sin(angle) * rad * 0.6;
       const z = Math.sin(angle + idx) * 0.12;
-
       n.sprite.position.set(x, y, z);
       const s = n.sprite.scale.x * (1 + Math.sin(t * 2.2 + idx) * 0.05);
       n.sprite.scale.setScalar(s);
-
       const p0 = new THREE.Vector3(0, 0, 0);
       const p1 = n.sprite.position.clone().multiplyScalar(0.9);
       const attr = n.line.geometry.attributes.position;
@@ -619,13 +674,11 @@ body::before {
       attr.setXYZ(1, p1.x, p1.y, p1.z);
       attr.needsUpdate = true;
     });
-
     renderer.render(scene, camera);
   }
   animate();
 })();
 </script>
-
 
 
 
@@ -639,11 +692,14 @@ body::before {
 <!-- ✅ ERP Tools Section -->
 <section class="tools-section" style="margin-top: -50px;">
   <div class="container">
+
+    <!-- ✅ Main Heading -->
+    <h2 class="section-heading" style="color: white;">Our ERP Tools</h2>
+
     <div class="tools-grid">
       
       <!-- Column 1 -->
       <div class="tools-col">
-        <h2>Finance</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135679.png" alt="Budgeting">
           <img src="https://cdn-icons-png.flaticon.com/512/1170/1170576.png" alt="Accounts">
@@ -654,7 +710,6 @@ body::before {
 
       <!-- Column 2 -->
       <div class="tools-col">
-        <h2>Inventory</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/679/679922.png" alt="Stock">
           <img src="https://cdn-icons-png.flaticon.com/512/2821/2821637.png" alt="Warehouse">
@@ -665,7 +720,6 @@ body::before {
 
       <!-- Column 3 -->
       <div class="tools-col">
-        <h2>Sales</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Orders">
           <img src="https://cdn-icons-png.flaticon.com/512/839/839860.png" alt="POS">
@@ -676,7 +730,6 @@ body::before {
 
       <!-- Column 4 -->
       <div class="tools-col">
-        <h2>HR</h2>
         <div class="tools">
           <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Employees">
           <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Payroll">
@@ -718,13 +771,7 @@ body::before {
 }
 
 .tools-col h2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  letter-spacing: 1.5px;
-  margin-bottom: 20px;
-  color: #fff;
-  text-align: center;
+  display: none; /* ✅ headings hide */
 }
 
 .tools {
@@ -763,7 +810,6 @@ body::before {
 
 
 
-
 <!-- ✅ Curtain Section -->
 <!-- ✅ Curtain Projects Section -->
 <!-- ✅ Curtain Projects Section -->
@@ -776,7 +822,7 @@ body::before {
   <div class="curtain-content">
     <h2>Advanced <span class="highlight">ERP</span> Solutions</h2>
     <p>We provide comprehensive ERP systems that streamline your business operations, improve efficiency, and give you full control over your organizational processes.</p>
-    <a href="#" class="btn-learn">Get Started</a>
+    <a href="#" class="btn-learn"><span class="btn-text">Get Started</span> <span class="arrow">›</span></a>
   </div>
 </section>
 
@@ -784,7 +830,7 @@ body::before {
 /* 🔹 Curtain Section */
 .curtain-section {
   position: relative;
-  height: 450px; /* ✅ height kam kar di */
+  height: 450px;
   background: url("erp7.webp") no-repeat center center / cover;
   background-attachment: fixed;
   display: flex;
@@ -793,7 +839,6 @@ body::before {
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 
 /* 🔹 Curtain Overlay */
 .curtain-overlay {
@@ -806,7 +851,6 @@ body::before {
   transition: clip-path 1.8s ease-in-out;
   z-index: 1;
 }
-
 .curtain-overlay.active {
   clip-path: polygon(0 0, 50% 0, 70% 100%, 0 100%);
 }
@@ -829,10 +873,7 @@ body::before {
   margin-bottom: 15px;
   font-weight: bold;
 }
-
-.highlight {
-  color: #53F3C0;
-}
+.highlight { color: #53F3C0; }
 
 /* Paragraph */
 .curtain-content p {
@@ -845,54 +886,47 @@ body::before {
 /* 🔹 Button */
 .btn-learn {
   padding: 14px 35px;
-  background: #ffffff;
-  border-radius: 35px;
-  color: #28a745;
+  background: black;
+  /* border-radius: 35px; */
+  color: white;
   font-weight: 600;
   font-size: 1.1rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  display: inline-block;
-  border: 2px solid #28a745;
-  box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* border: 2px solid #28a745; */
+  /* box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.2); */
+  overflow: hidden;
+  position: relative;
 }
-
+.btn-learn .arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
 .btn-learn:hover {
-  background: #28a745;
+  background: #303030;
   color: #fff;
   transform: scale(1.08);
-  box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4);
+  /* box-shadow: 0px 10px 25px rgba(40, 167, 69, 0.4); */
+}
+.btn-learn:hover .arrow {
+  transform: translateX(5px);
 }
 
 /* 🔹 Mobile Responsive */
 @media (max-width: 768px) {
-  .curtain-section {
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .curtain-content {
-    margin-left: 0;
-    padding: 20px;
-    max-width: 90%;
-  }
-
-  .curtain-content h2 {
-    font-size: 2rem;
-  }
-
-  .curtain-content p {
-    font-size: 1rem;
-  }
-
-  .btn-learn {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
+  .curtain-section { justify-content: center; text-align: center; }
+  .curtain-content { margin-left: 0; padding: 20px; max-width: 90%; }
+  .curtain-content h2 { font-size: 2rem; }
+  .curtain-content p { font-size: 1rem; }
+  .btn-learn { padding: 12px 30px; font-size: 1rem; }
 }
 </style>
 
 <script>
+/* 🔹 Curtain Reveal Animation */
 document.addEventListener("DOMContentLoaded", () => {
   const curtain = document.querySelector(".curtain-overlay");
   const section = document.querySelector(".curtain-section");
@@ -909,10 +943,38 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     { threshold: 0.4 }
   );
-
   observer.observe(section);
 });
+
+/* 🔹 Random Letters Animation on Hover */
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const btn = document.querySelector(".btn-learn");
+const btnText = document.querySelector(".btn-text");
+
+btn.addEventListener("mouseenter", () => {
+  let iteration = 0;
+  const original = btnText.innerText;
+  
+  const interval = setInterval(() => {
+    btnText.innerText = original
+      .split("")
+      .map((letter, index) => {
+        if (index < iteration) {
+          return original[index];
+        }
+        return letters[Math.floor(Math.random() * 26)];
+      })
+      .join("");
+
+    if (iteration >= original.length) {
+      clearInterval(interval);
+    }
+
+    iteration += 1 / 2;
+  }, 40);
+});
 </script>
+
 
 
 
@@ -1143,7 +1205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .info-box h4 {
   font-size: 18px;
   margin-bottom: 15px;
-  border-bottom: 2px solid #53F3C0;
+  border-bottom: 2px solid #f37021;
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -1173,7 +1235,7 @@ form input, form textarea {
 form button {
   width: 100%;
   padding: 12px;
-  background: #53F3C0;
+  background: #f37021;
   border: none;
   border-radius: 8px;
   font-weight: 600;
@@ -1181,7 +1243,7 @@ form button {
   transition: 0.3s;
 }
 form button:hover {
-  background: #3ad1a6;
+  background: #f37021;
 }
 
 /* ✅ Responsive */
@@ -1289,7 +1351,7 @@ form button:hover {
 }
 
 .cs-button {
-  background-color: rgba(53, 240, 137, 0.5);
+  background-color: #f37021;
   color: #fff;
   font-weight: 600;
   padding: 12px 20px;
@@ -1300,7 +1362,7 @@ form button:hover {
 }
 
 .cs-button:hover {
-  box-shadow: 0 0 15px rgba(53, 240, 137, 0.5);
+  box-shadow: 0 0 15px #f37021;
   transform: translateY(-2px);
 }
 
@@ -1334,9 +1396,9 @@ form button:hover {
 /* Hover effect: left + bottom orange border */
 .cs-info-card:hover {
   transform: translateY(-6px);
-  border-left: 4px solid rgba(53, 240, 137, 0.5);
-  border-bottom: 4px solid rgba(53, 240, 137, 0.5);
-  box-shadow: 0 12px 25px rgba(53, 240, 137, 0.5);
+  border-left: 4px solid #f37021;
+  border-bottom: 4px solid #f37021;
+  box-shadow: 0 12px 25px #f37021;
 }
 
 /* Responsive */
